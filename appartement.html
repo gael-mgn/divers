@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Visionneuse 360° (PC + Mobile)</title>
   <style>
     html, body {
@@ -9,6 +10,7 @@
       height: 100%;
       overflow: hidden;
       background-color: #000;
+      touch-action: none; /* ← empêche certains gestes natifs */
     }
     canvas {
       display: block;
@@ -65,18 +67,30 @@
         onPointerDownLon = lon;
         onPointerDownLat = lat;
       }
-    });
+    }, { passive: false }); // ← important pour pouvoir appeler preventDefault()
 
     document.addEventListener('touchmove', function(event) {
       if (isUserInteracting && event.touches.length == 1) {
         lon = (onPointerDownPointerX - event.touches[0].clientX) * 0.1 + onPointerDownLon;
         lat = (event.touches[0].clientY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
       }
-    });
+    }, { passive: false });
 
-    document.addEventListener('touchend', function() {
+    document.addEventListener('touchend', function(event) {
       isUserInteracting = false;
     });
+
+    // 🔒 Empêche le zoom double-tap (mobile)
+    let lastTap = 0;
+    document.addEventListener('touchend', function(e) {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      if (tapLength < 500 && tapLength > 0) {
+        e.preventDefault(); // ← bloque le zoom
+        switchImage(); // ← on change l'image
+      }
+      lastTap = currentTime;
+    }, { passive: false });
 
     window.addEventListener('resize', function () {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -84,7 +98,6 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // ✅ Gestion du changement d’image
     let currentImage = 1;
     function switchImage() {
       currentImage = currentImage === 1 ? 2 : 1;
@@ -93,14 +106,12 @@
       material.needsUpdate = true;
     }
 
-    // Changement d’image avec barre espace
     document.addEventListener('keydown', function(event) {
       if (event.code === 'Space') {
         switchImage();
       }
     });
 
-    // ✅ Changement d’image avec double-clic
     document.addEventListener('dblclick', function() {
       switchImage();
     });
