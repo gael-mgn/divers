@@ -85,7 +85,7 @@
     document.addEventListener('touchend', function(e) {
       const currentTime = new Date().getTime();
       const tapLength = currentTime - lastTap;
-      if (tapLength < 500 && tapLength > 0) {
+      if (tapLength < 180 && tapLength > 0) {
         e.preventDefault(); // ← bloque le zoom
         switchImage(); // ← on change l'image
       }
