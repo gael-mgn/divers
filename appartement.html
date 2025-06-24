@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Visionneuse 360° (PC + Mobile)</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background-color: #000;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const geometry = new THREE.SphereGeometry(500, 60, 40);
+    geometry.scale(-1, 1, 1);
+
+    let texture = new THREE.TextureLoader().load('https://gael-mgn.github.io/divers/1.jpg');
+    let material = new THREE.MeshBasicMaterial({ map: texture });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    let lon = 0, lat = 0;
+    let phi = 0, theta = 0;
+    let isUserInteracting = false;
+    let onPointerDownPointerX = 0, onPointerDownPointerY = 0;
+    let onPointerDownLon = 0, onPointerDownLat = 0;
+
+    document.addEventListener('mousedown', function(event) {
+      isUserInteracting = true;
+      onPointerDownPointerX = event.clientX;
+      onPointerDownPointerY = event.clientY;
+      onPointerDownLon = lon;
+      onPointerDownLat = lat;
+    });
+
+    document.addEventListener('mousemove', function(event) {
+      if (isUserInteracting) {
+        lon = (onPointerDownPointerX - event.clientX) * 0.1 + onPointerDownLon;
+        lat = (event.clientY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+      }
+    });
+
+    document.addEventListener('mouseup', function() {
+      isUserInteracting = false;
+    });
+
+    document.addEventListener('touchstart', function(event) {
+      if (event.touches.length == 1) {
+        isUserInteracting = true;
+        onPointerDownPointerX = event.touches[0].clientX;
+        onPointerDownPointerY = event.touches[0].clientY;
+        onPointerDownLon = lon;
+        onPointerDownLat = lat;
+      }
+    });
+
+    document.addEventListener('touchmove', function(event) {
+      if (isUserInteracting && event.touches.length == 1) {
+        lon = (onPointerDownPointerX - event.touches[0].clientX) * 0.1 + onPointerDownLon;
+        lat = (event.touches[0].clientY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+      }
+    });
+
+    document.addEventListener('touchend', function() {
+      isUserInteracting = false;
+    });
+
+    window.addEventListener('resize', function () {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ✅ Gestion du changement de texture avec la touche Espace
+    let currentImage = 1;
+    document.addEventListener('keydown', function(event) {
+      if (event.code === 'Space') {
+        currentImage = currentImage === 1 ? 2 : 1;
+        const newTexture = new THREE.TextureLoader().load(`https://gael-mgn.github.io/divers/${currentImage}.jpg`);
+        material.map = newTexture;
+        material.needsUpdate = true;
+      }
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      lat = Math.max(-85, Math.min(85, lat));
+      phi = THREE.MathUtils.degToRad(90 - lat);
+      theta = THREE.MathUtils.degToRad(lon);
+
+      camera.target = new THREE.Vector3(
+        500 * Math.sin(phi) * Math.cos(theta),
+        500 * Math.cos(phi),
+        500 * Math.sin(phi) * Math.sin(theta)
+      );
+      camera.lookAt(camera.target);
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
