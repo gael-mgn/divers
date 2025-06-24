@@ -84,15 +84,25 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // ✅ Gestion du changement de texture avec la touche Espace
+    // ✅ Gestion du changement d’image
     let currentImage = 1;
+    function switchImage() {
+      currentImage = currentImage === 1 ? 2 : 1;
+      const newTexture = new THREE.TextureLoader().load(`https://gael-mgn.github.io/divers/${currentImage}.jpg`);
+      material.map = newTexture;
+      material.needsUpdate = true;
+    }
+
+    // Changement d’image avec barre espace
     document.addEventListener('keydown', function(event) {
       if (event.code === 'Space') {
-        currentImage = currentImage === 1 ? 2 : 1;
-        const newTexture = new THREE.TextureLoader().load(`https://gael-mgn.github.io/divers/${currentImage}.jpg`);
-        material.map = newTexture;
-        material.needsUpdate = true;
+        switchImage();
       }
+    });
+
+    // ✅ Changement d’image avec double-clic
+    document.addEventListener('dblclick', function() {
+      switchImage();
     });
 
     function animate() {
