@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ajout à Google Sheet</title>
+  <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+  <h2>Ajouter un nom et prénom</h2>
+  <form id="sheetForm">
+    <input type="text" id="nom" placeholder="Nom" required />
+    <input type="text" id="prenom" placeholder="Prénom" required />
+    <button type="submit">Ajouter</button>
+  </form>
+
+  <script>
+    const CLIENT_ID = "607604649600-8c9iadf3udgj82mc86g5gl1u20gp8t7m.apps.googleusercontent.com";
+    const API_KEY = "AJOUTE_TA_CLÉ_API_ICI"; // optionnelle mais recommandée
+    const SPREADSHEET_ID = "1HT87wl3molF9l8DuwDZy3opAdEopQ2ekXhH4XfF-GoM";
+    const RANGE = "Feuille1!A:B"; // ou modifie selon l'onglet
+
+    function ajouterNomPrenom(nom, prenom) {
+      gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: SPREADSHEET_ID,
+        range: RANGE,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+          values: [[nom, prenom]]
+        }
+      }).then(response => {
+        alert("Ajouté !");
+      }, error => {
+        console.error("Erreur:", error);
+        alert("Erreur : " + error.result.error.message);
+      });
+    }
+
+    function initClient() {
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+        scope: "https://www.googleapis.com/auth/spreadsheets"
+      }).then(() => {
+        gapi.auth2.getAuthInstance().signIn().then(() => {
+          console.log("Connecté !");
+        });
+      });
+    }
+
+    gapi.load("client:auth2", initClient);
+
+    document.getElementById("sheetForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nom = document.getElementById("nom").value;
+      const prenom = document.getElementById("prenom").value;
+      ajouterNomPrenom(nom, prenom);
+    });
+  </script>
+</body>
+</html>
