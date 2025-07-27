@@ -39,22 +39,31 @@
       maxZoom: 19
     }).addTo(map);
 
-    const markers = L.markerClusterGroup();
+    // ✅ Variable pour activer ou désactiver le clustering
+    const enableClustering = true;
+
+    // Groupe de marqueurs (avec ou sans clustering)
+    const markers = enableClustering
+      ? L.markerClusterGroup({
+          disableClusteringAtZoom: 17,
+          maxClusterRadius: 50
+        })
+      : L.layerGroup();
 
     fetch("https://gael-mgn.github.io/divers/les-arbres.geojson")
       .then(response => response.json())
       .then(data => {
         const geoJsonLayer = L.geoJSON(data, {
           pointToLayer: function (feature, latlng) {
-  return L.circleMarker(latlng, {
-    radius: 7, // Taille augmentée
-    fillColor: "#228B22",
-    color: "#006400",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.75
-  });
-},
+            return L.circleMarker(latlng, {
+              radius: 7,
+              fillColor: "#228B22",
+              color: "#006400",
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.75
+            });
+          },
           onEachFeature: function (feature, layer) {
             const props = feature.properties;
             let popupContent = "<b>Arbre</b><br/>";
