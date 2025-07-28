@@ -11,73 +11,406 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-    #map {
-      width: 100vw;
-      height: 100vh;
-    }
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f5f7;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#map {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+#sidebar {
+  width: 300px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+#sidebar h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: #2f4f4f;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-group {
+  margin-bottom: 25px;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 14px;
+  padding: 6px 10px;
+  margin: 3px 0;
+  background-color: #f2f3f5;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.filter-group label:hover {
+  background-color: #e8eaee;
+}
+
+#arrondissement-filters,
+#espece-filters {
+  max-height: 220px;
+  overflow-y: auto;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.1);
+  accent-color: #228B22;
+}
+
+#toggleSidebar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1100;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#toggleSidebar:hover {
+  background-color: #f1f1f1;
+}
+
+@media (min-width: 768px) {
+  #toggleSidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  #sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    width: 100%;
+    padding: 20px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  #sidebar.open {
+    transform: translateX(0);
+  }
+
+  #toggleSidebar.open {
+    left: auto;
+    right: 20px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  #map {
+    height: 100vh;
+  }
+}
+
+
+
+
+
+
+/* Style de la popup Leaflet */
+.leaflet-popup-content-wrapper {
+  background-color: #ffffff;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+}
+
+.leaflet-popup-tip {
+  background-color: #ffffff;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  padding: 10px 15px;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 250px;
+}
+
+.leaflet-popup-content strong {
+  color: #2f4f4f;
+  display: inline-block;
+  min-width: 100px;
+  font-weight: 600;
+}
+
+.leaflet-popup-content br {
+  margin-bottom: 5px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  background-color: #e74c3c; /* rouge vif */
+  color: #fff; /* croix blanche */
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  top: 8px;
+  right: 8px;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+
+.leaflet-popup-content img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+.leaflet-popup-content a.recette-link {
+  display: inline-block;
+ width: 100%;
+ text-align: center;
+  padding: 8px 12px;
+  background-color: #228B22;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-popup-content a.recette-link:hover {
+  background-color: #1a6d1a;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+
+
   </style>
 </head>
 <body>
+  <!-- HTML : menu latéral avec deux sections -->
+  
+
+  <div class="container">
+    <button id="toggleSidebar">☰ Filtres</button>
+    <div id="sidebar">
+      <div class="filter-group">
+        <h2>Arrondissements</h2>
+        <div id="arrondissement-filters"></div>
+      </div>
+      <div class="filter-group">
+        <h2>Espèces d’arbres</h2>
+        <div id="espece-filters"></div>
+      </div>
+    </div>
+
+
   <div id="map"></div>
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <script>
-    const map = L.map("map").setView([48.8566, 2.3522], 13);
+  <script src="recettes.js"></script>
 
-    // Fond de carte doux (Carto Light)
+  <script>
+    const map = L.map("map", {
+      zoomControl: false // Désactive les boutons par défaut
+    }).setView([48.8566, 2.3522], 13);
+
+   if (window.innerWidth >= 768) {
+  // Ajoute les boutons de zoom uniquement sur desktop
+  L.control.zoom({ position: 'topright' }).addTo(map);
+}
+
+
     L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: "abcd",
       maxZoom: 19
     }).addTo(map);
 
-    // ✅ Variable pour activer ou désactiver le clustering
     const enableClustering = true;
-
-    // Groupe de marqueurs (avec ou sans clustering)
+    const allMarkers = [];
+    let geoJsonData = null;
     const markers = enableClustering
-      ? L.markerClusterGroup({
-          disableClusteringAtZoom: 17,
-          maxClusterRadius: 50
-        })
+      ? L.markerClusterGroup({ disableClusteringAtZoom: 17, maxClusterRadius: 50 })
       : L.layerGroup();
 
+    
     fetch("https://gael-mgn.github.io/divers/les-arbres.geojson")
-      .then(response => response.json())
-      .then(data => {
-        const geoJsonLayer = L.geoJSON(data, {
-          pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-              radius: 7,
-              fillColor: "#228B22",
-              color: "#006400",
-              weight: 1,
-              opacity: 1,
-              fillOpacity: 0.75
-            });
-          },
-          onEachFeature: function (feature, layer) {
-            const props = feature.properties;
-            let popupContent = "<b>Arbre</b><br/>";
-            for (const key in props) {
-              popupContent += `<strong>${key}</strong>: ${props[key]}<br/>`;
-            }
-            layer.bindPopup(popupContent);
-          }
-        });
+  .then(response => response.json())
+  .then(data => {
+    geoJsonData = data;
 
-        markers.addLayer(geoJsonLayer);
-        map.addLayer(markers);
-      })
-      .catch(error => console.error("Erreur lors du chargement du GeoJSON :", error));
+    // Extraire les valeurs uniques
+    const arrSet = new Set();
+    const espSet = new Set();
+    data.features.forEach(f => {
+      arrSet.add(f.properties.arrondissement);
+      if (f.properties.libellefrancais) {
+        espSet.add(f.properties.libellefrancais);
+      }
+    });
+
+    const arrList = Array.from(arrSet).sort();
+    const espList = Array.from(espSet).sort();
+
+    // Générer les filtres d'arrondissements
+    const filterArr = document.getElementById("arrondissement-filters");
+    arrList.forEach(arr => {
+      const id = "arr_" + arr.replace(/\s+/g, "_");
+      const label = document.createElement("label");
+      label.className = "arr-filter";
+      label.innerHTML = `<input type="checkbox" id="${id}" data-arr="${arr}" checked> ${arr}`;
+      filterArr.appendChild(label);
+    });
+
+    // Générer les filtres d'espèces
+    const filterEsp = document.getElementById("espece-filters");
+    espList.forEach(esp => {
+      const id = "esp_" + esp.replace(/\s+/g, "_");
+      const label = document.createElement("label");
+      label.className = "arr-filter";
+      label.innerHTML = `<input type="checkbox" id="${id}" data-esp="${esp}" checked> ${esp}`;
+      filterEsp.appendChild(label);
+    });
+
+    // Ajouter listeners
+    document.querySelectorAll("#arrondissement-filters input, #espece-filters input")
+      .forEach(input => {
+        input.addEventListener("change", updateMap);
+      });
+
+    updateMap(); // Premier affichage
+  })
+  .catch(error => console.error("Erreur lors du chargement du GeoJSON :", error));
+
+
+function updateMap() {
+  markers.clearLayers();
+
+  const selectedArr = Array.from(
+    document.querySelectorAll("#arrondissement-filters input:checked")
+  ).map(input => input.dataset.arr);
+
+  const selectedEsp = Array.from(
+    document.querySelectorAll("#espece-filters input:checked")
+  ).map(input => input.dataset.esp);
+
+  const filteredFeatures = geoJsonData.features.filter(f =>
+    selectedArr.includes(f.properties.arrondissement) &&
+    selectedEsp.includes(f.properties.libellefrancais)
+  );
+
+  const filteredLayer = L.geoJSON(filteredFeatures, {
+    pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, {
+        radius: 7,
+        fillColor: "#228B22",
+        color: "#006400",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.75
+      });
+    },
+    onEachFeature: function (feature, layer) {
+      const props = feature.properties;
+      const nomEspece = props["libellefrancais"];
+      const keysToShow = ["libellefrancais", "genre", "espece", "adresse"];
+      let popupContent = '<div class="popup-details">';
+keysToShow.forEach((key) => {
+  if (props[key] !== undefined) {
+    popupContent += `
+      <div><strong>${key}</strong> : ${props[key]}</div>
+    `;
+  }
+});
+popupContent += '</div>';
+
+      if (recetteHTMLParEspece[nomEspece]) {
+        popupContent += recetteHTMLParEspece[nomEspece];
+      }
+
+      layer.bindPopup(popupContent);
+    }
+  });
+
+  markers.addLayer(filteredLayer);
+  map.addLayer(markers);
+}
+
+document.getElementById("toggleSidebar").addEventListener("click", function () {
+  const sidebar = document.getElementById("sidebar");
+  const button = this;
+
+  sidebar.classList.toggle("open");
+  button.classList.toggle("open");
+
+  // Change le texte du bouton
+  if (sidebar.classList.contains("open")) {
+    button.innerHTML = "✕";
+  } else {
+    button.innerHTML = "☰ Filtres";
+  }
+});
+
   </script>
 </body>
 </html>
