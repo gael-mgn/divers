@@ -561,6 +561,17 @@ document.getElementById("closeHelp").addEventListener("click", function () {
   }
 }
 
+
+.color-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  border: 1px solid #999;
+}
+
 </style>
 
   <footer>
@@ -586,6 +597,18 @@ document.getElementById("closeHelp").addEventListener("click", function () {
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="recettes.js"></script>
     <script>
+// Génère une couleur unique et stable à partir d'une chaîne (nom d'espèce)
+function getColorFromString(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const hue = Math.abs(hash) % 360;
+  return `hsl(${hue}, 65%, 50%)`;
+}
+
+
+
 
 const recettesRestantesParEspece = {};
 const derniereRecetteParEspece = {};
@@ -646,7 +669,12 @@ function debounce(func, wait = 150) {
       maxZoom: 19
     }).addTo(map);
 
-    const enableClustering = true;
+    let enableClustering = false;
+
+if (window.innerWidth < 768) {
+  enableClustering = false;
+}
+
     const allMarkers = [];
     let geoJsonData = null;
     const markers = enableClustering
@@ -682,15 +710,22 @@ function debounce(func, wait = 150) {
       filterArr.appendChild(label);
     });
 
-    // Générer les filtres d'espèces
-    const filterEsp = document.getElementById("espece-filters");
-    espList.forEach(esp => {
-      const id = "esp_" + esp.replace(/\s+/g, "_");
-      const label = document.createElement("label");
-      label.className = "arr-filter";
-      label.innerHTML = `<input type="checkbox" id="${id}" data-esp="${esp}" checked> ${esp}`;
-      filterEsp.appendChild(label);
-    });
+   // Générer les filtres d'espèces avec couleurs
+const filterEsp = document.getElementById("espece-filters");
+espList.forEach(esp => {
+  const id = "esp_" + esp.replace(/\s+/g, "_");
+  const color = getColorFromString(esp);
+
+  const label = document.createElement("label");
+  label.className = "arr-filter";
+  label.innerHTML = `
+    <span class="color-indicator" style="background-color: ${color};"></span>
+    <input type="checkbox" id="${id}" data-esp="${esp}" checked> ${esp}
+  `;
+  filterEsp.appendChild(label);
+});
+
+
 
     // Ajouter listeners
     document.querySelectorAll("#arrondissement-filters input, #espece-filters input")
@@ -719,15 +754,20 @@ const filteredFeatures = geoJsonData.features.filter(f =>
 );
 
 const geoJsonLayer = L.geoJSON(filteredFeatures, {
-  pointToLayer: (feature, latlng) =>
-    L.circleMarker(latlng, {
-      radius: 10,
-      fillColor: "#228B22",
-      color: "#006400",
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.75
-    }),
+  pointToLayer: (feature, latlng) => {
+  const espece = feature.properties.libellefrancais || "Inconnue";
+  const color = getColorFromString(espece);
+
+  return L.circleMarker(latlng, {
+    radius: 10,
+    fillColor: color,
+    color: "#FFFFFF", // bordure
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  });
+},
+
   onEachFeature: function (feature, layer) {
     const props = feature.properties;
     const nomEspece = props["libellefrancais"];
