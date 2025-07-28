@@ -55,7 +55,7 @@ const recettes = {
       lien: "https://cookpad.com/fr/recettes/16541175"
     }
   ],
-  "Aubépine": [
+  "Aubepine": [
     {
       titre: "Gelée de baie d’aubépine",
       image: "https://img-global.cpcdn.com/recipes/c2a8ed4d2c7a0b05/600x852cq80/gelee-de-baies-daubepine-photo-principale-de-la-recette.webp",
