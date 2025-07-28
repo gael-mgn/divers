@@ -10,266 +10,503 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
+  <!-- Polices & styles globaux -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-* {
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Inter', sans-serif;
-  background-color: #f4f5f7;
-  color: #333;
-}
-
-.container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-}
-
-#map {
-  flex: 1;
-  height: 100%;
-  width: 100%;
-  z-index: 0;
-}
-
-#sidebar {
-  width: 300px;
-  background-color: #ffffff;
-  padding: 20px;
-  border-right: 1px solid #e0e0e0;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-  overflow-y: auto;
-  transition: transform 0.3s ease;
-  z-index: 1000;
-}
-
-#sidebar h2 {
-  font-size: 15px;
-  font-weight: 600;
-  margin: 0 0 10px;
-  color: #2f4f4f;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.filter-group {
-  margin-bottom: 25px;
-}
-
-.filter-group label {
+    /* Cache l’élément à partir de 768px de large (écrans desktop/tablette) */
+.desktop-hidden {
   display: block;
-  font-size: 14px;
-  padding: 6px 10px;
-  margin: 3px 0;
-  background-color: #f2f3f5;
-  border-radius: 6px;
-  transition: background-color 0.2s;
-  cursor: pointer;
-}
-
-.filter-group label:hover {
-  background-color: #e8eaee;
-}
-
-#arrondissement-filters,
-#espece-filters {
-  max-height: 220px;
-  overflow-y: auto;
-  background-color: #fafafa;
-  border: 1px solid #ddd;
-  padding: 8px;
-  border-radius: 6px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
-}
-
-input[type="checkbox"] {
-  margin-right: 8px;
-  transform: scale(1.1);
-  accent-color: #228B22;
-}
-
-#toggleSidebar {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1100;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-#toggleSidebar:hover {
-  background-color: #f1f1f1;
 }
 
 @media (min-width: 768px) {
-  #toggleSidebar {
+  .desktop-hidden {
     display: none;
   }
 }
 
-@media (max-width: 767px) {
-  #sidebar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    transform: translateX(-100%);
-    width: 100%;
-    padding: 20px;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
-  }
 
-  #sidebar.open {
-    transform: translateX(0);
-  }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f5f7;
+      color: #333;
+    }
 
-  #toggleSidebar.open {
-    left: auto;
-    right: 20px;
-  }
+    header {
+      background-color: #ffffff;
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
 
-  .container {
-    flex-direction: column;
-  }
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      color: #2f4f4f;
+    }
 
-  #map {
-    height: 100vh;
-  }
-}
+    header p {
+      margin: 0;
+      font-size: 15px;
+      color: #555;
+    }
 
-
-
-
+    main {
+      height: calc(100vh);
+    }
 
 
-/* Style de la popup Leaflet */
-.leaflet-popup-content-wrapper {
-  background-color: #ffffff;
-  color: #333;
-  font-family: 'Inter', sans-serif;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  padding: 10px;
-}
+    .info {
+      font-size: 0.7rem;
+      text-align: center;
+      top: 5px;
+      position: relative;
+    }
 
-.leaflet-popup-tip {
-  background-color: #ffffff;
-}
+    .container {
+      display: flex;
+      height: 100%;
+      overflow: hidden;
+    }
 
-.leaflet-popup-content {
-  margin: 0;
-  padding: 10px 15px;
-  font-size: 14px;
-  line-height: 1.5;
-  max-width: 250px;
-}
+    #map {
+      flex: 1;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
 
-.leaflet-popup-content strong {
-  color: #2f4f4f;
-  display: inline-block;
-  min-width: 100px;
-  font-weight: 600;
-}
+    #sidebar {
+      width: 300px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-right: 1px solid #e0e0e0;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+      overflow-y: auto;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
 
-.leaflet-popup-content br {
-  margin-bottom: 5px;
-}
+    #sidebar h2 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0 0 10px;
+      color: #2f4f4f;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
-.leaflet-container a.leaflet-popup-close-button {
-  background-color: #e74c3c; /* rouge vif */
-  color: #fff; /* croix blanche */
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
-  text-align: center;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  top: 8px;
-  right: 8px;
-}
+    .filter-group {
+      margin-bottom: 25px;
+    }
 
-.leaflet-container a.leaflet-popup-close-button:hover {
-  background-color: #c0392b;
-  transform: scale(1.05);
-}
+    .filter-group label {
+      display: block;
+      font-size: 14px;
+      padding: 6px 10px;
+      margin: 3px 0;
+      background-color: #f2f3f5;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+      cursor: pointer;
+    }
+
+    .filter-group label:hover {
+      background-color: #e8eaee;
+    }
+
+    #arrondissement-filters,
+    #espece-filters {
+      max-height: 220px;
+      overflow-y: auto;
+      background-color: #fafafa;
+      border: 1px solid #ddd;
+      padding: 8px;
+      border-radius: 6px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
+    }
+
+    input[type="checkbox"] {
+      margin-right: 8px;
+      transform: scale(1.1);
+      accent-color: #228B22;
+    }
+
+    #toggleSidebar {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #toggleSidebar:hover {
+      background-color: #f1f1f1;
+    }
+
+    .recette-refresh {
+      display: block;
+      margin: 10px auto 0;
+      padding: 6px 12px;
+      font-size: 14px;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .recette-refresh:hover {
+      background-color: #ddd;
+    }
 
 
-.leaflet-popup-content img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
-}
 
-.leaflet-popup-content a.recette-link {
-  display: inline-block;
- width: 100%;
- text-align: center;
-  padding: 8px 12px;
-  background-color: #228B22;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+    /* Responsive */
+    @media (min-width: 768px) {
+      #toggleSidebar {
+        display: none;
+      }
+    }
 
-.leaflet-popup-content a.recette-link:hover {
-  background-color: #1a6d1a;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    @media (max-width: 767px) {
+      #sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+        width: 100%;
+        padding: 20px;
+        padding-top: 0px;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+
+      }
+
+      #sidebar.open {
+        transform: translateX(0);
+      }
+
+      #toggleSidebar.open {
+        left: auto;
+        right: 20px;
+      }
+
+      .container {
+        flex-direction: column;
+      }
+
+      #map {
+        height: 100vh;
+      }
+    }
+
+    /* Leaflet popup */
+    .leaflet-popup-content-wrapper {
+      background-color: #ffffff;
+      color: #333;
+      font-family: 'Inter', sans-serif;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      padding: 10px;
+    }
+
+    .leaflet-popup-tip {
+      background-color: #ffffff;
+    }
+
+    .leaflet-popup-content {
+      margin: 0;
+      padding: 10px 15px;
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 250px;
+    }
+
+    .leaflet-popup-content strong {
+      color: #2f4f4f;
+      display: inline-block;
+      min-width: 100px;
+      font-weight: 600;
+    }
+
+    .leaflet-popup-content img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+
+    .leaflet-popup-content a.recette-link, .recette-link {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 8px 12px;
+      background-color: #2e8b57;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .leaflet-popup-content a.recette-link:hover {
+      background-color: #1a6d1a;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .leaflet-container a.leaflet-popup-close-button {
+      background-color: #e74c3c;
+      color: #fff;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      top: 8px;
+      right: 8px;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+
+    .leaflet-container a.leaflet-popup-close-button:hover {
+      background-color: #c0392b;
+      transform: scale(1.05);
+    }
 
 
+    .warning {
+      text-align: left;
+      background-color: #FFF3C1;
+      padding: 10px;
+      border-radius: 5px;
+    }
   </style>
 </head>
+
 <body>
-  <!-- HTML : menu latéral avec deux sections -->
-  
 
-  <div class="container">
-    <button id="toggleSidebar">☰ Filtres</button>
-    <div id="sidebar">
-      <div class="filter-group">
-        <h2>Arrondissements</h2>
-        <div id="arrondissement-filters"></div>
+  <header>
+    <h1><img src="logo.png" alt="Logo" class="logo-inline">
+  Carte des arbres comestibles à Paris</h1>
+    <p class="subtitle">Explorez les arbres fruitiers de la capitale !</p>
+
+    <style>.logo-inline {
+  height: 1.2em;
+  /*vertical-align: middle;*/
+}
+
+@media (max-width: 767px) {
+header {
+  display: none;
+}
+}
+</style>
+
+    <!--<nav style="margin-top: 10px;">
+  <a href="#about" style="margin-right: 15px; font-weight: 500; color: #228B22; text-decoration: none;">À propos</a>
+  <a href="#recettes" style="margin-right: 15px; font-weight: 500; color: #228B22; text-decoration: none;">Toutes les recettes</a>
+  <a href="mailto:tonemail@domaine.com" style="font-weight: 500; color: #228B22; text-decoration: none;">Contact</a>
+</nav>-->
+  </header>
+
+  <main>
+    <div class="container">
+      <button id="toggleSidebar">☰ Filtres</button>
+      <div id="sidebar">
+        <h1 class="desktop-hidden">Carte des arbres comestibles à Paris</h1>
+        <div class="filter-group">
+          <h2>Arrondissements</h2>
+          <div id="arrondissement-filters"></div>
+        </div>
+        <div class="filter-group">
+          <h2>Espèces d’arbres</h2>
+          <div id="espece-filters"></div>
+        </div>
+        <a href="#recettes" class="recette-link">Découvrir toutes les recettes</a>
+        <div class="info">
+
+          <p class="warning">Avant toute cueillette, assurez-vous que l’espèce est comestible : certaines peuvent être toxiques. En cas de doute, abstenez-vous ou demandez l’avis d’un spécialiste.</p>
+
+          <p>Données fournies par la Ville de Paris · <a href="https://opendata.paris.fr/explore/dataset/les-arbres/information/?disjunctive.espece&disjunctive.typeemplacement&disjunctive.arrondissement&disjunctive.genre&disjunctive.libellefrancais&disjunctive.varieteoucultivar&disjunctive.stadedeveloppement&disjunctive.remarquable" target="_blank">Paris DATA</a>
+          </p>
+        </div>
+
       </div>
-      <div class="filter-group">
-        <h2>Espèces d’arbres</h2>
-        <div id="espece-filters"></div>
-      </div>
+      <div id="map"></div>
     </div>
+  </main>
 
 
-  <div id="map"></div>
+  <!-- Bouton Help flottant -->
+<!-- Bouton Help amélioré -->
+<button id="helpBtn" title="Aide" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #228B22;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  z-index: 1200;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="18" height="18" viewBox="0 0 24 24">
+    <path d="M12 2C6.486 2 2 6.487 2 12s4.486 10 10 10 10-4.487 10-10S17.514 2 12 2zm.75 17h-1.5v-1.5h1.5V19zm1.477-7.195-.89.918c-.436.45-.586.807-.586 1.277V15h-1.5v-.667c0-.726.235-1.303.727-1.82l1.058-1.097c.396-.412.553-.786.553-1.27 0-.967-.784-1.729-1.75-1.729s-1.75.762-1.75 1.729H9c0-1.79 1.458-3.229 3.25-3.229S15.5 9.01 15.5 10.8c0 .743-.241 1.323-.723 1.805z"/>
+  </svg>
+  Aide
+</button>
 
-  <!-- Leaflet JS -->
+<!-- Pop-up d'aide -->
+<div id="helpPopup" style="
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 300px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  font-size: 14px;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+  display: none;
+  z-index: 1200;
+">
+  <!-- Croix de fermeture -->
+  <button id="closeHelp" style="
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  " title="Fermer">
+    &times;
+  </button>
+
+  <strong style="color: #2f4f4f;">Comment utiliser la carte ?</strong>
+  <p>Cliquez sur un arbre pour voir ses infos et une recette puis cliquez sur “Voir la recette complète” pour plus de détails !</p>
+  <p class="warning">Avant toute cueillette, assurez-vous que l’espèce est comestible : certaines peuvent être toxiques. En cas de doute, abstenez-vous ou demandez l’avis d’un spécialiste.</p>
+</div>
+
+
+<script>
+  // Bouton Help toggle
+document.getElementById("helpBtn").addEventListener("click", function () {
+  const popup = document.getElementById("helpPopup");
+  popup.style.display = popup.style.display === "block" ? "none" : "block";
+});
+
+// Fermer le popup
+document.getElementById("closeHelp").addEventListener("click", function () {
+  document.getElementById("helpPopup").style.display = "none";
+});
+
+
+</script>
+
+<style>
+  @media (max-width: 500px) {
+  #helpPopup {
+    right: 10px;
+    left: 10px;
+    width: auto;
+    bottom: 80px;
+  }
+}
+
+</style>
+
+  <footer>
+  </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
   <script src="recettes.js"></script>
+    <script>
 
-  <script>
+const recettesRestantesParEspece = {};
+const derniereRecetteParEspece = {};
+
+function getRecetteNonRepetitiveGlobal(espece) {
+  const pool = recettes[espece];
+  if (!pool || pool.length === 0) return null;
+
+  if (!recettesRestantesParEspece[espece] || recettesRestantesParEspece[espece].length === 0) {
+    // Réinitialise en excluant temporairement la dernière recette tirée
+    const derniere = derniereRecetteParEspece[espece];
+    recettesRestantesParEspece[espece] = pool.filter(r => r !== derniere);
+
+    console.log(`🔁 Réinitialisation des recettes pour ${espece}, en excluant temporairement : ${derniere?.titre}`);
+
+    // Si toutes les recettes étaient identiques ou une seule, on réinclut tout pour éviter un pool vide
+    if (recettesRestantesParEspece[espece].length === 0) {
+      recettesRestantesParEspece[espece] = [...pool];
+      console.log(`⚠️ Une seule recette possible, réintégration de toutes les recettes.`);
+    }
+  }
+
+  const index = Math.floor(Math.random() * recettesRestantesParEspece[espece].length);
+  const recette = recettesRestantesParEspece[espece].splice(index, 1)[0];
+  derniereRecetteParEspece[espece] = recette;
+
+  console.log(`🎯 Recette tirée pour ${espece} :`, recette.titre);
+  console.log(`📉 Recettes restantes pour ${espece} :`, recettesRestantesParEspece[espece].map(r => r.titre));
+
+  return recette;
+}
+
+
 
 function debounce(func, wait = 150) {
   let timeout;
@@ -280,7 +517,7 @@ function debounce(func, wait = 150) {
 }
 
 
-    
+
     const map = L.map("map", {
       zoomControl: false // Désactive les boutons par défaut
     }).setView([48.8566, 2.3522], 13);
@@ -379,37 +616,60 @@ const updateMap = debounce(() => {
         opacity: 1,
         fillOpacity: 0.75
       }),
-    onEachFeature: (feature, layer) => {
-      const nomEspece = feature.properties.libellefrancais;
+    onEachFeature: function (feature, layer) {
+  const props = feature.properties;
+  const nomEspece = props["libellefrancais"];
 
-      if (window.innerWidth >= 768 && nomEspece) {
-        layer.bindTooltip(nomEspece, {
-          permanent: false,
-          direction: 'top',
-          offset: [0, -10],
-          opacity: 0.9,
-          className: 'custom-tooltip'
-        });
-      }
+  if (window.innerWidth >= 768 && nomEspece) {
+    layer.bindTooltip(nomEspece, {
+      permanent: false,
+      direction: 'top',
+      offset: [0, -10],
+      opacity: 0.9,
+      className: 'custom-tooltip'
+    });
+  }
 
-      layer.on("click", () => {
-        let popupContent = '<div class="popup-details">';
-        ["libellefrancais", "genre", "espece", "adresse"].forEach(key => {
-          if (feature.properties[key]) {
-            popupContent += `<div><strong>${key}</strong> : ${feature.properties[key]}</div>`;
-          }
-        });
-        popupContent += '</div>';
+layer.on("click", () => {
+  const espece = nomEspece;
+  const layerId = layer._leaflet_id;
 
-        if (recetteHTMLParEspece[nomEspece]) {
-          const recettes = recetteHTMLParEspece[nomEspece];
-          const recetteRandom = recettes[Math.floor(Math.random() * recettes.length)];
-          popupContent += `<div class="recette-popup">${recetteRandom}</div>`;
-        }
+  const recette = getRecetteNonRepetitiveGlobal(espece);
+  if (!recette) return;
 
-        layer.bindPopup(popupContent).openPopup();
-      });
+  let popupContent = '<div class="popup-details">';
+  ["libellefrancais", "genre", "espece", "adresse"].forEach(key => {
+    if (props[key]) {
+      popupContent += `<div><strong>${key}</strong> : ${props[key]}</div>`;
     }
+  });
+  popupContent += '</div>';
+
+  popupContent += `
+    <div class="recette-popup" id="recette-${layerId}">
+      <h3>${recette.titre}</h3>
+      <img src="${recette.image}" alt="${recette.titre}">
+      <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
+  `;
+
+  if (recettes[espece] && recettes[espece].length > 1) {
+    popupContent += `
+      <button class="recette-refresh" data-layer="${layerId}" data-espece="${espece}">🔄 Une autre recette</button>
+    `;
+  }
+
+  popupContent += `</div>`;
+
+  layer.bindPopup(popupContent).openPopup();
+});
+
+
+}
+
+
+
+
+
   });
 
   markers.addLayer(geoJsonLayer);
@@ -431,7 +691,27 @@ document.getElementById("toggleSidebar").addEventListener("click", function () {
     button.innerHTML = "☰ Filtres";
   }
 });
+document.addEventListener("click", function (e) {
+  if (e.target && e.target.classList.contains("recette-refresh")) {
+    const layerId = e.target.dataset.layer;
+    const espece = e.target.dataset.espece;
+
+    const nouvelleRecette = getRecetteNonRepetitiveGlobal(espece);
+    if (!nouvelleRecette) return;
+
+    const container = document.getElementById(`recette-${layerId}`);
+    if (container) {
+      container.innerHTML = `
+        <h3>${nouvelleRecette.titre}</h3>
+        <img src="${nouvelleRecette.image}" alt="${nouvelleRecette.titre}">
+        <a class="recette-link" href="${nouvelleRecette.lien}" target="_blank">🍽️ Voir la recette complète</a>
+        <button class="recette-refresh" data-layer="${layerId}" data-espece="${espece}">🔄 Une autre recette</button>
+      `;
+    }
+  }
+});
 
   </script>
+
 </body>
 </html>

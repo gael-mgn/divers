@@ -42,26 +42,19 @@ const recettes = {
   // Tu peux en ajouter autant que nécessaire
 };
 
+const recetteHTMLParEspece = {};
 
-const recetteHTMLParEspece = {
-  "Amandier": [
-    `
-      <h3>Confiture de figues</h3>
-      <img src="img/figues1.jpg" alt="Confiture de figues">
-      <p>Faites mijoter les figues avec du sucre et du citron...</p>
-      <a class="recette-link" href="https://exemple.com/figues1" target="_blank">🍽️ Voir la recette complète</a>
-    `,
-    `
-      <h3>Tarte aux figues</h3>
-      <img src="img/figues2.jpg" alt="Tarte aux figues">
-      <p>Disposez les figues sur une pâte sablée...</p>
-      <a class="recette-link" href="https://exemple.com/figues2" target="_blank">🍽️ Voir la recette complète</a>
-    `
-  ],
-  "Pommier": [
-    `...`
-  ]
-};
+for (const espece in recettes) {
+  const recettesEspece = recettes[espece];
+  recetteHTMLParEspece[espece] = recettesEspece.map(recette => {
+    return `
+      <h3>${recette.titre}</h3>
+      <img src="${recette.image}" alt="${recette.titre}">
+      <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
+    `;
+  });
+}
+
 
 /*
 // Génère une seule fois tous les panneaux HTML de recettes par espèce
