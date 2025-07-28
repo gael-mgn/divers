@@ -4,11 +4,6 @@ const recettes = {
       titre: "Abricots rôtis",
       image: "https://assets.afcdn.com/recipe/20220613/132768_w1024h768c1cx1060cy707cxt0cyt0cxb2120cyb1415.jpg",
       lien: "https://www.marmiton.org/recettes/recette_abricots-rotis_40562.aspx"
-    },
-    {
-      titre: "Abricots rôtis 2",
-      image: "https://assets.afcdn.com/recipe/20220613/132768_w1024h768c1cx1060cy707cxt0cyt0cxb2120cyb1415.jpg",
-      lien: "https://www.marmiton.org/recettes/recette_abricots-rotis_40562.aspx"
     }
   ],
   "Amandier": [
@@ -20,7 +15,7 @@ const recettes = {
   ],
   "Amélanchier": [
     {
-      titre: "Chouchous aux amandes",
+      titre: "Compote d’amélanches",
       image: "https://isabellecotenutritionniste.com/wp-content/uploads/2018/07/Compote-amelanche-haut-petit-980x749.jpg",
       lien: "https://isabellecotenutritionniste.com/recettes/compote-damelanches/"
     }
@@ -80,15 +75,15 @@ const recettes = {
   "Châtaignier": [
     {
       titre: "Velouté de châtaigne",
-      image: "",
-      lien: "https://www.lesfruitsetlegumesfrais.com/recettes/veloute-de-chataigne"
+      image: "https://deliacious.com/wp-content/uploads/2018/12/soupe-chataignes-500x500.jpg",
+      lien: "https://deliacious.com/2018/12/veloute-chataigne.html"
     }
   ],
   "Chèvrefeuille": [
     {
       titre: "Rhum chèvrefeuille",
-      image: "https://www.rhum-arrange.fr/recettes/rhum-arrange/rhum-chevrefeuille/",
-      lien: "https://www.rhum-arrange.fr/wp-content/uploads/2008/06/fleurs-de-chevrefeuilles-scaled.jpg"
+      image: "https://www.rhum-arrange.fr/wp-content/uploads/2008/06/fleurs-de-chevrefeuilles-scaled.jpg",
+      lien: "https://www.rhum-arrange.fr/recettes/rhum-arrange/rhum-chevrefeuille/"
     }
   ],
 
@@ -130,7 +125,20 @@ const recettes = {
       lien: "https://www.julieandrieu.com/recettes/beignets-fleurs-glycines-camille-oger"
     }
   ],
-
+  "Poirier à fruits": [
+    {
+      titre: "Poires rôties au cidre",
+      image: "https://cache.marieclaire.fr/data/photo/w1500_ci/6z/recette-de-poire-roties-au-cidre.webp",
+      lien: "https://www.marieclaire.fr/cuisine/poires-roties-au-cidre,1487547.asp"
+    }
+  ],
+  "Prunier à fruits": [
+    {
+      titre: "",
+      image: "https://www.julieandrieu.com/media/cache/web_recipe_detail/uploads/recettes/dessert/beignets-fleurs-glycines-camille-oger.jpg",
+      lien: "https://www.julieandrieu.com/recettes/beignets-fleurs-glycines-camille-oger"
+    }
+  ],
 
 
 
@@ -182,3 +190,22 @@ for (const espece in recettes) {
   recetteHTMLParEspece[espece] = html;
 }
 */
+
+
+
+const couleurParEspece = {};
+const palette = [
+  "#e6194b", "#3cb44b", "#ffe119", "#4363d8", "#f58231",
+  "#911eb4", "#46f0f0", "#f032e6", "#bcf60c", "#fabebe",
+  "#008080", "#e6beff", "#9a6324", "#fffac8", "#800000"
+];
+
+let colorIndex = 0;
+
+function getCouleurPourEspece(espece) {
+  if (!couleurParEspece[espece]) {
+    couleurParEspece[espece] = palette[colorIndex % palette.length];
+    colorIndex++;
+  }
+  return couleurParEspece[espece];
+}

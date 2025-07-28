@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Carte des arbres comestibles à Paris</title>
+  <title>Récolter Paris - Carte des arbres comestibles à Paris</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Leaflet CSS -->
@@ -27,6 +27,37 @@
   .desktop-hidden {
     display: none;
   }
+}
+
+
+
+.cta-button {
+  display: inline-block;
+  display: block;
+  width: fit-content;
+  margin: 2rem auto 0;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #34a853, #0b8457);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 6px 12px rgba(0, 128, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.3);
+  background: linear-gradient(135deg, #2e9d45, #067c4f);
+}
+
+.cta-button:active {
+  transform: scale(0.98);
 }
 
 
@@ -103,8 +134,13 @@
     }
 
     .filter-group {
+
       margin-bottom: 25px;
     }
+
+@media (max-width: 767px) {
+    .filter-group {margin-top: 25px;}
+  }
 
     .filter-group label {
       display: block;
@@ -123,7 +159,7 @@
 
     #arrondissement-filters,
     #espece-filters {
-      max-height: 220px;
+      max-height: 320px;
       overflow-y: auto;
       background-color: #fafafa;
       border: 1px solid #ddd;
@@ -131,6 +167,12 @@
       border-radius: 6px;
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
     }
+
+@media (max-width: 767px) {
+  #espece-filters {
+      max-height: 390px;
+    }
+}
 
     input[type="checkbox"] {
       margin-right: 8px;
@@ -172,7 +214,19 @@
     .recette-refresh:hover {
       background-color: #ddd;
     }
-
+    .popup-details {
+      line-height: 0.5;
+    }
+    .popup-details h3 {
+      text-align: center;
+    }
+    .popup-details h4{
+      text-align: center;
+      font-style: italic;
+      padding: 0;
+      margin: 0;
+      font-weight: normal;
+    }
 
 
     /* Responsive */
@@ -301,6 +355,64 @@
       padding: 10px;
       border-radius: 5px;
     }
+
+
+    /* Animation à l’ouverture */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#sidebar.open {
+  animation: fadeIn 0.4s ease forwards;
+  backdrop-filter: blur(5px);
+}
+
+#toggleSidebar {
+  transition: all 0.3s ease-in-out;
+}
+#toggleSidebar:hover {
+  transform: scale(1.05);
+}
+
+/* Liseré sous les titres */
+header h1, .filter-group h2 {
+  position: relative;
+}
+header h1::after, .filter-group h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 40px;
+  height: 3px;
+  background-color: #228B22;
+  border-radius: 4px;
+}
+
+/* Ombres plus douces */
+#sidebar, header, .leaflet-popup-content-wrapper {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.07);
+}
+
+/* Bouton recette "zoom" */
+.recette-link, .recette-refresh {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.recette-link:hover, .recette-refresh:hover {
+  transform: scale(1.03);
+}
+
+/* Tooltip personnalisé */
+.custom-tooltip {
+  background-color: #2e8b57 !important;
+  color: white !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
   </style>
 </head>
 
@@ -308,7 +420,7 @@
 
   <header>
     <h1><img src="logo.png" alt="Logo" class="logo-inline">
-  Carte des arbres comestibles à Paris</h1>
+  Récolter Paris - Carte des arbres comestibles à Paris</h1>
     <p class="subtitle">Explorez les arbres fruitiers de la capitale !</p>
 
     <style>.logo-inline {
@@ -335,7 +447,7 @@ header {
       <button id="toggleSidebar">☰ Filtres</button>
       <div id="sidebar">
         <h1 class="desktop-hidden">Carte des arbres comestibles à Paris</h1>
-        <div class="filter-group">
+        <div class="filter-group" style="display: none;">
           <h2>Arrondissements</h2>
           <div id="arrondissement-filters"></div>
         </div>
@@ -343,7 +455,7 @@ header {
           <h2>Espèces d’arbres</h2>
           <div id="espece-filters"></div>
         </div>
-        <a href="#recettes" class="recette-link">Découvrir toutes les recettes</a>
+        <a href="recettes.html" class="cta-button">Découvrir toutes les recettes</a>
         <div class="info">
 
           <p class="warning">Avant toute cueillette, assurez-vous que l’espèce est comestible : certaines peuvent être toxiques. En cas de doute, abstenez-vous ou demandez l’avis d’un spécialiste.</p>
@@ -592,88 +704,82 @@ function debounce(func, wait = 150) {
 
 
 const updateMap = debounce(() => {
-  markers.clearLayers();
+markers.clearLayers();
 
-  const selectedArr = new Set(
-    Array.from(document.querySelectorAll("#arrondissement-filters input:checked")).map(i => i.dataset.arr)
-  );
-  const selectedEsp = new Set(
-    Array.from(document.querySelectorAll("#espece-filters input:checked")).map(i => i.dataset.esp)
-  );
+const selectedArr = new Set(
+  Array.from(document.querySelectorAll("#arrondissement-filters input:checked")).map(i => i.dataset.arr)
+);
+const selectedEsp = new Set(
+  Array.from(document.querySelectorAll("#espece-filters input:checked")).map(i => i.dataset.esp)
+);
 
-  const filteredFeatures = geoJsonData.features.filter(f =>
-    selectedArr.has(f.properties.arrondissement) &&
-    selectedEsp.has(f.properties.libellefrancais)
-  );
+const filteredFeatures = geoJsonData.features.filter(f =>
+  selectedArr.has(f.properties.arrondissement) &&
+  selectedEsp.has(f.properties.libellefrancais)
+);
 
-  const geoJsonLayer = L.geoJSON(filteredFeatures, {
-    pointToLayer: (feature, latlng) =>
-      L.circleMarker(latlng, {
-        radius: 6,
-        fillColor: "#228B22",
-        color: "#006400",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.75
-      }),
-    onEachFeature: function (feature, layer) {
-  const props = feature.properties;
-  const nomEspece = props["libellefrancais"];
+const geoJsonLayer = L.geoJSON(filteredFeatures, {
+  pointToLayer: (feature, latlng) =>
+    L.circleMarker(latlng, {
+      radius: 10,
+      fillColor: "#228B22",
+      color: "#006400",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.75
+    }),
+  onEachFeature: function (feature, layer) {
+    const props = feature.properties;
+    const nomEspece = props["libellefrancais"];
+    const layerId = layer._leaflet_id;
 
-  if (window.innerWidth >= 768 && nomEspece) {
-    layer.bindTooltip(nomEspece, {
-      permanent: false,
-      direction: 'top',
-      offset: [0, -10],
-      opacity: 0.9,
-      className: 'custom-tooltip'
+    if (window.innerWidth >= 768 && nomEspece) {
+      layer.bindTooltip(nomEspece, {
+        permanent: false,
+        direction: 'top',
+        offset: [0, -10],
+        opacity: 0.9,
+        className: 'custom-tooltip'
+      });
+    }
+
+    // Construction du popup une seule fois
+    const recette = getRecetteNonRepetitiveGlobal(nomEspece);
+    if (!recette) return;
+
+    let popupContent = '<div class="popup-details">';
+    popupContent += `<h3>${props["libellefrancais"]}</h3>`;
+    popupContent += `<h4>${props["genre"]}</h4>`;
+    popupContent += '</div>';
+
+    popupContent += `
+      <div class="recette-popup" id="recette-${layerId}">
+        <h3>${recette.titre}</h3>
+        <img src="${recette.image}" alt="${recette.titre}">
+        <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
+    `;
+
+    if (recettes[nomEspece] && recettes[nomEspece].length > 1) {
+      popupContent += `
+        <button class="recette-refresh" data-layer="${layerId}" data-espece="${nomEspece}">🔄 Une autre recette</button>
+      `;
+    }
+
+    popupContent += `</div>`;
+
+    // Bind une seule fois
+    layer.bindPopup(popupContent);
+
+    // Clic = juste ouvrir
+    layer.on("click", () => {
+      layer.openPopup();
     });
   }
-
-layer.on("click", () => {
-  const espece = nomEspece;
-  const layerId = layer._leaflet_id;
-
-  const recette = getRecetteNonRepetitiveGlobal(espece);
-  if (!recette) return;
-
-  let popupContent = '<div class="popup-details">';
-  ["libellefrancais", "genre", "espece", "adresse"].forEach(key => {
-    if (props[key]) {
-      popupContent += `<div><strong>${key}</strong> : ${props[key]}</div>`;
-    }
-  });
-  popupContent += '</div>';
-
-  popupContent += `
-    <div class="recette-popup" id="recette-${layerId}">
-      <h3>${recette.titre}</h3>
-      <img src="${recette.image}" alt="${recette.titre}">
-      <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
-  `;
-
-  if (recettes[espece] && recettes[espece].length > 1) {
-    popupContent += `
-      <button class="recette-refresh" data-layer="${layerId}" data-espece="${espece}">🔄 Une autre recette</button>
-    `;
-  }
-
-  popupContent += `</div>`;
-
-  layer.bindPopup(popupContent).openPopup();
 });
 
+markers.addLayer(geoJsonLayer);
+map.addLayer(markers);
 
-}
-
-
-
-
-
-  });
-
-  markers.addLayer(geoJsonLayer);
-  map.addLayer(markers);
 }, 200);
 
 
