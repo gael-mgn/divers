@@ -4,6 +4,11 @@ const recettes = {
       titre: "Abricots rôtis",
       image: "https://assets.afcdn.com/recipe/20220613/132768_w1024h768c1cx1060cy707cxt0cyt0cxb2120cyb1415.jpg",
       lien: "https://www.marmiton.org/recettes/recette_abricots-rotis_40562.aspx"
+    },
+    {
+      titre: "Abricots rôtis 2",
+      image: "https://assets.afcdn.com/recipe/20220613/132768_w1024h768c1cx1060cy707cxt0cyt0cxb2120cyb1415.jpg",
+      lien: "https://www.marmiton.org/recettes/recette_abricots-rotis_40562.aspx"
     }
   ],
   "Amandier": [
@@ -38,6 +43,27 @@ const recettes = {
 };
 
 
+const recetteHTMLParEspece = {
+  "Amandier": [
+    `
+      <h3>Confiture de figues</h3>
+      <img src="img/figues1.jpg" alt="Confiture de figues">
+      <p>Faites mijoter les figues avec du sucre et du citron...</p>
+      <a class="recette-link" href="https://exemple.com/figues1" target="_blank">🍽️ Voir la recette complète</a>
+    `,
+    `
+      <h3>Tarte aux figues</h3>
+      <img src="img/figues2.jpg" alt="Tarte aux figues">
+      <p>Disposez les figues sur une pâte sablée...</p>
+      <a class="recette-link" href="https://exemple.com/figues2" target="_blank">🍽️ Voir la recette complète</a>
+    `
+  ],
+  "Pommier": [
+    `...`
+  ]
+};
+
+/*
 // Génère une seule fois tous les panneaux HTML de recettes par espèce
 const recetteHTMLParEspece = {};
 
@@ -53,3 +79,4 @@ for (const espece in recettes) {
   });
   recetteHTMLParEspece[espece] = html;
 }
+*/

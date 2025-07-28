@@ -270,6 +270,17 @@ input[type="checkbox"] {
   <script src="recettes.js"></script>
 
   <script>
+
+function debounce(func, wait = 150) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+
+    
     const map = L.map("map", {
       zoomControl: false // Désactive les boutons par défaut
     }).setView([48.8566, 2.3522], 13);
@@ -343,58 +354,68 @@ input[type="checkbox"] {
   .catch(error => console.error("Erreur lors du chargement du GeoJSON :", error));
 
 
-function updateMap() {
+const updateMap = debounce(() => {
   markers.clearLayers();
 
-  const selectedArr = Array.from(
-    document.querySelectorAll("#arrondissement-filters input:checked")
-  ).map(input => input.dataset.arr);
-
-  const selectedEsp = Array.from(
-    document.querySelectorAll("#espece-filters input:checked")
-  ).map(input => input.dataset.esp);
-
-  const filteredFeatures = geoJsonData.features.filter(f =>
-    selectedArr.includes(f.properties.arrondissement) &&
-    selectedEsp.includes(f.properties.libellefrancais)
+  const selectedArr = new Set(
+    Array.from(document.querySelectorAll("#arrondissement-filters input:checked")).map(i => i.dataset.arr)
+  );
+  const selectedEsp = new Set(
+    Array.from(document.querySelectorAll("#espece-filters input:checked")).map(i => i.dataset.esp)
   );
 
-  const filteredLayer = L.geoJSON(filteredFeatures, {
-    pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, {
-        radius: 7,
+  const filteredFeatures = geoJsonData.features.filter(f =>
+    selectedArr.has(f.properties.arrondissement) &&
+    selectedEsp.has(f.properties.libellefrancais)
+  );
+
+  const geoJsonLayer = L.geoJSON(filteredFeatures, {
+    pointToLayer: (feature, latlng) =>
+      L.circleMarker(latlng, {
+        radius: 6,
         fillColor: "#228B22",
         color: "#006400",
         weight: 1,
         opacity: 1,
         fillOpacity: 0.75
-      });
-    },
-    onEachFeature: function (feature, layer) {
-      const props = feature.properties;
-      const nomEspece = props["libellefrancais"];
-      const keysToShow = ["libellefrancais", "genre", "espece", "adresse"];
-      let popupContent = '<div class="popup-details">';
-keysToShow.forEach((key) => {
-  if (props[key] !== undefined) {
-    popupContent += `
-      <div><strong>${key}</strong> : ${props[key]}</div>
-    `;
-  }
-});
-popupContent += '</div>';
+      }),
+    onEachFeature: (feature, layer) => {
+      const nomEspece = feature.properties.libellefrancais;
 
-      if (recetteHTMLParEspece[nomEspece]) {
-        popupContent += recetteHTMLParEspece[nomEspece];
+      if (window.innerWidth >= 768 && nomEspece) {
+        layer.bindTooltip(nomEspece, {
+          permanent: false,
+          direction: 'top',
+          offset: [0, -10],
+          opacity: 0.9,
+          className: 'custom-tooltip'
+        });
       }
 
-      layer.bindPopup(popupContent);
+      layer.on("click", () => {
+        let popupContent = '<div class="popup-details">';
+        ["libellefrancais", "genre", "espece", "adresse"].forEach(key => {
+          if (feature.properties[key]) {
+            popupContent += `<div><strong>${key}</strong> : ${feature.properties[key]}</div>`;
+          }
+        });
+        popupContent += '</div>';
+
+        if (recetteHTMLParEspece[nomEspece]) {
+          const recettes = recetteHTMLParEspece[nomEspece];
+          const recetteRandom = recettes[Math.floor(Math.random() * recettes.length)];
+          popupContent += `<div class="recette-popup">${recetteRandom}</div>`;
+        }
+
+        layer.bindPopup(popupContent).openPopup();
+      });
     }
   });
 
-  markers.addLayer(filteredLayer);
+  markers.addLayer(geoJsonLayer);
   map.addLayer(markers);
-}
+}, 200);
+
 
 document.getElementById("toggleSidebar").addEventListener("click", function () {
   const sidebar = document.getElementById("sidebar");
