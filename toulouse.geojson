@@ -6,6 +6,36 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4351853516954327,
+          43.641781559970376
+        ]
+      },
+      "properties": {
+        "genre": "Pterocarya",
+        "espece": "fraxinifolia",
+        "libellefrancais": "Ptérocaryer du Caucase!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4351402007288303,
+          43.64169863261619
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "angustifolia",
+        "libellefrancais": "Frêne à feuilles étroites!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.461721805915113,
           43.64237322247459
         ]
@@ -36,6 +66,126 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.429284828026775,
+          43.64636463890938
+        ]
+      },
+      "properties": {
+        "genre": "Taxus",
+        "espece": "baccata",
+        "libellefrancais": "If commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4292347724852699,
+          43.64640639576625
+        ]
+      },
+      "properties": {
+        "genre": "Taxus",
+        "espece": "baccata",
+        "libellefrancais": "If commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4292784355341779,
+          43.646408762104684
+        ]
+      },
+      "properties": {
+        "genre": "Taxus",
+        "espece": "baccata",
+        "libellefrancais": "If commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3987056936431905,
+          43.56357597441482
+        ]
+      },
+      "properties": {
+        "genre": "Castanea",
+        "espece": "sativa",
+        "libellefrancais": "Châtaignier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4047659219548954,
+          43.56330259362415
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3984560571222266,
+          43.56226104594441
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4053069556186062,
+          43.5631893756972
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4041280216220209,
+          43.56344622285469
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.3949866367295778,
           43.56265075858965
         ]
@@ -44,6 +194,21 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4060801525284734,
+          43.56301584598118
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
       }
     },
     {
@@ -66,6 +231,156 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4779211112680715,
+          43.61868242700712
+        ]
+      },
+      "properties": {
+        "genre": "Corylus",
+        "espece": "colurna",
+        "libellefrancais": "Noisetier de Byzance!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4777803126726827,
+          43.61857404095778
+        ]
+      },
+      "properties": {
+        "genre": "Sorbus",
+        "espece": "aucuparia",
+        "libellefrancais": "Sorbier des oiseleurs!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4651894937661796,
+          43.57278615348416
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "cordata",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.477775883692186,
+          43.61842919968602
+        ]
+      },
+      "properties": {
+        "genre": "Sorbus",
+        "espece": "domestica",
+        "libellefrancais": "Cormier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4780588198231717,
+          43.618735867571004
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "avium",
+        "libellefrancais": "Merisier, Cerisier des oiseaux!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.46489706381758,
+          43.57265391196724
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "cordata",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.46459462293026,
+          43.57253330279349
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4778768443934902,
+          43.61865930266147
+        ]
+      },
+      "properties": {
+        "genre": "Sorbus",
+        "espece": "domestica",
+        "libellefrancais": "Cormier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4951787273589974,
+          43.58009969692365
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4778255679832786,
+          43.61825250973867
+        ]
+      },
+      "properties": {
+        "genre": "Corylus",
+        "espece": "colurna",
+        "libellefrancais": "Noisetier de Byzance!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.4643856233317947,
           43.57244639752254
         ]
@@ -74,6 +389,186 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4569256014968845,
+          43.543350917238456
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "cordata",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4780152174571377,
+          43.618722861536654
+        ]
+      },
+      "properties": {
+        "genre": "Sorbus",
+        "espece": "aucuparia",
+        "libellefrancais": "Sorbier des oiseleurs!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4821803181781037,
+          43.63155835978309
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4909202730852271,
+          43.582464795712625
+        ]
+      },
+      "properties": {
+        "genre": "Castanea",
+        "espece": "sativa",
+        "libellefrancais": "Châtaignier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4778055554203884,
+          43.61832954847437
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "avium",
+        "libellefrancais": "Merisier, Cerisier des oiseaux!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.477769278584453,
+          43.618471450242765
+        ]
+      },
+      "properties": {
+        "genre": "Corylus",
+        "espece": "colurna",
+        "libellefrancais": "Noisetier de Byzance!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4778023417355122,
+          43.61859996934632
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "avium",
+        "libellefrancais": "Merisier, Cerisier des oiseaux!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4778166801201158,
+          43.61828940992543
+        ]
+      },
+      "properties": {
+        "genre": "Sorbus",
+        "espece": "aucuparia",
+        "libellefrancais": "Sorbier des oiseleurs!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4916030648161147,
+          43.588541874797755
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4777729567391666,
+          43.61853809720992
+        ]
+      },
+      "properties": {
+        "genre": "Taxus",
+        "espece": "baccata",
+        "libellefrancais": "If commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4761334320189865,
+          43.62200437965878
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.392260046414185,
+          43.58104668307417
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
       }
     },
     {
@@ -156,6 +651,81 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4043708962686867,
+          43.60437870329015
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4071393086450128,
+          43.60925192853934
+        ]
+      },
+      "properties": {
+        "genre": "Sorbus",
+        "espece": "aucuparia",
+        "libellefrancais": "Sorbier des oiseleurs!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3894450131240892,
+          43.613452135340616
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "angustifolia",
+        "libellefrancais": "Frêne à feuilles étroites!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.404318842254691,
+          43.60417625831764
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3843229166925775,
+          43.57900250456929
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.4045554457101244,
           43.60484325517779
         ]
@@ -201,6 +771,36 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.416684168152982,
+          43.59905173913802
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4047158036448304,
+          43.60486172672736
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.4043448016954097,
           43.60406609384794
         ]
@@ -209,6 +809,36 @@
         "genre": "Quercus",
         "espece": "coccinea",
         "libellefrancais": "Chêne"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.404347598339856,
+          43.60410602221598
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4038618831469842,
+          43.60397583900601
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
       }
     },
     {
@@ -246,6 +876,36 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.3906477939726571,
+          43.58169969866083
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4062653031676247,
+          43.60968196376496
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.3893842089236914,
           43.5760159928355
         ]
@@ -254,6 +914,36 @@
         "genre": "Liriodendron",
         "espece": "tulipifera",
         "libellefrancais": "Tulipier de Virginie"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.401824391704574,
+          43.605484662921675
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4068295335336924,
+          43.60926480939656
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "angustifolia",
+        "libellefrancais": "Frêne à feuilles étroites!"
       }
     },
     {
@@ -314,6 +1004,36 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3923398036403296,
+          43.58101730123286
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4098136005105155,
+          43.60764250342718
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
       }
     },
     {
@@ -396,6 +1116,21 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4039462754592271,
+          43.60401079941426
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.3944740499503976,
           43.60410215404897
         ]
@@ -426,6 +1161,21 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.392289306604585,
+          43.58109052739292
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.4042853376675508,
           43.60414759119495
         ]
@@ -441,6 +1191,111 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4164935844922864,
+          43.59893681406846
+        ]
+      },
+      "properties": {
+        "genre": "Arbutus",
+        "espece": "unedo",
+        "libellefrancais": "Arbousier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.369177766341934,
+          43.60652014308948
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3894590687458135,
+          43.613595622805526
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4043277196495265,
+          43.604184510056896
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3901608832251338,
+          43.57619061850937
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4047278657974924,
+          43.604854781276934
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.403864908610084,
+          43.603966734313325
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.416633240073856,
           43.59899361504858
         ]
@@ -449,6 +1304,66 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4164259939010821,
+          43.60053338522122
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.40648153452465,
+          43.60943532583541
+        ]
+      },
+      "properties": {
+        "genre": "Sorbus",
+        "espece": "aucuparia",
+        "libellefrancais": "Sorbier des oiseleurs!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.3895771609831782,
+          43.57595808629235
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.389444819387119,
+          43.61349938639129
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
       }
     },
     {
@@ -486,6 +1401,36 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4039530343353652,
+          43.60401952606822
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4067549343069201,
+          43.60930951351753
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "angustifolia",
+        "libellefrancais": "Frêne à feuilles étroites!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.402415825277876,
           43.605126457481866
         ]
@@ -494,6 +1439,111 @@
         "genre": "Quercus",
         "espece": "coccinea",
         "libellefrancais": "Chêne"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4043415594814166,
+          43.604096288251036
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4164702264766922,
+          43.600526366170264
+        ]
+      },
+      "properties": {
+        "genre": "Morus",
+        "espece": "alba",
+        "libellefrancais": "Mûrier blanc!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4038159138482602,
+          43.603901780414326
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4038149954683339,
+          43.60390989692753
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.406425339275287,
+          43.609478374923064
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "padus",
+        "libellefrancais": "Merisier à grappes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.369213460192867,
+          43.606558124027394
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "angustifolia",
+        "libellefrancais": "Frêne à feuilles étroites!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4073481700195516,
+          43.60938819484705
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
       }
     },
     {
@@ -516,6 +1566,51 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4167185823125188,
+          43.59901918067556
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4070622048801191,
+          43.60919180132919
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "padus",
+        "libellefrancais": "Merisier à grappes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4018227528943525,
+          43.60549378673258
+        ]
+      },
+      "properties": {
+        "genre": "Ficus",
+        "espece": "carica",
+        "libellefrancais": "Figuier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.4043489815862862,
           43.60434740542166
         ]
@@ -531,6 +1626,36 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.404378414063944,
+          43.60438541484637
+        ]
+      },
+      "properties": {
+        "genre": "Prunus",
+        "espece": "persica",
+        "libellefrancais": "Pêcher commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4290686347651824,
+          43.59846427055828
+        ]
+      },
+      "properties": {
+        "genre": "Arbutus",
+        "espece": "unedo",
+        "libellefrancais": "Arbousier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.4418378164498697,
           43.59478057920082
         ]
@@ -539,6 +1664,141 @@
         "genre": "Prunus",
         "espece": "dulcis",
         "libellefrancais": "Amandier"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4504056736105428,
+          43.59353735911833
+        ]
+      },
+      "properties": {
+        "genre": "Cornus",
+        "espece": "controversa",
+        "libellefrancais": "Cornouiller!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4382840077067314,
+          43.585762499312416
+        ]
+      },
+      "properties": {
+        "genre": "Malus",
+        "espece": "domestica",
+        "libellefrancais": "Pommier commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4301890373161017,
+          43.58037478133587
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "excelsior",
+        "libellefrancais": "Frêne!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4320838758798866,
+          43.59849418481073
+        ]
+      },
+      "properties": {
+        "genre": "Acer",
+        "espece": "buergerianum",
+        "libellefrancais": "Erable!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4419547102220132,
+          43.5946974606555
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.432231567396997,
+          43.612227825067066
+        ]
+      },
+      "properties": {
+        "genre": "Pinus",
+        "espece": "nigra",
+        "libellefrancais": "Pin noir nain!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4291601337433166,
+          43.598372528366646
+        ]
+      },
+      "properties": {
+        "genre": "Arbutus",
+        "espece": "unedo",
+        "libellefrancais": "Arbousier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4351686691362286,
+          43.59762489445612
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "cordata",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4418891723348013,
+          43.594721783808225
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
       }
     },
     {
@@ -576,6 +1836,36 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4300454747840075,
+          43.57727668748071
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "cordata",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4290696749261005,
+          43.59846428469558
+        ]
+      },
+      "properties": {
+        "genre": "Arbutus",
+        "espece": "unedo",
+        "libellefrancais": "Arbousier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.426498469199489,
           43.60099575838653
         ]
@@ -599,6 +1889,21 @@
         "genre": "Prunus",
         "espece": "dulcis",
         "libellefrancais": "Amandier"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4334552039790651,
+          43.57447256392111
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "excelsior",
+        "libellefrancais": "Frêne!"
       }
     },
     {
@@ -666,6 +1971,36 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.428957408364074,
+          43.59858852226457
+        ]
+      },
+      "properties": {
+        "genre": "Arbutus",
+        "espece": "unedo",
+        "libellefrancais": "Arbousier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4490562423055766,
+          43.594997564503664
+        ]
+      },
+      "properties": {
+        "genre": "Lagerstroemia",
+        "espece": "indica",
+        "libellefrancais": "Lilas des indes, lilas d'été!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.441801388754219,
           43.59477666717876
         ]
@@ -674,6 +2009,21 @@
         "genre": "Prunus",
         "espece": "dulcis",
         "libellefrancais": "Amandier"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4418806449722317,
+          43.59468268852596
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
       }
     },
     {
@@ -704,6 +2054,36 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.429532039793494,
+          43.579300115855865
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4297605862428384,
+          43.60128044766727
+        ]
+      },
+      "properties": {
+        "genre": "Lagerstroemia",
+        "espece": "indica",
+        "libellefrancais": "Lilas des indes, lilas d'été!"
       }
     },
     {
@@ -756,6 +2136,51 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4293705367624407,
+          43.60100970384014
+        ]
+      },
+      "properties": {
+        "genre": "Lagerstroemia",
+        "espece": "indica",
+        "libellefrancais": "Lilas des indes, lilas d'été!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.451555921743519,
+          43.597845776893585
+        ]
+      },
+      "properties": {
+        "genre": "Carpinus",
+        "espece": "betulus",
+        "libellefrancais": "Charme!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.429140772278919,
+          43.59839131430207
+        ]
+      },
+      "properties": {
+        "genre": "Arbutus",
+        "espece": "unedo",
+        "libellefrancais": "Arbousier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.441947643466953,
           43.594557450340304
         ]
@@ -764,6 +2189,36 @@
         "genre": "Prunus",
         "espece": "dulcis",
         "libellefrancais": "Amandier"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4419318490220363,
+          43.594727391472496
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4382361458451887,
+          43.58615161219728
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "excelsior",
+        "libellefrancais": "Frêne!"
       }
     },
     {
@@ -816,6 +2271,111 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4382583568778478,
+          43.585933513699516
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "excelsior",
+        "libellefrancais": "Frêne!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.429674902520684,
+          43.57973943287646
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4410731627055096,
+          43.59450129449311
+        ]
+      },
+      "properties": {
+        "genre": "Melia",
+        "espece": "azedarach",
+        "libellefrancais": "Lilas des indes!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4462821315267054,
+          43.579023725694874
+        ]
+      },
+      "properties": {
+        "genre": "Acer",
+        "espece": "pseudoplatanus",
+        "libellefrancais": "Erable sycomore!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4322593843003164,
+          43.57529243870674
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4311668605940124,
+          43.57601947516003
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4349843837984817,
+          43.59766562876233
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "cordata",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.441840209267072,
           43.59485377383046
         ]
@@ -824,6 +2384,21 @@
         "genre": "Prunus",
         "espece": "dulcis",
         "libellefrancais": "Amandier"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.441820931191467,
+          43.59468216255655
+        ]
+      },
+      "properties": {
+        "genre": "Gleditsia",
+        "espece": "triacanthos",
+        "libellefrancais": "Févier!"
       }
     },
     {
@@ -846,6 +2421,66 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.4293284494859044,
+          43.579416964171315
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "excelsior",
+        "libellefrancais": "Frêne!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.429568107129037,
+          43.60120669584623
+        ]
+      },
+      "properties": {
+        "genre": "Lagerstroemia",
+        "espece": "indica",
+        "libellefrancais": "Lilas des indes, lilas d'été!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4522780909698405,
+          43.59460717363518
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "platyphyllos",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4382433313652632,
+          43.58619606422337
+        ]
+      },
+      "properties": {
+        "genre": "Malus",
+        "espece": "domestica",
+        "libellefrancais": "Pommier commun!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           1.4323077068889538,
           43.57720671163616
         ]
@@ -854,6 +2489,36 @@
         "genre": "Quercus",
         "espece": "petraea",
         "libellefrancais": "Chêne"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4452990678351183,
+          43.5783421981323
+        ]
+      },
+      "properties": {
+        "genre": "Tilia",
+        "espece": "cordata",
+        "libellefrancais": "Tilleul!"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.4354317736449809,
+          43.57992867214934
+        ]
+      },
+      "properties": {
+        "genre": "Fraxinus",
+        "espece": "excelsior",
+        "libellefrancais": "Frêne!"
       }
     }
   ]
