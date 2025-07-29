@@ -58,7 +58,10 @@
       "properties": {
         "genre": "Pterocarya",
         "espece": "fraxinifolia",
-        "libellefrancais": "Ptérocaryer du Caucase"
+        "libellefrancais": [
+          "Ptérocaryer du Caucase",
+          "null"
+        ]
       }
     },
     {
@@ -88,7 +91,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites"
+        "libellefrancais": [
+          "Frêne à feuilles étroites",
+          "null"
+        ]
       }
     },
     {
@@ -133,7 +139,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "frainetto",
-        "libellefrancais": "Chêne de Hongrie"
+        "libellefrancais": [
+          "Chêne de Hongrie",
+          "null"
+        ]
       }
     },
     {
@@ -148,7 +157,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -193,7 +205,10 @@
       "properties": {
         "genre": "Taxus",
         "espece": "baccata",
-        "libellefrancais": "If commun"
+        "libellefrancais": [
+          "If commun",
+          "null"
+        ]
       }
     },
     {
@@ -208,7 +223,10 @@
       "properties": {
         "genre": "Taxus",
         "espece": "baccata",
-        "libellefrancais": "If commun"
+        "libellefrancais": [
+          "If commun",
+          "null"
+        ]
       }
     },
     {
@@ -223,7 +241,10 @@
       "properties": {
         "genre": "Taxus",
         "espece": "baccata",
-        "libellefrancais": "If commun"
+        "libellefrancais": [
+          "If commun",
+          "null"
+        ]
       }
     },
     {
@@ -253,7 +274,10 @@
       "properties": {
         "genre": "Castanea",
         "espece": "sativa",
-        "libellefrancais": "Châtaignier"
+        "libellefrancais": [
+          "Châtaignier",
+          "null"
+        ]
       }
     },
     {
@@ -268,7 +292,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -283,7 +310,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -298,7 +328,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -313,7 +346,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -328,7 +364,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -343,7 +382,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -358,7 +400,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -388,7 +433,10 @@
       "properties": {
         "genre": "Corylus",
         "espece": "colurna",
-        "libellefrancais": "Noisetier de Byzance"
+        "libellefrancais": [
+          "Noisetier de Byzance",
+          "null"
+        ]
       }
     },
     {
@@ -403,7 +451,10 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "aucuparia",
-        "libellefrancais": "Sorbier des oiseleurs"
+        "libellefrancais": [
+          "Sorbier des oiseleurs",
+          "null"
+        ]
       }
     },
     {
@@ -433,7 +484,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "cordata",
-        "libellefrancais": "Tilleul à petites feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -463,7 +517,10 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "domestica",
-        "libellefrancais": "Cormier"
+        "libellefrancais": [
+          "Cormier",
+          "null"
+        ]
       }
     },
     {
@@ -478,7 +535,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "avium",
-        "libellefrancais": "Merisier, Cerisier des oiseaux"
+        "libellefrancais": [
+          "Merisier, Cerisier des oiseaux",
+          "null"
+        ]
       }
     },
     {
@@ -523,7 +583,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "cordata",
-        "libellefrancais": "Tilleul à petites feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -583,7 +646,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -598,7 +664,10 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "domestica",
-        "libellefrancais": "Cormier"
+        "libellefrancais": [
+          "Cormier",
+          "null"
+        ]
       }
     },
     {
@@ -613,7 +682,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -643,7 +715,10 @@
       "properties": {
         "genre": "Corylus",
         "espece": "colurna",
-        "libellefrancais": "Noisetier de Byzance"
+        "libellefrancais": [
+          "Noisetier de Byzance",
+          "null"
+        ]
       }
     },
     {
@@ -658,7 +733,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -673,7 +751,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "cordata",
-        "libellefrancais": "Tilleul à petites feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -703,7 +784,10 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "aucuparia",
-        "libellefrancais": "Sorbier des oiseleurs"
+        "libellefrancais": [
+          "Sorbier des oiseleurs",
+          "null"
+        ]
       }
     },
     {
@@ -718,7 +802,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -763,7 +850,10 @@
       "properties": {
         "genre": "Castanea",
         "espece": "sativa",
-        "libellefrancais": "Châtaignier"
+        "libellefrancais": [
+          "Châtaignier",
+          "null"
+        ]
       }
     },
     {
@@ -808,7 +898,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "avium",
-        "libellefrancais": "Merisier, Cerisier des oiseaux"
+        "libellefrancais": [
+          "Merisier, Cerisier des oiseaux",
+          "null"
+        ]
       }
     },
     {
@@ -853,7 +946,10 @@
       "properties": {
         "genre": "Corylus",
         "espece": "colurna",
-        "libellefrancais": "Noisetier de Byzance"
+        "libellefrancais": [
+          "Noisetier de Byzance",
+          "null"
+        ]
       }
     },
     {
@@ -883,7 +979,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "avium",
-        "libellefrancais": "Merisier, Cerisier des oiseaux"
+        "libellefrancais": [
+          "Merisier, Cerisier des oiseaux",
+          "null"
+        ]
       }
     },
     {
@@ -1063,7 +1162,10 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "aucuparia",
-        "libellefrancais": "Sorbier des oiseleurs"
+        "libellefrancais": [
+          "Sorbier des oiseleurs",
+          "null"
+        ]
       }
     },
     {
@@ -1093,7 +1195,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -1108,7 +1213,10 @@
       "properties": {
         "genre": "Taxus",
         "espece": "baccata",
-        "libellefrancais": "If commun"
+        "libellefrancais": [
+          "If commun",
+          "null"
+        ]
       }
     },
     {
@@ -1123,7 +1231,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -1198,7 +1309,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -1213,7 +1327,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -1228,7 +1345,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -1243,7 +1363,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -1258,7 +1381,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -1288,7 +1414,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -1363,7 +1492,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -1393,7 +1525,10 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "aucuparia",
-        "libellefrancais": "Sorbier des oiseleurs"
+        "libellefrancais": [
+          "Sorbier des oiseleurs",
+          "null"
+        ]
       }
     },
     {
@@ -1408,7 +1543,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites"
+        "libellefrancais": [
+          "Frêne à feuilles étroites",
+          "null"
+        ]
       }
     },
     {
@@ -1438,7 +1576,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -1453,7 +1594,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -1483,7 +1627,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -1528,7 +1675,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -1573,7 +1723,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -1588,7 +1741,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -1618,7 +1774,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -1663,7 +1822,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -1708,7 +1870,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -1723,7 +1888,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -1753,7 +1921,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "rubra",
-        "libellefrancais": "Chêne rouge d'Amérique"
+        "libellefrancais": [
+          "Chêne rouge d'Amérique",
+          "null"
+        ]
       }
     },
     {
@@ -1843,7 +2014,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "phellos",
-        "libellefrancais": "Chêne à feuilles de saule"
+        "libellefrancais": [
+          "Chêne à feuilles de saule",
+          "null"
+        ]
       }
     },
     {
@@ -1858,7 +2032,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -1873,7 +2050,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -1888,7 +2068,10 @@
       "properties": {
         "genre": "Liriodendron",
         "espece": "tulipifera",
-        "libellefrancais": "Tulipier de Virginie"
+        "libellefrancais": [
+          "Tulipier de Virginie",
+          "false"
+        ]
       }
     },
     {
@@ -1978,7 +2161,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -1993,7 +2179,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites"
+        "libellefrancais": [
+          "Frêne à feuilles étroites",
+          "null"
+        ]
       }
     },
     {
@@ -2038,7 +2227,10 @@
       "properties": {
         "genre": "Liriodendron",
         "espece": "tulipifera",
-        "libellefrancais": "Tulipier de Virginie"
+        "libellefrancais": [
+          "Tulipier de Virginie",
+          "false"
+        ]
       }
     },
     {
@@ -2053,7 +2245,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "rubra",
-        "libellefrancais": "Chêne rouge d'Amérique"
+        "libellefrancais": [
+          "Chêne rouge d'Amérique",
+          "null"
+        ]
       }
     },
     {
@@ -2083,7 +2278,10 @@
       "properties": {
         "genre": "Liriodendron",
         "espece": "tulipifera",
-        "libellefrancais": "Tulipier de Virginie"
+        "libellefrancais": [
+          "Tulipier de Virginie",
+          "false"
+        ]
       }
     },
     {
@@ -2113,7 +2311,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -2143,7 +2344,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -2173,7 +2377,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -2203,7 +2410,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -2218,7 +2428,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "rubra",
-        "libellefrancais": "Chêne rouge d'Amérique"
+        "libellefrancais": [
+          "Chêne rouge d'Amérique",
+          "null"
+        ]
       }
     },
     {
@@ -2233,7 +2446,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -2263,7 +2479,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -2278,7 +2497,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -2368,7 +2590,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -2398,7 +2623,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -2428,7 +2656,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "phellos",
-        "libellefrancais": "Chêne à feuilles de saule"
+        "libellefrancais": [
+          "Chêne à feuilles de saule",
+          "null"
+        ]
       }
     },
     {
@@ -2473,7 +2704,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -2488,7 +2722,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -2548,7 +2785,10 @@
       "properties": {
         "genre": "Arbutus",
         "espece": "unedo",
-        "libellefrancais": "Arbousier"
+        "libellefrancais": [
+          "Arbousier",
+          "null"
+        ]
       }
     },
     {
@@ -2563,7 +2803,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -2593,7 +2836,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -2608,7 +2854,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -2623,7 +2872,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -2638,7 +2890,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -2698,7 +2953,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -2728,7 +2986,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -2743,7 +3004,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -2803,7 +3067,10 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "aucuparia",
-        "libellefrancais": "Sorbier des oiseleurs"
+        "libellefrancais": [
+          "Sorbier des oiseleurs",
+          "null"
+        ]
       }
     },
     {
@@ -2863,7 +3130,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -2878,7 +3148,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -2923,7 +3196,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -2953,7 +3229,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "rubra",
-        "libellefrancais": "Chêne rouge d'Amérique"
+        "libellefrancais": [
+          "Chêne rouge d'Amérique",
+          "null"
+        ]
       }
     },
     {
@@ -2968,7 +3247,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -2983,7 +3265,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites"
+        "libellefrancais": [
+          "Frêne à feuilles étroites",
+          "null"
+        ]
       }
     },
     {
@@ -3013,7 +3298,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -3028,7 +3316,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -3043,7 +3334,10 @@
       "properties": {
         "genre": "Morus",
         "espece": "alba",
-        "libellefrancais": "Mûrier blanc"
+        "libellefrancais": [
+          "Mûrier blanc",
+          "null"
+        ]
       }
     },
     {
@@ -3088,7 +3382,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -3103,7 +3400,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -3133,7 +3433,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "padus",
-        "libellefrancais": "Merisier à grappes"
+        "libellefrancais": [
+          "Merisier à grappes",
+          "null"
+        ]
       }
     },
     {
@@ -3178,7 +3481,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites"
+        "libellefrancais": [
+          "Frêne à feuilles étroites",
+          "null"
+        ]
       }
     },
     {
@@ -3193,7 +3499,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -3208,7 +3517,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -3238,7 +3550,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -3268,7 +3583,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "padus",
-        "libellefrancais": "Merisier à grappes"
+        "libellefrancais": [
+          "Merisier à grappes",
+          "null"
+        ]
       }
     },
     {
@@ -3283,7 +3601,10 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier"
+        "libellefrancais": [
+          "Figuier",
+          "null"
+        ]
       }
     },
     {
@@ -3298,7 +3619,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "coccinea",
-        "libellefrancais": "Chêne écarlate"
+        "libellefrancais": [
+          "Chêne écarlate",
+          "null"
+        ]
       }
     },
     {
@@ -3313,7 +3637,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun"
+        "libellefrancais": [
+          "Pêcher commun",
+          "null"
+        ]
       }
     },
     {
@@ -3328,7 +3655,10 @@
       "properties": {
         "genre": "Arbutus",
         "espece": "unedo",
-        "libellefrancais": "Arbousier"
+        "libellefrancais": [
+          "Arbousier",
+          "null"
+        ]
       }
     },
     {
@@ -3343,7 +3673,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -3373,7 +3706,10 @@
       "properties": {
         "genre": "Cornus",
         "espece": "controversa",
-        "libellefrancais": "Cornouiller"
+        "libellefrancais": [
+          "Cornouiller",
+          "null"
+        ]
       }
     },
     {
@@ -3388,7 +3724,10 @@
       "properties": {
         "genre": "Malus",
         "espece": "domestica",
-        "libellefrancais": "Pommier commun"
+        "libellefrancais": [
+          "Pommier commun",
+          "null"
+        ]
       }
     },
     {
@@ -3403,7 +3742,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne"
+        "libellefrancais": [
+          "Frêne",
+          "null"
+        ]
       }
     },
     {
@@ -3433,7 +3775,10 @@
       "properties": {
         "genre": "Acer",
         "espece": "buergerianum",
-        "libellefrancais": "Erable"
+        "libellefrancais": [
+          "Erable",
+          "null"
+        ]
       }
     },
     {
@@ -3448,7 +3793,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -3478,7 +3826,10 @@
       "properties": {
         "genre": "Pinus",
         "espece": "nigra",
-        "libellefrancais": "Pin noir nain"
+        "libellefrancais": [
+          "Pin noir nain",
+          "null"
+        ]
       }
     },
     {
@@ -3508,7 +3859,10 @@
       "properties": {
         "genre": "Arbutus",
         "espece": "unedo",
-        "libellefrancais": "Arbousier"
+        "libellefrancais": [
+          "Arbousier",
+          "null"
+        ]
       }
     },
     {
@@ -3538,7 +3892,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "cordata",
-        "libellefrancais": "Tilleul à petites feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -3553,7 +3910,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -3583,7 +3943,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "robur",
-        "libellefrancais": "Chêne pédonculé"
+        "libellefrancais": [
+          "Chêne pédonculé",
+          "null"
+        ]
       }
     },
     {
@@ -3598,7 +3961,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "serrulata",
-        "libellefrancais": "Cerisier à fleurs"
+        "libellefrancais": [
+          "Cerisier à fleurs",
+          "false"
+        ]
       }
     },
     {
@@ -3613,7 +3979,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "cordata",
-        "libellefrancais": "Tilleul à petites feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -3628,7 +3997,10 @@
       "properties": {
         "genre": "Arbutus",
         "espece": "unedo",
-        "libellefrancais": "Arbousier"
+        "libellefrancais": [
+          "Arbousier",
+          "null"
+        ]
       }
     },
     {
@@ -3643,7 +4015,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -3658,7 +4033,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -3688,7 +4066,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne"
+        "libellefrancais": [
+          "Frêne",
+          "null"
+        ]
       }
     },
     {
@@ -3703,7 +4084,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -3733,7 +4117,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -3748,7 +4135,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "serrulata",
-        "libellefrancais": "Cerisier à fleurs"
+        "libellefrancais": [
+          "Cerisier à fleurs",
+          "false"
+        ]
       }
     },
     {
@@ -3763,7 +4153,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -3778,7 +4171,10 @@
       "properties": {
         "genre": "Arbutus",
         "espece": "unedo",
-        "libellefrancais": "Arbousier"
+        "libellefrancais": [
+          "Arbousier",
+          "null"
+        ]
       }
     },
     {
@@ -3793,7 +4189,10 @@
       "properties": {
         "genre": "Lagerstroemia",
         "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été"
+        "libellefrancais": [
+          "Lilas des indes, lilas d'été",
+          "null"
+        ]
       }
     },
     {
@@ -3808,7 +4207,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -3823,7 +4225,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -3853,7 +4258,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -3898,7 +4306,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -3988,7 +4399,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -4033,7 +4447,10 @@
       "properties": {
         "genre": "Lagerstroemia",
         "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été"
+        "libellefrancais": [
+          "Lilas des indes, lilas d'été",
+          "null"
+        ]
       }
     },
     {
@@ -4063,7 +4480,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -4078,7 +4498,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "palustris",
-        "libellefrancais": "Chêne des marais"
+        "libellefrancais": [
+          "Chêne des marais",
+          "null"
+        ]
       }
     },
     {
@@ -4093,7 +4516,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "serrulata",
-        "libellefrancais": "Cerisier à fleurs"
+        "libellefrancais": [
+          "Cerisier à fleurs",
+          "false"
+        ]
       }
     },
     {
@@ -4108,7 +4534,10 @@
       "properties": {
         "genre": "Lagerstroemia",
         "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été"
+        "libellefrancais": [
+          "Lilas des indes, lilas d'été",
+          "null"
+        ]
       }
     },
     {
@@ -4123,7 +4552,10 @@
       "properties": {
         "genre": "Carpinus",
         "espece": "betulus",
-        "libellefrancais": "Charme commun, Charme pyramidal"
+        "libellefrancais": [
+          "Charme",
+          "null"
+        ]
       }
     },
     {
@@ -4183,7 +4615,10 @@
       "properties": {
         "genre": "Arbutus",
         "espece": "unedo",
-        "libellefrancais": "Arbousier"
+        "libellefrancais": [
+          "Arbousier",
+          "null"
+        ]
       }
     },
     {
@@ -4198,7 +4633,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -4213,7 +4651,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -4243,7 +4684,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne"
+        "libellefrancais": [
+          "Frêne",
+          "null"
+        ]
       }
     },
     {
@@ -4258,7 +4702,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "phellos",
-        "libellefrancais": "Chêne à feuilles de saule"
+        "libellefrancais": [
+          "Chêne à feuilles de saule",
+          "null"
+        ]
       }
     },
     {
@@ -4273,7 +4720,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -4318,7 +4768,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "phellos",
-        "libellefrancais": "Chêne à feuilles de saule"
+        "libellefrancais": [
+          "Chêne à feuilles de saule",
+          "null"
+        ]
       }
     },
     {
@@ -4333,7 +4786,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne"
+        "libellefrancais": [
+          "Frêne",
+          "null"
+        ]
       }
     },
     {
@@ -4363,7 +4819,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -4408,7 +4867,10 @@
       "properties": {
         "genre": "Melia",
         "espece": "azedarach",
-        "libellefrancais": "Lilas des indes"
+        "libellefrancais": [
+          "Lilas des indes",
+          "null"
+        ]
       }
     },
     {
@@ -4423,7 +4885,10 @@
       "properties": {
         "genre": "Acer",
         "espece": "pseudoplatanus",
-        "libellefrancais": "Erable sycomore"
+        "libellefrancais": [
+          "Erable sycomore",
+          "null"
+        ]
       }
     },
     {
@@ -4438,7 +4903,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -4468,7 +4936,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -4483,7 +4954,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "cordata",
-        "libellefrancais": "Tilleul à petites feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -4498,7 +4972,10 @@
       "properties": {
         "genre": "Prunus",
         "espece": "dulcis",
-        "libellefrancais": "Amandier"
+        "libellefrancais": [
+          "Amandier",
+          "true"
+        ]
       }
     },
     {
@@ -4513,7 +4990,10 @@
       "properties": {
         "genre": "Gleditsia",
         "espece": "triacanthos",
-        "libellefrancais": "Févier"
+        "libellefrancais": [
+          "Févier",
+          "null"
+        ]
       }
     },
     {
@@ -4528,7 +5008,10 @@
       "properties": {
         "genre": "Cercis",
         "espece": "siliquastrum",
-        "libellefrancais": "Arbre de Judée"
+        "libellefrancais": [
+          "Arbre de Judée",
+          "true"
+        ]
       }
     },
     {
@@ -4543,7 +5026,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne"
+        "libellefrancais": [
+          "Frêne",
+          "null"
+        ]
       }
     },
     {
@@ -4573,7 +5059,10 @@
       "properties": {
         "genre": "Lagerstroemia",
         "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été"
+        "libellefrancais": [
+          "Lilas des indes, lilas d'été",
+          "null"
+        ]
       }
     },
     {
@@ -4618,7 +5107,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "platyphyllos",
-        "libellefrancais": "Tilleul à grandes feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -4633,7 +5125,10 @@
       "properties": {
         "genre": "Malus",
         "espece": "domestica",
-        "libellefrancais": "Pommier commun"
+        "libellefrancais": [
+          "Pommier commun",
+          "null"
+        ]
       }
     },
     {
@@ -4663,7 +5158,10 @@
       "properties": {
         "genre": "Quercus",
         "espece": "petraea",
-        "libellefrancais": "Chêne rouvre, Chêne sessile"
+        "libellefrancais": [
+          "Chêne rouvre, Chêne sessile",
+          "null"
+        ]
       }
     },
     {
@@ -4678,7 +5176,10 @@
       "properties": {
         "genre": "Tilia",
         "espece": "cordata",
-        "libellefrancais": "Tilleul à petites feuilles"
+        "libellefrancais": [
+          "Tilleul",
+          "null"
+        ]
       }
     },
     {
@@ -4708,7 +5209,10 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne"
+        "libellefrancais": [
+          "Frêne",
+          "null"
+        ]
       }
     },
     {
