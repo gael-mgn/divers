@@ -170,6 +170,7 @@
       background-color: #fafafa;
       border: 1px solid #ddd;
       padding: 8px;
+      margin-top: 15px;
       border-radius: 6px;
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
     }
@@ -203,6 +204,12 @@
 
     #toggleSidebar:hover {
       background-color: #f1f1f1;
+    }
+
+    .recette-title {
+      font-size: 1.2em;
+      text-decoration: underline;
+      text-align: center;
     }
 
     .recette-refresh {
@@ -318,7 +325,7 @@
       width: 100%;
       text-align: center;
       padding: 8px 12px;
-      background-color: #2e8b57;
+      background: linear-gradient(135deg, #34a853, #0b8457);
       color: #fff;
       text-decoration: none;
       font-weight: 500;
@@ -381,7 +388,7 @@
 header h1, .filter-group h2 {
   position: relative;
 }
-header h1::after, .filter-group h2::after {
+.filter-group h2::after {
   content: "";
   position: absolute;
   left: 0;
@@ -446,7 +453,32 @@ header {
 
 <div id="search-container">
   <div class="search-bar">
-    <span class="search-icon">📍</span>
+    <button id="geolocate-btn" aria-label="Se géolocaliser" title="Me localiser">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#1a6b1a" viewBox="0 0 24 24">
+    <path d="M12 2C8.13401 2 5 5.13401 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86599-3.134-7-7-7zm0 9.5c-1.3807 0-2.5-1.1193-2.5-2.5s1.1193-2.5 2.5-2.5 2.5 1.1193 2.5 2.5-1.1193 2.5-2.5 2.5z"/>
+  </svg>
+</button>
+
+<style>#geolocate-btn {
+  background: inherit;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+#geolocate-btn svg, #search-btn svg {
+  transition: transform 0.2s ease;
+}
+
+#geolocate-btn:hover svg {
+  transform: scale(1.3);
+}
+#search-btn:hover svg {
+  transform: scale(1.1);
+}
+#geolocate-btn:hover {
+
+}</style>
     <input
       type="text"
       id="address-input"
@@ -460,7 +492,24 @@ header {
     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
   </svg>
 </button>
+<script>document.getElementById("geolocate-btn").addEventListener("click", function () {
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par votre navigateur.");
+    return;
+  }
 
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      map.setView([latitude, longitude], 16);
+    },
+    (error) => {
+      alert("Impossible de vous localiser. Veuillez vérifier les autorisations.");
+      console.error("Erreur de géolocalisation :", error);
+    }
+  );
+});
+</script>
   </div>
   <datalist id="suggestions"></datalist>
 </div>
@@ -531,6 +580,7 @@ document.getElementById("address-input").addEventListener("keydown", function (e
 #address-input {
   flex: 1;
   padding: 10px;
+  padding-left: 5px;
   border: none;
   outline: none;
   font-size: 15px;
@@ -538,7 +588,7 @@ document.getElementById("address-input").addEventListener("keydown", function (e
 }
 
 #search-btn {
-  background-color: #228B22;
+   background: linear-gradient(135deg, #34a853, #0b8457);
   color: white;
   border: none;
   padding: 10px 14px;
@@ -601,10 +651,14 @@ document.getElementById("address-input").addEventListener("keydown", function (e
   <!-- Bouton Help flottant -->
 <!-- Bouton Help amélioré -->
 <button id="helpBtn" title="Aide" style="
-  position: fixed;
+  
+">
+<style>
+  #helpBtn {
+    position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #228B22;
+   background: linear-gradient(135deg, #34a853, #0b8457);
   color: white;
   border: none;
   border-radius: 30px;
@@ -619,7 +673,17 @@ document.getElementById("address-input").addEventListener("keydown", function (e
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
   z-index: 1200;
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-">
+  }
+  #helpBtn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.3);
+  background: linear-gradient(135deg, #2e9d45, #067c4f);
+}
+
+#helpBtn:active {
+  transform: scale(0.98);
+}
+</style>
   <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="18" height="18" viewBox="0 0 24 24">
     <path d="M12 2C6.486 2 2 6.487 2 12s4.486 10 10 10 10-4.487 10-10S17.514 2 12 2zm.75 17h-1.5v-1.5h1.5V19zm1.477-7.195-.89.918c-.436.45-.586.807-.586 1.277V15h-1.5v-.667c0-.726.235-1.303.727-1.82l1.058-1.097c.396-.412.553-.786.553-1.27 0-.967-.784-1.729-1.75-1.729s-1.75.762-1.75 1.729H9c0-1.79 1.458-3.229 3.25-3.229S15.5 9.01 15.5 10.8c0 .743-.241 1.323-.723 1.805z"/>
   </svg>
@@ -942,7 +1006,7 @@ const geoJsonLayer = L.geoJSON(filteredFeatures, {
 
     popupContent += `
       <div class="recette-popup" id="recette-${layerId}">
-        <h3>${recette.titre}</h3>
+        <h3 class="recette-title">${recette.titre}</h3>
         <img src="${recette.image}" alt="${recette.titre}">
         <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
     `;
@@ -998,7 +1062,7 @@ document.addEventListener("click", function (e) {
     const container = document.getElementById(`recette-${layerId}`);
     if (container) {
       container.innerHTML = `
-        <h3>${nouvelleRecette.titre}</h3>
+        <h3 class="recette-title">${nouvelleRecette.titre}</h3>
         <img src="${nouvelleRecette.image}" alt="${nouvelleRecette.titre}">
         <a class="recette-link" href="${nouvelleRecette.lien}" target="_blank">🍽️ Voir la recette complète</a>
         <button class="recette-refresh" data-layer="${layerId}" data-espece="${espece}">🔄 Une autre recette</button>
