@@ -457,6 +457,40 @@ header {
   <datalist id="suggestions"></datalist>
 </div>
 
+<script>
+document.getElementById("search-btn").addEventListener("click", function () {
+  const address = document.getElementById("address-input").value;
+  if (!address) return;
+
+  const encoded = encodeURIComponent(address + ", Paris, France"); // pour s'assurer qu'on reste dans Paris
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encoded}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lon = parseFloat(data[0].lon);
+        map.setView([lat, lon], 17); // zoom sur l'adresse
+      } else {
+        alert("Adresse non trouvée. Essayez avec une adresse plus précise !");
+      }
+    })
+    .catch(err => {
+      console.error("Erreur lors de la géolocalisation :", err);
+      alert("Erreur lors de la recherche d’adresse.");
+    });
+});
+
+// Déclenche la recherche avec Entrée
+document.getElementById("address-input").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.getElementById("search-btn").click();
+  }
+});
+</script>
+
 <style>
 #search-container {
   position: absolute;
@@ -539,39 +573,7 @@ header {
 
 
 
-<script>
-document.getElementById("search-btn").addEventListener("click", function () {
-  const address = document.getElementById("address-input").value;
-  if (!address) return;
 
-  const encoded = encodeURIComponent(address + ", Paris, France"); // pour s'assurer qu'on reste dans Paris
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encoded}`;
-
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      if (data && data.length > 0) {
-        const lat = parseFloat(data[0].lat);
-        const lon = parseFloat(data[0].lon);
-        map.setView([lat, lon], 17); // zoom sur l'adresse
-      } else {
-        alert("Adresse non trouvée. Essayez avec une adresse plus précise !");
-      }
-    })
-    .catch(err => {
-      console.error("Erreur lors de la géolocalisation :", err);
-      alert("Erreur lors de la recherche d’adresse.");
-    });
-});
-
-// Déclenche la recherche avec Entrée
-document.getElementById("address-input").addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    document.getElementById("search-btn").click();
-  }
-});
-</script>
 
         <a href="recettes.html" class="cta-button">Découvrir toutes les recettes</a>
         <div class="info">
@@ -787,10 +789,10 @@ function debounce(func, wait = 150) {
       maxZoom: 19
     }).addTo(map);
 
-    let enableClustering = false;
+    let enableClustering = true;
 
 if (window.innerWidth < 768) {
-  enableClustering = false;
+  enableClustering = true;
 }
 
     const allMarkers = [];
