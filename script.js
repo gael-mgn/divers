@@ -1,3 +1,12 @@
+const lyon = "https://gael-mgn.github.io/divers/lyon.geojson";
+const paris = "https://gael-mgn.github.io/divers/paris.geojson";
+const toulouse = "https://gael-mgn.github.io/divers/toulouse.geojson";
+
+
+const root = paris;
+
+
+
 // Génère une couleur unique et stable à partir d'une chaîne (nom d'espèce)
 function getColorFromString(str) {
   let hash = 0;
@@ -8,9 +17,6 @@ function getColorFromString(str) {
   return `hsl(${hue}, 65%, 50%)`;
 }
 
-
-
-
 const recettesRestantesParEspece = {};
 const derniereRecetteParEspece = {};
 
@@ -19,30 +25,18 @@ function getRecetteNonRepetitiveGlobal(espece) {
   if (!pool || pool.length === 0) return null;
 
   if (!recettesRestantesParEspece[espece] || recettesRestantesParEspece[espece].length === 0) {
-    // Réinitialise en excluant temporairement la dernière recette tirée
     const derniere = derniereRecetteParEspece[espece];
     recettesRestantesParEspece[espece] = pool.filter(r => r !== derniere);
-
-    console.log(`🔁 Réinitialisation des recettes pour ${espece}, en excluant temporairement : ${derniere?.titre}`);
-
-    // Si toutes les recettes étaient identiques ou une seule, on réinclut tout pour éviter un pool vide
     if (recettesRestantesParEspece[espece].length === 0) {
       recettesRestantesParEspece[espece] = [...pool];
-      console.log(`⚠️ Une seule recette possible, réintégration de toutes les recettes.`);
     }
   }
 
   const index = Math.floor(Math.random() * recettesRestantesParEspece[espece].length);
   const recette = recettesRestantesParEspece[espece].splice(index, 1)[0];
   derniereRecetteParEspece[espece] = recette;
-
-  console.log(`🎯 Recette tirée pour ${espece} :`, recette.titre);
-  console.log(`📉 Recettes restantes pour ${espece} :`, recettesRestantesParEspece[espece].map(r => r.titre));
-
   return recette;
 }
-
-
 
 function debounce(func, wait = 150) {
   let timeout;
@@ -52,69 +46,37 @@ function debounce(func, wait = 150) {
   };
 }
 
+const map = L.map("map", {
+  zoomControl: false
+}).setView([48.8566, 2.3522], 13);
 
-
-    const map = L.map("map", {
-      zoomControl: false // Désactive les boutons par défaut
-    }).setView([48.8566, 2.3522], 13);
-
-   if (window.innerWidth >= 768) {
-  // Ajoute les boutons de zoom uniquement sur desktop
+if (window.innerWidth >= 768) {
   L.control.zoom({ position: 'topright' }).addTo(map);
 }
 
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+  subdomains: "abcd",
+  maxZoom: 19
+}).addTo(map);
 
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 19
-    }).addTo(map);
+let enableClustering = window.innerWidth < 768 ? true : true;
 
-    let enableClustering = true;
+const allMarkers = [];
+let geoJsonData = null;
+const markers = enableClustering
+  ? L.markerClusterGroup({ disableClusteringAtZoom: 15, maxClusterRadius: 50 })
+  : L.layerGroup();
 
-if (window.innerWidth < 768) {
-  enableClustering = true;
-}
-
-    const allMarkers = [];
-    let geoJsonData = null;
-    const markers = enableClustering
-      ? L.markerClusterGroup({ disableClusteringAtZoom: 15, maxClusterRadius: 50 })
-      : L.layerGroup();
-
-    
-    
-    fetch("https://gael-mgn.github.io/divers/les-arbres.geojson")
+fetch(root)
   .then(response => response.json())
   .then(data => {
     geoJsonData = data;
 
     data.features.forEach(f => {
-  if (f.properties.libellefrancais === "Aubepine") {
-    f.properties.libellefrancais = "Aubépine";
-  }
-});
-
-    // Extraire les valeurs uniques
-    const arrSet = new Set();
-    const espSet = new Set();
-    data.features.forEach(f => {
-      arrSet.add(f.properties.arrondissement);
-      if (f.properties.libellefrancais) {
-        espSet.add(f.properties.libellefrancais);
+      if (f.properties.libellefrancais === "Aubepine") {
+        f.properties.libellefrancais = "Aubépine";
       }
-    });
-
-    const arrList = Array.from(arrSet).sort();
-
-    // Générer les filtres d'arrondissements
-    const filterArr = document.getElementById("arrondissement-filters");
-    arrList.forEach(arr => {
-      const id = "arr_" + arr.replace(/\s+/g, "_");
-      const label = document.createElement("label");
-      label.className = "arr-filter";
-      label.innerHTML = `<input type="checkbox" id="${id}" data-arr="${arr}" checked> ${arr}`;
-      filterArr.appendChild(label);
     });
 
     // Compter les occurrences d'espèces
@@ -128,7 +90,7 @@ if (window.innerWidth < 768) {
 
     const espList = Object.keys(especeCounts).sort();
 
-    // Générer les filtres d'espèces avec le nombre d'occurrences
+    // Générer les filtres d'espèces
     const filterEsp = document.getElementById("espece-filters");
     espList.forEach(esp => {
       const count = especeCounts[esp];
@@ -144,11 +106,8 @@ if (window.innerWidth < 768) {
       filterEsp.appendChild(label);
     });
 
-
-
-
-    // Ajouter listeners
-    document.querySelectorAll("#arrondissement-filters input, #espece-filters input")
+    // Ajouter les listeners uniquement pour les espèces
+    document.querySelectorAll("#espece-filters input")
       .forEach(input => {
         input.addEventListener("change", updateMap);
       });
@@ -157,92 +116,82 @@ if (window.innerWidth < 768) {
   })
   .catch(error => console.error("Erreur lors du chargement du GeoJSON :", error));
 
-
 const updateMap = debounce(() => {
-markers.clearLayers();
+  markers.clearLayers();
 
-const selectedArr = new Set(
-  Array.from(document.querySelectorAll("#arrondissement-filters input:checked")).map(i => i.dataset.arr)
-);
-const selectedEsp = new Set(
-  Array.from(document.querySelectorAll("#espece-filters input:checked")).map(i => i.dataset.esp)
-);
+  const selectedEsp = new Set(
+    Array.from(document.querySelectorAll("#espece-filters input:checked")).map(i => i.dataset.esp)
+  );
 
-const filteredFeatures = geoJsonData.features.filter(f =>
-  selectedArr.has(f.properties.arrondissement) &&
-  selectedEsp.has(f.properties.libellefrancais)
-);
+  const filteredFeatures = geoJsonData.features.filter(f =>
+    selectedEsp.has(f.properties.libellefrancais)
+  );
 
-const geoJsonLayer = L.geoJSON(filteredFeatures, {
-  pointToLayer: (feature, latlng) => {
-  const espece = feature.properties.libellefrancais || "Inconnue";
-  const color = getColorFromString(espece);
+  const geoJsonLayer = L.geoJSON(filteredFeatures, {
+    pointToLayer: (feature, latlng) => {
+      const espece = feature.properties.libellefrancais || "Inconnue";
+      const color = getColorFromString(espece);
 
-  return L.circleMarker(latlng, {
-    radius: 10,
-    fillColor: color,
-    color: "#FFFFFF", // bordure
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
-  });
-},
+      return L.circleMarker(latlng, {
+        radius: 10,
+        fillColor: color,
+        color: "#FFFFFF",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+      });
+    },
 
-  onEachFeature: function (feature, layer) {
-    const props = feature.properties;
-    const nomEspece = props["libellefrancais"];
-    const layerId = layer._leaflet_id;
+    onEachFeature: function (feature, layer) {
+      const props = feature.properties;
+      const nomEspece = props["libellefrancais"];
+      const layerId = layer._leaflet_id;
 
-    if (window.innerWidth >= 768 && nomEspece) {
-      layer.bindTooltip(nomEspece, {
-        permanent: false,
-        direction: 'top',
-        offset: [0, -10],
-        opacity: 0.9,
-        className: 'custom-tooltip'
+      if (window.innerWidth >= 768 && nomEspece) {
+        layer.bindTooltip(nomEspece, {
+          permanent: false,
+          direction: 'top',
+          offset: [0, -10],
+          opacity: 0.9,
+          className: 'custom-tooltip'
+        });
+      }
+
+      const recette = getRecetteNonRepetitiveGlobal(nomEspece);
+      if (!recette) return;
+
+      let popupContent = '<div class="popup-details">';
+      popupContent += `<h3>${props["libellefrancais"]}</h3>`;
+      popupContent += `<h4>${props["genre"]} ${props["espece"]}</h4>`;
+      popupContent += '</div>';
+
+      popupContent += `
+        <div class="recette-popup" id="recette-${layerId}">
+          <h3 class="recette-title">${recette.titre}</h3>
+          <img src="${recette.image}" alt="${recette.titre}">
+          <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
+      `;
+
+      if (recettes[nomEspece] && recettes[nomEspece].length > 1) {
+        popupContent += `
+          <button class="recette-refresh" data-layer="${layerId}" data-espece="${nomEspece}">🔄 Une autre recette</button>
+        `;
+      }
+
+      popupContent += `</div>`;
+      layer.bindPopup(popupContent);
+
+      layer.on("click", () => {
+        layer.openPopup();
       });
     }
+  });
 
-    // Construction du popup une seule fois
-    const recette = getRecetteNonRepetitiveGlobal(nomEspece);
-    if (!recette) return;
-
-    let popupContent = '<div class="popup-details">';
-    popupContent += `<h3>${props["libellefrancais"]}</h3>`;
-    popupContent += `<h4>${props["genre"]}</h4>`;
-    popupContent += '</div>';
-
-    popupContent += `
-      <div class="recette-popup" id="recette-${layerId}">
-        <h3 class="recette-title">${recette.titre}</h3>
-        <img src="${recette.image}" alt="${recette.titre}">
-        <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
-    `;
-
-    if (recettes[nomEspece] && recettes[nomEspece].length > 1) {
-      popupContent += `
-        <button class="recette-refresh" data-layer="${layerId}" data-espece="${nomEspece}">🔄 Une autre recette</button>
-      `;
-    }
-
-    popupContent += `</div>`;
-
-    // Bind une seule fois
-    layer.bindPopup(popupContent);
-
-    // Clic = juste ouvrir
-    layer.on("click", () => {
-      layer.openPopup();
-    });
-  }
-});
-
-markers.addLayer(geoJsonLayer);
-map.addLayer(markers);
-
+  markers.addLayer(geoJsonLayer);
+  map.addLayer(markers);
 }, 200);
 
-
+// Bouton toggle du menu
 document.getElementById("toggleSidebar").addEventListener("click", function () {
   const sidebar = document.getElementById("sidebar");
   const button = this;
@@ -250,15 +199,11 @@ document.getElementById("toggleSidebar").addEventListener("click", function () {
   sidebar.classList.toggle("open");
   button.classList.toggle("open");
 
-  // Change le texte du bouton
-  if (sidebar.classList.contains("open")) {
-    button.innerHTML = "✕";
-    button.style.top = "20px";
-  } else {
-    button.innerHTML = "☰ Filtres";
-    button.style.top = "100px";
-  }
+  button.innerHTML = sidebar.classList.contains("open") ? "✕" : "☰ Filtres";
+  button.style.top = sidebar.classList.contains("open") ? "20px" : "100px";
 });
+
+// Bouton de rafraîchissement des recettes dans les popups
 document.addEventListener("click", function (e) {
   if (e.target && e.target.classList.contains("recette-refresh")) {
     const layerId = e.target.dataset.layer;
@@ -279,23 +224,12 @@ document.addEventListener("click", function (e) {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-  // Bouton Help toggle
+// Aide : bouton et fermeture du popup
 document.getElementById("helpBtn").addEventListener("click", function () {
   const popup = document.getElementById("helpPopup");
   popup.style.display = popup.style.display === "block" ? "none" : "block";
 });
 
-// Fermer le popup
 document.getElementById("closeHelp").addEventListener("click", function () {
   document.getElementById("helpPopup").style.display = "none";
 });

@@ -62,11 +62,50 @@ const recettes = {
       lien: "https://www.cuisineaz.com/recettes/confiture-d-arbouses-31178.aspx"
     }
   ],
+  "Arbre de Judée": [
+    {
+      titre: "Beignets de fleurs de l’arbre de Judée",
+      image: "https://amandebasilic.com/wp-content/uploads/2023/05/R.jpg",
+      lien: "https://amandebasilic.com/beignets-de-fleurs-judee/"
+    },
+    {
+      titre: "Salade de fleurs de l’Arbre de Judée",
+      image: "https://www.umbriatourism.it/documents/20126/5654210/siliquastro_banner2.jpg/c49dab4b-8302-287c-3f01-434a18be1161?width=1920",
+      lien: "https://www.umbriatourism.it/fr/-/salade-de-fleurs-de-larbre-de-judee"
+    }
+  ],
+
+
   "Argousier": [
     {
       titre: "Sauce à l'argousier, érable et romarin",
       image: "https://www.argousiere.com/wp-content/uploads/2018/11/sauce-argousier-romarin-et-erable-833x800-1000x600-1-600x576.jpg",
       lien: "https://www.argousiere.com/recipe/sauce-a-largousier-erable-et-romarin/"
+    },
+    {
+      titre: "Jus de baies d’argouse minute",
+      image: "https://www.lesmauvaisesherbes.com/app/uploads/2020/08/25aout2020-LMH-JacintheMorinPhotographe-DSC_9346-scaled-1-1200x801.jpg",
+      lien: "https://www.lesmauvaisesherbes.com/recettes/jus-de-baies-dargouse-minute/"
+    },
+    {
+      titre: "Fromage ricotta au miel et à l'argousier",
+      image: "https://signecameline.com/cdn/shop/articles/20241220193621-fromage-20ricotta-20au-20miel-20et-20-c3-a0-20l-argousier.jpg?v=1734723390&width=1600",
+      lien: "https://signecameline.com/blogs/recettes/fromage-ricotta-au-miel-et-a-largousier"
+    },
+    {
+      titre: "Tarte à l’argousier meringuée",
+      image: "https://ucarecdn.com/1f92933d-4f4e-450e-8227-dfa3d0a91a1f/-/crop/999x1350/1%2C0/-/preview/-/scale_crop/992x1340/-/quality/smart_retina/-/format/preserve/",
+      lien: "https://www.ricardocuisine.com/recettes/10003-tarte-a-l-argousier-meringuee"
+    },
+    {
+      titre: "Ris de veau, argousier, carottes",
+      image: "https://www.kalfsvleesrecepten.nl/uploads/690_large.jpg",
+      lien: "https://www.petersfarm.fr/recettes/detail/713-ris-de-veau-argousier-carottes"
+    },
+    {
+      titre: "Smoothies à l’argousier, à la banane et à l’orange",
+      image: "https://www.argousiere.com/wp-content/uploads/2019/08/smoothis-arg-bananes-orange-1000x600-1.jpg",
+      lien: "https://www.argousiere.com/recipe/smoothies-a-largousier-a-la-banane-et-a-lorange/"
     }
   ],
   "Aronie": [
@@ -204,6 +243,13 @@ const recettes = {
       lien: "https://www.marmiton.org/recettes/recette_chataignes-au-four_27423.aspx"
     }
   ],
+  "Chêne": [
+    {
+      titre: "Terrine de glands de chêne",
+      image: "https://plantes-sauvages-comestibles.com/wp-content/uploads/2020/10/Terrine-de-glands-1024x723.jpg",
+      lien: "https://plantes-sauvages-comestibles.com/terrine-de-glands-de-chene/"
+    }
+  ],
   "Chèvrefeuille": [
     {
       titre: "Rhum chèvrefeuille",
@@ -268,6 +314,18 @@ const recettes = {
       lien: "https://www.joseedistasio.ca/recettes/saucisson-au-chocolat-et-aux-figues/"
     }
   ],
+  "Frêne": [
+    {
+      titre: "Infusion au frêne",
+      image: "https://img.fourchette-et-bikini.fr/660x495/2025/06/24/i228248-infusion-au-frene.webp",
+      lien: "https://www.fourchette-et-bikini.fr/recettes/infusion-au-frene-12670.html"
+    },
+    {
+      titre: "Frênette du mineur",
+      image: "https://www.ca-drache.fr/wp-content/uploads/2016/05/Frenette-1050x420.jpg",
+      lien: "https://www.ca-drache.fr/recette/cocktail-chti/frenette-du-mineur/"
+    }
+  ],
   "Glycine": [
     {
       titre: "Beignet de fleur de glycine",
@@ -282,6 +340,34 @@ const recettes = {
       lien: "https://www.marieclaire.fr/cuisine/poires-roties-au-cidre,1487547.asp"
     }
   ],
+
+  "Charme": [
+    {
+      titre: "Poires rôties au cidre",
+      image: "https://cache.marieclaire.fr/data/photo/w1500_ci/6z/recette-de-poire-roties-au-cidre.webp",
+      lien: "https://www.marieclaire.fr/cuisine/poires-roties-au-cidre,1487547.asp"
+    }
+  ],
+  "Cormier": [
+    {
+      titre: "Confiture / Sirop / Cormé",
+      image: "",
+      lien: "https://www.fruitiers-rares.info/articles-A117a122/article118-cormes-Sorbus-domestica-Cormier.html"
+    }
+  ],
+  "Lilas": [
+    {
+      titre: "Sirop de Lilas",
+      image: "https://l-herboriste.com/wp-content/uploads/2020/04/Sirop-de-lilas.jpg",
+      lien: "https://l-herboriste.com/sirop-de-lilas-maison/"
+    },
+    {
+      titre: "Tisane de lilas",
+      image: "https://cuisine-saine.fr/wp-content/uploads/2019/05/tisane-lilas.jpg",
+      lien: "https://cuisine-saine.fr/vie-saine/comment-preparer-une-tisane-de-lilas-ou-un-the-vert-au-lilas/"
+    }
+  ],
+
   "Prunier à fruits": [
     {
       titre: "Beignets de prunes",
@@ -342,6 +428,60 @@ const recettes = {
       titre: "Tarte flamande aux prunes",
       image: "https://www.yumelise.fr/wp-content/uploads/2018/07/tarte-prunes.jpg",
       lien: "https://www.yumelise.fr/tarte-flamande-prunes/"
+    }
+  ],
+  "Sureau": [
+    {
+      titre: "Crêpes aux fleurs de sureau",
+      image: "https://www.lamaisondusureau.com/Edelweiss.Upload/recipe/32/medium/0327498001561656137.jpg",
+      lien: "https://www.lamaisondusureau.com/crepes-biere-fleurs-de-sureau,re32.html"
+    },
+    {
+      titre: "Sirop de fleurs de sureau noir",
+      image: "https://www.celiadreams.be/wp-content/uploads/2019/06/Sirop-aux-fleurs-de-sureau-noir.png",
+      lien: "https://www.celiadreams.be/article-du-blog/recettes/sirop-fleur-sureau-noir-recette-naturelle-facile/"
+    },
+    {
+      titre: "Gelée de baies de sureau",
+      image: "https://www.lamaisondusureau.com/Edelweiss.Upload/recipe/42/medium/0052747001575553160.jpeg",
+      lien: "https://www.lamaisondusureau.com/gelee-de-baies-de-sureau,re42.html"
+    },
+    {
+      titre: "Tourte aux baies de sureau noir",
+      image: "https://resize.elle.fr/portrait_480_webp/var/plain_site/storage/images/elle-a-table/recettes-de-cuisine/tourte-aux-baies-de-sureau-noir-3714122/88382477-1-fre-FR/Tourte-aux-baies-de-sureau-noir.jpg",
+      lien: "https://www.elle.fr/Elle-a-Table/Recettes-de-cuisine/Tourte-aux-baies-de-sureau-noir-3714122"
+    },
+    {
+      titre: "Biscuit roulé au sureau de Nelly",
+      image: "https://www.lamaisondusureau.com/Edelweiss.Upload/recipe/33/medium/0086234001561656683.jpg",
+      lien: "https://www.lamaisondusureau.com/biscuit-roule-au-sureau-de-nelly,re33.html"
+    },
+    {
+      titre: "Glace au yaourt et à la fleur de sureau",
+      image: "https://www.lamaisondusureau.com/Edelweiss.Upload/recipe/30/medium/0030971001561651944.jpg",
+      lien: "https://www.lamaisondusureau.com/glace-yaourt-bulgare-fleur-sureau,re30.html"
+    },
+  ],
+  "Tilleul": [
+    {
+      titre: "Soupe de prunes au tilleul",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i89977-soupe-de-prunes-au-tilleul.webp",
+      lien: "https://www.cuisineaz.com/recettes/soupe-de-prunes-au-tilleul-82388.aspx"
+    },
+    {
+      titre: "Gelée de tilleul",
+      image: "https://img-3.journaldesfemmes.fr/5mZN96wwwwr2txyF47Ls1aru4bE=/750x500/61003bc9de5e481a96a88aa4de03178d/ccmcms-jdf/39694234.jpg",
+      lien: "https://cuisine.journaldesfemmes.fr/recette/3105365-gelee-de-tilleul"
+    },
+    {
+      titre: "Sirop de fleurs de tilleul",
+      image: "https://recipeimages.migros.ch/crop/v-w-1600-h-1200-a-center_center/9fda3d57d1b946d9bca08710d5a0d202332edec1/sirop-de-fleurs-de-tilleul-0-4-3.jpg",
+      lien: "https://migusto.migros.ch/fr/recettes/sirop-de-fleurs-de-tilleul"
+    },
+    {
+      titre: "Salade de Tilleul",
+      image: "https://cueilleurs-sauvages.ch/wp-content/uploads/2017/04/salade-tilleul-1800px.jpg",
+      lien: "https://cueilleurs-sauvages.ch/blog/salade-de-tilleul/"
     }
   ]
 };
