@@ -28,7 +28,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -66,51 +66,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.429284828026775,
-          43.64636463890938
-        ]
-      },
-      "properties": {
-        "genre": "Taxus",
-        "espece": "baccata",
-        "libellefrancais": "If commun !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4292347724852699,
-          43.64640639576625
-        ]
-      },
-      "properties": {
-        "genre": "Taxus",
-        "espece": "baccata",
-        "libellefrancais": "If commun !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4292784355341779,
-          43.646408762104684
-        ]
-      },
-      "properties": {
-        "genre": "Taxus",
-        "espece": "baccata",
-        "libellefrancais": "If commun !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.3987056936431905,
           43.56357597441482
         ]
@@ -118,7 +73,7 @@
       "properties": {
         "genre": "Castanea",
         "espece": "sativa",
-        "libellefrancais": "Châtaignier !"
+        "libellefrancais": "Châtaignier"
       }
     },
     {
@@ -283,7 +238,7 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "domestica",
-        "libellefrancais": "Cormier !"
+        "libellefrancais": "Cormier"
       }
     },
     {
@@ -321,21 +276,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.46459462293026,
-          43.57253330279349
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4778768443934902,
           43.61865930266147
         ]
@@ -343,22 +283,7 @@
       "properties": {
         "genre": "Sorbus",
         "espece": "domestica",
-        "libellefrancais": "Cormier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4951787273589974,
-          43.58009969692365
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
+        "libellefrancais": "Cormier"
       }
     },
     {
@@ -426,21 +351,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4821803181781037,
-          43.63155835978309
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4909202730852271,
           43.582464795712625
         ]
@@ -448,7 +358,7 @@
       "properties": {
         "genre": "Castanea",
         "espece": "sativa",
-        "libellefrancais": "Châtaignier !"
+        "libellefrancais": "Châtaignier"
       }
     },
     {
@@ -509,51 +419,6 @@
         "genre": "Sorbus",
         "espece": "aucuparia",
         "libellefrancais": "Sorbier des oiseleurs !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4916030648161147,
-          43.588541874797755
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4777729567391666,
-          43.61853809720992
-        ]
-      },
-      "properties": {
-        "genre": "Taxus",
-        "espece": "baccata",
-        "libellefrancais": "If commun !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4761334320189865,
-          43.62200437965878
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
       }
     },
     {
@@ -688,7 +553,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -771,21 +636,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.416684168152982,
-          43.59905173913802
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4047158036448304,
           43.60486172672736
         ]
@@ -793,7 +643,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -823,7 +673,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -876,36 +726,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.3906477939726571,
-          43.58169969866083
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4062653031676247,
-          43.60968196376496
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.401824391704574,
           43.605484662921675
         ]
@@ -913,7 +733,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -928,7 +748,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -1161,36 +981,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.369177766341934,
-          43.60652014308948
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.3894590687458135,
-          43.613595622805526
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4043277196495265,
           43.604184510056896
         ]
@@ -1206,21 +996,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.3901608832251338,
-          43.57619061850937
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4047278657974924,
           43.604854781276934
         ]
@@ -1228,7 +1003,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -1311,21 +1086,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.389444819387119,
-          43.61349938639129
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4024106020053817,
           43.60513858358516
         ]
@@ -1378,7 +1138,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -1408,7 +1168,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -1438,7 +1198,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -1453,7 +1213,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -1483,22 +1243,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "angustifolia",
-        "libellefrancais": "Frêne à feuilles étroites !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4073481700195516,
-          43.60938819484705
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -1514,21 +1259,6 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4167185823125188,
-          43.59901918067556
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
       }
     },
     {
@@ -1558,7 +1288,7 @@
       "properties": {
         "genre": "Ficus",
         "espece": "carica",
-        "libellefrancais": "Figuier !"
+        "libellefrancais": "Figuier"
       }
     },
     {
@@ -1633,7 +1363,7 @@
       "properties": {
         "genre": "Cornus",
         "espece": "controversa",
-        "libellefrancais": "Cornouiller !"
+        "libellefrancais": "Cornouiller"
       }
     },
     {
@@ -1663,37 +1393,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4320838758798866,
-          43.59849418481073
-        ]
-      },
-      "properties": {
-        "genre": "Acer",
-        "espece": "buergerianum",
-        "libellefrancais": "Erable !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4419547102220132,
-          43.5946974606555
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -1739,21 +1439,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4418891723348013,
-          43.594721783808225
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
       }
     },
     {
@@ -1843,7 +1528,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -1911,21 +1596,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4490562423055766,
-          43.594997564503664
-        ]
-      },
-      "properties": {
-        "genre": "Lagerstroemia",
-        "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.441801388754219,
           43.59477666717876
         ]
@@ -1934,21 +1604,6 @@
         "genre": "Prunus",
         "espece": "dulcis",
         "libellefrancais": "Amandier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4418806449722317,
-          43.59468268852596
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
       }
     },
     {
@@ -1986,36 +1641,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.429532039793494,
-          43.579300115855865
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4297605862428384,
-          43.60128044766727
-        ]
-      },
-      "properties": {
-        "genre": "Lagerstroemia",
-        "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4418024885109666,
           43.59482335936456
         ]
@@ -2046,21 +1671,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4293705367624407,
-          43.60100970384014
-        ]
-      },
-      "properties": {
-        "genre": "Lagerstroemia",
-        "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.451555921743519,
           43.597845776893585
         ]
@@ -2068,7 +1678,7 @@
       "properties": {
         "genre": "Carpinus",
         "espece": "betulus",
-        "libellefrancais": "Charme !"
+        "libellefrancais": "Charme"
       }
     },
     {
@@ -2106,21 +1716,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4419318490220363,
-          43.594727391472496
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4382361458451887,
           43.58615161219728
         ]
@@ -2128,7 +1723,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -2188,37 +1783,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.429674902520684,
-          43.57973943287646
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4410731627055096,
-          43.59450129449311
-        ]
-      },
-      "properties": {
-        "genre": "Melia",
-        "espece": "azedarach",
-        "libellefrancais": "Lilas des indes !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -2234,36 +1799,6 @@
         "genre": "Acer",
         "espece": "pseudoplatanus",
         "libellefrancais": "Erable sycomore !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4322593843003164,
-          43.57529243870674
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4311668605940124,
-          43.57601947516003
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
       }
     },
     {
@@ -2301,21 +1836,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.441820931191467,
-          43.59468216255655
-        ]
-      },
-      "properties": {
-        "genre": "Gleditsia",
-        "espece": "triacanthos",
-        "libellefrancais": "Févier !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4515938355271956,
           43.592393724514835
         ]
@@ -2338,22 +1858,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.429568107129037,
-          43.60120669584623
-        ]
-      },
-      "properties": {
-        "genre": "Lagerstroemia",
-        "espece": "indica",
-        "libellefrancais": "Lilas des indes, lilas d'été !"
+        "libellefrancais": "Frêne"
       }
     },
     {
@@ -2428,7 +1933,7 @@
       "properties": {
         "genre": "Fraxinus",
         "espece": "excelsior",
-        "libellefrancais": "Frêne !"
+        "libellefrancais": "Frêne"
       }
     }
   ]
