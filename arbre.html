@@ -182,7 +182,7 @@
 
     #toggleSidebar {
       position: fixed;
-      top: 20px;
+      top: 100px;
       left: 20px;
       z-index: 1100;
       background-color: #ffffff;
@@ -442,6 +442,85 @@ header {
 </nav>-->
   </header>
 
+<div id="search-container">
+  <div class="search-bar">
+    <span class="search-icon">📍</span>
+    <input
+      type="text"
+      id="address-input"
+      placeholder="Rechercher une adresse à Paris..."
+      list="suggestions"
+      aria-label="Champ de recherche d'adresse"
+    />
+    <button id="search-btn" aria-label="Lancer la recherche">🔍</button>
+  </div>
+  <datalist id="suggestions"></datalist>
+</div>
+
+<style>
+#search-container {
+  position: absolute;
+  top: 110px;
+  left: 310px;
+  z-index: 901;
+  width: 90%;
+  max-width: 450px;
+  background-color: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.search-icon {
+  padding: 0 10px;
+  font-size: 18px;
+  color: #555;
+}
+
+#address-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background-color: transparent;
+}
+
+#search-btn {
+  background-color: #228B22;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+#search-btn:hover {
+  background-color: #1a6b1a;
+}
+
+@media (max-width: 767px) {
+  #search-container {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    padding: 10px;
+  }
+}
+</style>
+
+
   <main>
     <div class="container">
       <button id="toggleSidebar">☰ Filtres</button>
@@ -455,6 +534,45 @@ header {
           <h2>Espèces d’arbres</h2>
           <div id="espece-filters"></div>
         </div>
+
+
+
+
+
+<script>
+document.getElementById("search-btn").addEventListener("click", function () {
+  const address = document.getElementById("address-input").value;
+  if (!address) return;
+
+  const encoded = encodeURIComponent(address + ", Paris, France"); // pour s'assurer qu'on reste dans Paris
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encoded}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lon = parseFloat(data[0].lon);
+        map.setView([lat, lon], 17); // zoom sur l'adresse
+      } else {
+        alert("Adresse non trouvée. Essayez avec une adresse plus précise !");
+      }
+    })
+    .catch(err => {
+      console.error("Erreur lors de la géolocalisation :", err);
+      alert("Erreur lors de la recherche d’adresse.");
+    });
+});
+
+// Déclenche la recherche avec Entrée
+document.getElementById("address-input").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.getElementById("search-btn").click();
+  }
+});
+</script>
+
         <a href="recettes.html" class="cta-button">Découvrir toutes les recettes</a>
         <div class="info">
 
