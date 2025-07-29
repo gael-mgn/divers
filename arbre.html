@@ -42,7 +42,7 @@
   background: linear-gradient(135deg, #34a853, #0b8457);
   color: white;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-align: center;
   text-decoration: none;
   box-shadow: 0 6px 12px rgba(0, 128, 0, 0.2);
@@ -89,8 +89,14 @@
     }
 
     main {
-      height: calc(100vh);
+      height: calc(100vh - 100px);
     }
+    @media (max-width: 767px) {
+      main {
+      height: 100vh;
+    }
+    }
+
 
 
     .info {
@@ -368,12 +374,8 @@
   backdrop-filter: blur(5px);
 }
 
-#toggleSidebar {
-  transition: all 0.3s ease-in-out;
-}
-#toggleSidebar:hover {
-  transform: scale(1.05);
-}
+
+
 
 /* Liseré sous les titres */
 header h1, .filter-group h2 {
@@ -452,7 +454,13 @@ header {
       list="suggestions"
       aria-label="Champ de recherche d'adresse"
     />
-    <button id="search-btn" aria-label="Lancer la recherche">🔍</button>
+    <button id="search-btn" aria-label="Lancer la recherche">
+  <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"/>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+</button>
+
   </div>
   <datalist id="suggestions"></datalist>
 </div>
@@ -619,21 +627,7 @@ document.getElementById("address-input").addEventListener("keydown", function (e
 </button>
 
 <!-- Pop-up d'aide -->
-<div id="helpPopup" style="
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  width: 300px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  font-size: 14px;
-  color: #333;
-  font-family: 'Inter', sans-serif;
-  display: none;
-  z-index: 1200;
-">
+<div id="helpPopup">
   <!-- Croix de fermeture -->
   <button id="closeHelp" style="
     position: absolute;
@@ -649,6 +643,34 @@ document.getElementById("address-input").addEventListener("keydown", function (e
   " title="Fermer">
     &times;
   </button>
+
+  <style>
+    #helpPopup{
+          position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 300px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  font-size: 14px;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+  display: none;
+  z-index: 1200;
+    }
+@media (max-width: 600px) {
+  #helpPopup {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    right: auto;
+  }
+}
+
+  </style>
 
   <strong style="color: #2f4f4f;">Comment utiliser la carte ?</strong>
   <p>Cliquez sur un arbre pour voir ses infos et une recette puis cliquez sur “Voir la recette complète” pour plus de détails !</p>
@@ -672,14 +694,7 @@ document.getElementById("closeHelp").addEventListener("click", function () {
 </script>
 
 <style>
-  @media (max-width: 500px) {
-  #helpPopup {
-    right: 10px;
-    left: 10px;
-    width: auto;
-    bottom: 80px;
-  }
-}
+
 
 
 .color-indicator {
@@ -798,9 +813,10 @@ if (window.innerWidth < 768) {
     const allMarkers = [];
     let geoJsonData = null;
     const markers = enableClustering
-      ? L.markerClusterGroup({ disableClusteringAtZoom: 17, maxClusterRadius: 50 })
+      ? L.markerClusterGroup({ disableClusteringAtZoom: 15, maxClusterRadius: 50 })
       : L.layerGroup();
 
+    
     
     fetch("https://gael-mgn.github.io/divers/les-arbres.geojson")
   .then(response => response.json())
@@ -818,7 +834,6 @@ if (window.innerWidth < 768) {
     });
 
     const arrList = Array.from(arrSet).sort();
-    const espList = Array.from(espSet).sort();
 
     // Générer les filtres d'arrondissements
     const filterArr = document.getElementById("arrondissement-filters");
@@ -830,20 +845,33 @@ if (window.innerWidth < 768) {
       filterArr.appendChild(label);
     });
 
-   // Générer les filtres d'espèces avec couleurs
-const filterEsp = document.getElementById("espece-filters");
-espList.forEach(esp => {
-  const id = "esp_" + esp.replace(/\s+/g, "_");
-  const color = getColorFromString(esp);
+    // Compter les occurrences d'espèces
+    const especeCounts = {};
+    data.features.forEach(f => {
+      const esp = f.properties.libellefrancais;
+      if (esp) {
+        especeCounts[esp] = (especeCounts[esp] || 0) + 1;
+      }
+    });
 
-  const label = document.createElement("label");
-  label.className = "arr-filter";
-  label.innerHTML = `
-    <span class="color-indicator" style="background-color: ${color};"></span>
-    <input type="checkbox" id="${id}" data-esp="${esp}" checked> ${esp}
-  `;
-  filterEsp.appendChild(label);
-});
+    const espList = Object.keys(especeCounts).sort();
+
+    // Générer les filtres d'espèces avec le nombre d'occurrences
+    const filterEsp = document.getElementById("espece-filters");
+    espList.forEach(esp => {
+      const count = especeCounts[esp];
+      const id = "esp_" + esp.replace(/\s+/g, "_");
+      const color = getColorFromString(esp);
+
+      const label = document.createElement("label");
+      label.className = "arr-filter";
+      label.innerHTML = `
+        <span class="color-indicator" style="background-color: ${color};"></span>
+        <input type="checkbox" id="${id}" data-esp="${esp}" checked> ${esp} (${count})
+      `;
+      filterEsp.appendChild(label);
+    });
+
 
 
 
@@ -953,8 +981,10 @@ document.getElementById("toggleSidebar").addEventListener("click", function () {
   // Change le texte du bouton
   if (sidebar.classList.contains("open")) {
     button.innerHTML = "✕";
+    button.style.top = "20px";
   } else {
     button.innerHTML = "☰ Filtres";
+    button.style.top = "100px";
   }
 });
 document.addEventListener("click", function (e) {
