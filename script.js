@@ -1,0 +1,301 @@
+// Génère une couleur unique et stable à partir d'une chaîne (nom d'espèce)
+function getColorFromString(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const hue = Math.abs(hash) % 360;
+  return `hsl(${hue}, 65%, 50%)`;
+}
+
+
+
+
+const recettesRestantesParEspece = {};
+const derniereRecetteParEspece = {};
+
+function getRecetteNonRepetitiveGlobal(espece) {
+  const pool = recettes[espece];
+  if (!pool || pool.length === 0) return null;
+
+  if (!recettesRestantesParEspece[espece] || recettesRestantesParEspece[espece].length === 0) {
+    // Réinitialise en excluant temporairement la dernière recette tirée
+    const derniere = derniereRecetteParEspece[espece];
+    recettesRestantesParEspece[espece] = pool.filter(r => r !== derniere);
+
+    console.log(`🔁 Réinitialisation des recettes pour ${espece}, en excluant temporairement : ${derniere?.titre}`);
+
+    // Si toutes les recettes étaient identiques ou une seule, on réinclut tout pour éviter un pool vide
+    if (recettesRestantesParEspece[espece].length === 0) {
+      recettesRestantesParEspece[espece] = [...pool];
+      console.log(`⚠️ Une seule recette possible, réintégration de toutes les recettes.`);
+    }
+  }
+
+  const index = Math.floor(Math.random() * recettesRestantesParEspece[espece].length);
+  const recette = recettesRestantesParEspece[espece].splice(index, 1)[0];
+  derniereRecetteParEspece[espece] = recette;
+
+  console.log(`🎯 Recette tirée pour ${espece} :`, recette.titre);
+  console.log(`📉 Recettes restantes pour ${espece} :`, recettesRestantesParEspece[espece].map(r => r.titre));
+
+  return recette;
+}
+
+
+
+function debounce(func, wait = 150) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+
+
+    const map = L.map("map", {
+      zoomControl: false // Désactive les boutons par défaut
+    }).setView([48.8566, 2.3522], 13);
+
+   if (window.innerWidth >= 768) {
+  // Ajoute les boutons de zoom uniquement sur desktop
+  L.control.zoom({ position: 'topright' }).addTo(map);
+}
+
+
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: "abcd",
+      maxZoom: 19
+    }).addTo(map);
+
+    let enableClustering = true;
+
+if (window.innerWidth < 768) {
+  enableClustering = true;
+}
+
+    const allMarkers = [];
+    let geoJsonData = null;
+    const markers = enableClustering
+      ? L.markerClusterGroup({ disableClusteringAtZoom: 15, maxClusterRadius: 50 })
+      : L.layerGroup();
+
+    
+    
+    fetch("https://gael-mgn.github.io/divers/les-arbres.geojson")
+  .then(response => response.json())
+  .then(data => {
+    geoJsonData = data;
+
+    data.features.forEach(f => {
+  if (f.properties.libellefrancais === "Aubepine") {
+    f.properties.libellefrancais = "Aubépine";
+  }
+});
+
+    // Extraire les valeurs uniques
+    const arrSet = new Set();
+    const espSet = new Set();
+    data.features.forEach(f => {
+      arrSet.add(f.properties.arrondissement);
+      if (f.properties.libellefrancais) {
+        espSet.add(f.properties.libellefrancais);
+      }
+    });
+
+    const arrList = Array.from(arrSet).sort();
+
+    // Générer les filtres d'arrondissements
+    const filterArr = document.getElementById("arrondissement-filters");
+    arrList.forEach(arr => {
+      const id = "arr_" + arr.replace(/\s+/g, "_");
+      const label = document.createElement("label");
+      label.className = "arr-filter";
+      label.innerHTML = `<input type="checkbox" id="${id}" data-arr="${arr}" checked> ${arr}`;
+      filterArr.appendChild(label);
+    });
+
+    // Compter les occurrences d'espèces
+    const especeCounts = {};
+    data.features.forEach(f => {
+      const esp = f.properties.libellefrancais;
+      if (esp) {
+        especeCounts[esp] = (especeCounts[esp] || 0) + 1;
+      }
+    });
+
+    const espList = Object.keys(especeCounts).sort();
+
+    // Générer les filtres d'espèces avec le nombre d'occurrences
+    const filterEsp = document.getElementById("espece-filters");
+    espList.forEach(esp => {
+      const count = especeCounts[esp];
+      const id = "esp_" + esp.replace(/\s+/g, "_");
+      const color = getColorFromString(esp);
+
+      const label = document.createElement("label");
+      label.className = "arr-filter";
+      label.innerHTML = `
+        <span class="color-indicator" style="background-color: ${color};"></span>
+        <input type="checkbox" id="${id}" data-esp="${esp}" checked> ${esp} (${count})
+      `;
+      filterEsp.appendChild(label);
+    });
+
+
+
+
+    // Ajouter listeners
+    document.querySelectorAll("#arrondissement-filters input, #espece-filters input")
+      .forEach(input => {
+        input.addEventListener("change", updateMap);
+      });
+
+    updateMap(); // Premier affichage
+  })
+  .catch(error => console.error("Erreur lors du chargement du GeoJSON :", error));
+
+
+const updateMap = debounce(() => {
+markers.clearLayers();
+
+const selectedArr = new Set(
+  Array.from(document.querySelectorAll("#arrondissement-filters input:checked")).map(i => i.dataset.arr)
+);
+const selectedEsp = new Set(
+  Array.from(document.querySelectorAll("#espece-filters input:checked")).map(i => i.dataset.esp)
+);
+
+const filteredFeatures = geoJsonData.features.filter(f =>
+  selectedArr.has(f.properties.arrondissement) &&
+  selectedEsp.has(f.properties.libellefrancais)
+);
+
+const geoJsonLayer = L.geoJSON(filteredFeatures, {
+  pointToLayer: (feature, latlng) => {
+  const espece = feature.properties.libellefrancais || "Inconnue";
+  const color = getColorFromString(espece);
+
+  return L.circleMarker(latlng, {
+    radius: 10,
+    fillColor: color,
+    color: "#FFFFFF", // bordure
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  });
+},
+
+  onEachFeature: function (feature, layer) {
+    const props = feature.properties;
+    const nomEspece = props["libellefrancais"];
+    const layerId = layer._leaflet_id;
+
+    if (window.innerWidth >= 768 && nomEspece) {
+      layer.bindTooltip(nomEspece, {
+        permanent: false,
+        direction: 'top',
+        offset: [0, -10],
+        opacity: 0.9,
+        className: 'custom-tooltip'
+      });
+    }
+
+    // Construction du popup une seule fois
+    const recette = getRecetteNonRepetitiveGlobal(nomEspece);
+    if (!recette) return;
+
+    let popupContent = '<div class="popup-details">';
+    popupContent += `<h3>${props["libellefrancais"]}</h3>`;
+    popupContent += `<h4>${props["genre"]}</h4>`;
+    popupContent += '</div>';
+
+    popupContent += `
+      <div class="recette-popup" id="recette-${layerId}">
+        <h3 class="recette-title">${recette.titre}</h3>
+        <img src="${recette.image}" alt="${recette.titre}">
+        <a class="recette-link" href="${recette.lien}" target="_blank">🍽️ Voir la recette complète</a>
+    `;
+
+    if (recettes[nomEspece] && recettes[nomEspece].length > 1) {
+      popupContent += `
+        <button class="recette-refresh" data-layer="${layerId}" data-espece="${nomEspece}">🔄 Une autre recette</button>
+      `;
+    }
+
+    popupContent += `</div>`;
+
+    // Bind une seule fois
+    layer.bindPopup(popupContent);
+
+    // Clic = juste ouvrir
+    layer.on("click", () => {
+      layer.openPopup();
+    });
+  }
+});
+
+markers.addLayer(geoJsonLayer);
+map.addLayer(markers);
+
+}, 200);
+
+
+document.getElementById("toggleSidebar").addEventListener("click", function () {
+  const sidebar = document.getElementById("sidebar");
+  const button = this;
+
+  sidebar.classList.toggle("open");
+  button.classList.toggle("open");
+
+  // Change le texte du bouton
+  if (sidebar.classList.contains("open")) {
+    button.innerHTML = "✕";
+    button.style.top = "20px";
+  } else {
+    button.innerHTML = "☰ Filtres";
+    button.style.top = "100px";
+  }
+});
+document.addEventListener("click", function (e) {
+  if (e.target && e.target.classList.contains("recette-refresh")) {
+    const layerId = e.target.dataset.layer;
+    const espece = e.target.dataset.espece;
+
+    const nouvelleRecette = getRecetteNonRepetitiveGlobal(espece);
+    if (!nouvelleRecette) return;
+
+    const container = document.getElementById(`recette-${layerId}`);
+    if (container) {
+      container.innerHTML = `
+        <h3 class="recette-title">${nouvelleRecette.titre}</h3>
+        <img src="${nouvelleRecette.image}" alt="${nouvelleRecette.titre}">
+        <a class="recette-link" href="${nouvelleRecette.lien}" target="_blank">🍽️ Voir la recette complète</a>
+        <button class="recette-refresh" data-layer="${layerId}" data-espece="${espece}">🔄 Une autre recette</button>
+      `;
+    }
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+  // Bouton Help toggle
+document.getElementById("helpBtn").addEventListener("click", function () {
+  const popup = document.getElementById("helpPopup");
+  popup.style.display = popup.style.display === "block" ? "none" : "block";
+});
+
+// Fermer le popup
+document.getElementById("closeHelp").addEventListener("click", function () {
+  document.getElementById("helpPopup").style.display = "none";
+});

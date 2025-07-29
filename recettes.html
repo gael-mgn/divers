@@ -191,7 +191,8 @@ h1::after {
   <script src="recettes.js"></script>
 
   <script>
-    
+    const totalRecettes = Object.values(recettes).reduce((acc, arr) => acc + arr.length, 0);
+    console.log(totalRecettes);
 
     const grid = document.getElementById('recette-grid');
 

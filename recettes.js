@@ -18,6 +18,41 @@ const recettes = {
       titre: "Compote d’amélanches",
       image: "https://isabellecotenutritionniste.com/wp-content/uploads/2018/07/Compote-amelanche-haut-petit-980x749.jpg",
       lien: "https://isabellecotenutritionniste.com/recettes/compote-damelanches/"
+    },
+    {
+      titre: "Confiture de baies d'amélanchier",
+      image: "https://assets.afcdn.com/recipe/20161216/17569_w1024h768c1cx2592cy1728.jpg",
+      lien: "https://www.marmiton.org/recettes/recette_confiture-de-baies-d-amelanchier_49167.aspx"
+    },
+     {
+      titre: "Tarte aux baies d'amélanchier",
+      image: "https://fr.rc-cdn.community.thermomix.com/recipeimage/sujg4me3-8da4a-497361-cfcd2-vpibbyr1/0afe1938-5f02-4e96-88c3-af4ac0ac4666/main/tarte-aux-baies-damelanchier.jpg",
+      lien: "https://www.espace-recettes.fr/patisseries-sucrees-recettes/tarte-aux-baies-damelanchier/sujg4me3-8da4a-497361-cfcd2-vpibbyr1"
+    },
+    {
+      titre: "Escalopes de poulet au chutney d’amélanches",
+      image: "https://lepoulet.qc.ca/wp-content/uploads/2021/10/c10d89d5-4d45-4e1e-aa94-43ddb4eac91f.jpg",
+      lien: "https://lepoulet.qc.ca/recettes/escalopes-de-poulet-au-chutney-damelanches/"
+    },
+    {
+      titre: "Muffins aux Amélanches",
+      image: "https://images.smuckers.ca/images/recipes/29/fr/Muffins-aux-amelanches_desktop.jpg",
+      lien: "https://www.robinhood.ca/Fr/Recettes/Muffins-Aux-Amelanches"
+    },
+    {
+      titre: "Longe de chevreuil aux baies d’amélanchier",
+      image: "https://images.radio-canada.ca/q_auto,w_844/v1/alimentation/ingredient/16x9/bouillon-fonce-ingredients-mordu.jpg",
+      lien: "https://ici.radio-canada.ca/mordu/recettes/3425/longe-chevreuil-baies-amelanchier"
+    },
+    {
+      titre: "Cheesecake aux amélanches",
+      image: "https://res.cloudinary.com/hv9ssmzrz/image/fetch/c_fill,f_auto,h_488,q_auto,w_650/https://s3-eu-west-1.amazonaws.com/images-ca-1-0-1-eu/recipe_photos/original/63341/open-uri20130705-2-1009aqe",
+      lien: "https://chefsimon.com/gourmets/un-peu-gay-dans-les-coings/recettes/cheesecake-aux-amelanches"
+    },
+    {
+      titre: "Glace aux amelanches",
+      image: "https://www.ma-petite-recette.fr/photos_recettes/base/grande/g/glace_aux_amelanches.webp",
+      lien: "https://www.ma-petite-recette.fr/recette/dessert/fruits-et-agrumes/amelanche/recette-glace-aux-amelanches.htm"
     }
   ],
   "Arbousier": [
@@ -48,13 +83,31 @@ const recettes = {
       titre: "Gelée de baie d’aubépine",
       image: "https://img-global.cpcdn.com/recipes/c2a8ed4d2c7a0b05/600x852cq80/gelee-de-baies-daubepine-photo-principale-de-la-recette.webp",
       lien: "https://cookpad.com/fr/recettes/16541175"
-    }
-  ],
-  "Aubepine": [
+    },
     {
-      titre: "Gelée de baie d’aubépine",
-      image: "https://img-global.cpcdn.com/recipes/c2a8ed4d2c7a0b05/600x852cq80/gelee-de-baies-daubepine-photo-principale-de-la-recette.webp",
-      lien: "https://cookpad.com/fr/recettes/16541175"
+      titre: "Café d’aubépine",
+      image: "https://plantes-sauvages-comestibles.com/wp-content/uploads/2019/10/IMG_1422-2.jpg",
+      lien: "https://plantes-sauvages-comestibles.com/cafe-daubepine/"
+    },
+    {
+      titre: "Boisson d'aubépine",
+      image: "https://cookinero.com/images/medium/recipes/2023/01/e9c1c21934281883fc706283191ef9b7db92a0b0420761bd03cc5d7452dbc589",
+      lien: "https://cookinero.com/fr/recipes/hawthorn-drink"
+    },
+    {
+      titre: "Salade de carottes et navet râpés aux feuilles d’aubépine à la grecque",
+      image: "https://res.cloudinary.com/hv9ssmzrz/image/fetch/c_fill,f_auto,h_488,q_auto,w_650/https://s3-eu-west-1.amazonaws.com/images-ca-1-0-1-eu/recipe_photos/original/212749/open-uri20210609-70-1axro5c",
+      lien: "https://chefsimon.com/gourmets/la-cuisine-sauvage-au-fil-des-saisons/recettes/salade-de-carottes-et-navet-rapes-aux-feuilles-d-aubepine-a-la-grecque"
+    },
+    {
+      titre: "Crumble de spéculoos aux cenelles et aux poires",
+      image: "https://res.cloudinary.com/hv9ssmzrz/image/fetch/c_fill,f_auto,h_488,q_auto,w_650/https://s3-eu-west-1.amazonaws.com/images-ca-1-0-1-eu/recipe_photos/original/201073/open-uri20201013-3568-timhjd",
+      lien: "https://chefsimon.com/gourmets/la-cuisine-sauvage-au-fil-des-saisons/recettes/crumble-de-speculoos-aux-cenelles-et-aux-poires"
+    },
+    {
+      titre: "Tarte aux pommes et aux cenelles",
+      image: "https://res.cloudinary.com/hv9ssmzrz/image/fetch/c_fill,f_auto,h_488,q_auto,w_650/https://s3-eu-west-1.amazonaws.com/images-ca-1-0-1-eu/recipe_photos/original/201273/open-uri20201018-483-mbehyz",
+      lien: "https://chefsimon.com/gourmets/la-cuisine-sauvage-au-fil-des-saisons/recettes/tarte-aux-pommes-et-aux-cenelles"
     }
   ],
 
@@ -77,6 +130,78 @@ const recettes = {
       titre: "Velouté de châtaigne",
       image: "https://deliacious.com/wp-content/uploads/2018/12/soupe-chataignes-500x500.jpg",
       lien: "https://deliacious.com/2018/12/veloute-chataigne.html"
+    },
+    {
+      titre: "Compote pomme chataigne",
+      image: "https://recettes.belly-media.com/wp-content/uploads/elementor/thumbs/compote-pomme-chataigne-r794mbhajzbfphnf7va2ayj3ba6pczcwz9wqay46ia.jpg",
+      lien: "https://recettes.belly-media.com/recettes/compote-pomme-chataigne/"
+    },
+    {
+      titre: "Châtaignes blanchies",
+      image: "https://img.cuisineaz.com/660x495/2016/04/28/i92268-chataignes-blanchies.webp",
+      lien: "https://www.cuisineaz.com/recettes/chataignes-blanchies-30963.aspx"
+    },
+    {
+      titre: "Cappuccino de châtaignes en verrines",
+      image: "https://img.cuisineaz.com/660x495/2016/09/20/i100998-cappuccino-de-chataignes-en-verrines-a-ma-facon.webp",
+      lien: "https://www.cuisineaz.com/recettes/cappuccino-de-chataignes-en-verrines-a-ma-facon-70407.aspx"
+    },
+    {
+      titre: "Rôti de veau aux châtaignes et légumes",
+      image: "https://img.cuisineaz.com/660x495/2016/09/20/i86060-roti-de-veau-aux-chataignes-et-legumes.webp",
+      lien: "https://www.cuisineaz.com/recettes/roti-de-veau-aux-chataignes-et-legumes-74139.aspx"
+    },
+    {
+      titre: "Velouté de panais aux châtaignes",
+      image: "https://img.cuisineaz.com/660x495/2016/09/20/i93018-veloute-de-panais-aux-chataignes.webp",
+      lien: "https://www.cuisineaz.com/recettes/veloute-de-panais-aux-chataignes-81252.aspx"
+    },
+    {
+      titre: "Gâteau châtaignes et saumon fumé",
+      image: "https://img.cuisineaz.com/660x495/2016/09/20/i83268-gateau-chataignes-et-saumon-fume-maison.webp",
+      lien: "https://www.cuisineaz.com/recettes/gateau-chataignes-et-saumon-fume-maison-69943.aspx"
+    },
+    {
+      titre: "Noix de Saint-Jacques sur purée de châtaignes",
+      image: "https://img.cuisineaz.com/660x495/2016/09/20/i94110-noix-de-saint-jacques-sur-puree-de-chataignes-faciles.webp",
+      lien: "https://www.cuisineaz.com/recettes/noix-de-saint-jacques-sur-puree-de-chataignes-faciles-53834.aspx"
+    },{
+      titre: "Suprême de faisan aux champignons et châtaignes",
+      image: "https://img.cuisineaz.com/660x495/2016/04/28/i88776-supreme-de-faisan-aux-champignons-et-chataignes.webp",
+      lien: "https://www.cuisineaz.com/recettes/supreme-de-faisan-aux-champignons-et-chataignes-29484.aspx"
+    },{
+      titre: "Velouté de potimarron aux châtaignes",
+      image: "https://img.cuisineaz.com/660x495/2015/02/13/i113112-veloute-de-potimarron-aux-chataignes.webp",
+      lien: "https://www.cuisineaz.com/recettes/veloute-de-potimarron-aux-chataignes-54152.aspx"
+    },{
+      titre: "Gratin de potimarron aux châtaignes",
+      image: "https://img.cuisineaz.com/660x495/2016/03/17/i94008-gratin-de-potimarron-aux-chataignes.webp",
+      lien: "https://www.cuisineaz.com/recettes/gratin-de-potimarron-aux-chataignes-3745.aspx"
+    },
+    {
+      titre: "Rôti de colvert aux châtaignes et fricassée de girolles",
+      image: "https://img.cuisineaz.com/660x495/2016/04/28/i94594-roti-de-colvert-aux-chataignes-et-fricassee-de-girolles.webp",
+      lien: "https://www.cuisineaz.com/recettes/roti-de-colvert-aux-chataignes-et-fricassee-de-girolles-43365.aspx"
+    },
+    {
+      titre: "Gâteau de châtaignes au chocolat à pâtisser",
+      image: "https://img.cuisineaz.com/660x495/2016/04/28/i113198-gateau-de-chataignes-au-chocolat-a-patisser.webp",
+      lien: "https://www.cuisineaz.com/recettes/gateau-de-chataignes-au-chocolat-a-patisser-33999.aspx"
+    },
+    {
+      titre: "Crème de marrons maison",
+      image: "https://www.blogdechataigne.fr/wp-content/uploads/2020/10/Creme-de-marrons-maison-12.jpg",
+      lien: "https://www.blogdechataigne.fr/creme-de-marrons-maison/"
+    },
+    {
+      titre: "Crème de châtaignes aux lardons",
+      image: "https://www.herta.fr/sites/default/files/styles/scale_crop_720_500/public/herta_fr_recipes/recette-creme-chataigne_8675_1.jpg.webp?itok=-CWDkn5r",
+      lien: "https://www.herta.fr/recettes/creme-chataignes-aux-lardons"
+    },
+    {
+      titre: "Châtaignes au four",
+      image: "https://assets.afcdn.com/recipe/20181017/82836_w1024h1024c1cx1880cy2506cxt0cyt0cxb3760cyb5013.webp",
+      lien: "https://www.marmiton.org/recettes/recette_chataignes-au-four_27423.aspx"
     }
   ],
   "Chèvrefeuille": [
@@ -109,6 +234,31 @@ const recettes = {
       titre: "Chutney de cornouilles",
       image: "https://img-3.journaldesfemmes.fr/R1mQxLA7cDZgwGwphDmFZwoTuPQ=/750x500/7b983877925742028c4135c74dc2f5b7/ccmcms-jdf/39917012.jpg",
       lien: "https://cuisine.journaldesfemmes.fr/recette/318758-chutney-de-cornouilles"
+    },
+    {
+      titre: "Fleurs de Cornouiller Fondant",
+      image: "https://static.foodiez.fr/media/images/recipe/232045.webp?v=1708597674",
+      lien: "https://www.foodiez.fr/recettes/fleurs-de-cornouiller-fondant-191380/"
+    },
+    {
+      titre: "Cornouilles apéritives",
+      image: "https://media.bettybossi.ch/image/992382728798/image_fsl893plu561facdh35j6sre69/-FWEBP-Ro:5,w:2250,h:1800,n:default",
+      lien: "https://www.bettybossi.ch/fr/recettes/recette/cornouilles-aperitives-10008536/"
+    },
+    {
+      titre: "Confiture de cornouilles",
+      image: "https://img.cuisineaz.com/660x495/2019/01/03/i145445-confiture-de-cornouilles.webp",
+      lien: "https://www.cuisineaz.com/recettes/confiture-de-cornouilles-105633.aspx"
+    },
+    {
+      titre: "La recette pleine de saveurs de tarte aux cornouilles",
+      image: "https://www.francebleu.fr/s3/cruiser-production/2023/10/64c11892-0681-4c61-9cba-aed1c592883a/1200x680_sc_tarte.webp",
+      lien: "https://www.francebleu.fr/vie-quotidienne/cuisine/la-recette-pleine-de-saveurs-de-tarte-aux-cornouilles-7603208"
+    },
+    {
+      titre: "Cornouilles lacto-fermentées",
+      image: "https://garrigue-gourmande.fr/images/recettes/re45-1_gr.jpg",
+      lien: "https://garrigue-gourmande.fr/index.php?option=com_content&view=article&id=200045&Itemid=209"
     }
   ],
   "Figuier": [
@@ -134,9 +284,64 @@ const recettes = {
   ],
   "Prunier à fruits": [
     {
-      titre: "",
-      image: "https://www.julieandrieu.com/media/cache/web_recipe_detail/uploads/recettes/dessert/beignets-fleurs-glycines-camille-oger.jpg",
-      lien: "https://www.julieandrieu.com/recettes/beignets-fleurs-glycines-camille-oger"
+      titre: "Beignets de prunes",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i17295-beignets-de-prunes.webp",
+      lien: "https://www.cuisineaz.com/recettes/beignets-de-prunes-82394.aspx"
+    },
+    {
+      titre: "Soupe de prunes au tilleul",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i89977-soupe-de-prunes-au-tilleul.webp",
+      lien: "https://www.cuisineaz.com/recettes/soupe-de-prunes-au-tilleul-82388.aspx"
+    },
+    {
+      titre: "Glace aux prunes",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i27779-glace-aux-prunes.webp",
+      lien: "https://www.cuisineaz.com/recettes/glace-aux-prunes-82386.aspx"
+    },
+    {
+      titre: "Crêpes aux prunes, sauce au chocolat",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i6134-crepes-aux-prunes-sauce-au-chocolat.webp",
+      lien: "https://www.cuisineaz.com/recettes/crepes-aux-prunes-sauce-au-chocolat-31738.aspx"
+    },
+    {
+      titre: "Smoothie aux prunes",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i13924-smoothie-aux-prunes.webp",
+      lien: "https://www.cuisineaz.com/recettes/smoothie-aux-prunes-82389.aspx"
+    },
+    {
+      titre: "Gâteau au yaourt aux prunes",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i94715-gateau-au-yaourt-aux-prunes.webp",
+      lien: "https://www.cuisineaz.com/recettes/gateau-au-yaourt-aux-prunes-82385.aspx"
+    },
+    {
+      titre: "Cheesecake aux prunes",
+      image: "https://img.cuisineaz.com/660x495/2015/06/29/i95067-cheesecake-aux-prunes.webp",
+      lien: "https://www.cuisineaz.com/recettes/cheesecake-aux-prunes-82164.aspx"
+    },
+    {
+      titre: "Poêlée de prunes à la fleur d’oranger et à la vanille",
+      image: "https://www.lesfruitsetlegumesfrais.com/app/uploads/2015/01/r593-2-poelee-de-prune-vanille-500x500.jpg",
+      lien: "https://www.lesfruitsetlegumesfrais.com/recettes/poelee-de-prunes-a-la-fleur-doranger-et-a-la-vanille"
+    },
+    {
+      titre: "Crumble aux prunes",
+      image: "https://www.marechal-fraicheur.fr/media/cache/sylius_shop_product_large_thumbnail/e2/1d/2a57c2fe071ce3465e5fde425e54.jpg",
+      lien: "https://www.marechal-fraicheur.fr/fr_FR/products/crumble-aux-prunes"
+    },
+    {
+      titre: "Confiture de prunes",
+      image: "https://images.ricardocuisine.com/services/recipes/992x1340_4561-v3.jpg",
+      lien: "https://www.ricardocuisine.com/recettes/4561-confiture-de-prunes"
+    },
+    {
+      titre: "Clafoutis aux prunes",
+      image: "https://assets.afcdn.com/recipe/20230713/144169_w1024h1024c1cx960cy540cxt0cyt0cxb1920cyb1080.jpg",
+      lien: "https://www.marmiton.org/recettes/recette_clafoutis-aux-prunes-reines-claude_93510.aspx"
+    },
+    {
+      titre: "Tarte flamande aux prunes",
+      image: "https://www.yumelise.fr/wp-content/uploads/2018/07/tarte-prunes.jpg",
+      lien: "https://www.yumelise.fr/tarte-flamande-prunes/"
     }
   ]
 };
