@@ -441,21 +441,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4504005648761324,
-          43.59859027165647
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4392873638617478,
           43.616208948814204
         ]
@@ -554,21 +539,6 @@
         "genre": "Quercus",
         "espece": "robur",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.433786256439132,
-          43.58480546158132
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -981,21 +951,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4279903582582842,
-          43.60767210299347
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4567872230110979,
           43.61189063072524
         ]
@@ -1094,21 +1049,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4256452865590075,
-          43.605446048695626
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -1393,7 +1333,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -1491,36 +1431,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4516175669817766,
-          43.593932601402514
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4516023747605649,
-          43.59396021517977
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4504207954837678,
           43.59209830751302
         ]
@@ -1529,21 +1439,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4140147806325705,
-          43.60920273615403
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -1589,21 +1484,6 @@
         "genre": "Cornus",
         "espece": "kousa",
         "libellefrancais": "Cornouiller"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.460882696723787,
-          43.613138120187486
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -1821,21 +1701,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4516088782177778,
-          43.591989593496
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.462567295930743,
           43.61767227735
         ]
@@ -2024,21 +1889,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4330875426531637,
-          43.60060579252304
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -2391,21 +2241,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4144232712698588,
-          43.60935729319807
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4271587075982675,
           43.60571520647027
         ]
@@ -2526,21 +2361,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4472304200921213,
-          43.604573819316364
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4486655459561952,
           43.603127345215064
         ]
@@ -2601,21 +2421,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4527011977931665,
-          43.59174468470323
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4495303745802903,
           43.59412243207233
         ]
@@ -2654,21 +2459,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.413993155529709,
-          43.60921248614177
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -3059,21 +2849,6 @@
         "genre": "Corylus",
         "espece": "colurna",
         "libellefrancais": "Noisetier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4138535513446326,
-          43.60930927300004
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -4176,36 +3951,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4614418325506475,
-          43.61267726361476
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4614116088858555,
-          43.61265237516918
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4605069909730435,
           43.61303157204916
         ]
@@ -4371,21 +4116,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4496003749678634,
-          43.59853578942403
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4370635022273854,
           43.59478027428406
         ]
@@ -4484,21 +4214,6 @@
         "genre": "Fraxinus",
         "espece": "angustifolia",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4343092814759368,
-          43.59977565624497
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -4634,21 +4349,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4315467431649376,
-          43.59556666365883
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -5241,21 +4941,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4139855055007178,
-          43.60921604516116
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.421824212636316,
           43.60600710608063
         ]
@@ -5548,7 +5233,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -5638,7 +5323,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -7836,21 +7521,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4660262442609941,
-          43.60827543491103
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4276162259131875,
           43.60572416743594
         ]
@@ -7979,21 +7649,6 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4139995058163641,
-          43.609209836536664
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -8713,7 +8368,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -9426,21 +9081,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4638267991809701,
-          43.60946707472569
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.459372896688455,
           43.59111065622267
         ]
@@ -9771,21 +9411,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4524847249988782,
-          43.593219210190355
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.450697585716899,
           43.592392480016805
         ]
@@ -9981,36 +9606,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4496413449413443,
-          43.59853215288292
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4549912229288766,
-          43.61619152536834
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.43017004080111,
           43.600551081439455
         ]
@@ -10169,21 +9764,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4496245799791594,
-          43.59853381850109
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -10379,21 +9959,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.452713556078319,
-          43.5916235882109
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -11331,21 +10896,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4495764924656087,
-          43.59856895783185
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4301304827566066,
           43.600280058403435
         ]
@@ -12051,21 +11601,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4607756424438407,
-          43.61013163996192
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.460381250029245,
           43.61285894414309
         ]
@@ -12089,51 +11624,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4613267991235865,
-          43.6073618574986
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4139471998743263,
-          43.609238358690604
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4658200102747418,
-          43.60762304758536
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -12449,21 +11939,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4256941276666864,
-          43.605454014807876
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -12913,7 +12388,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -13258,7 +12733,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -13334,36 +12809,6 @@
         "genre": "Pinus",
         "espece": "sylvestris",
         "libellefrancais": "Pin sylvestre"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4351949124701822,
-          43.57256253610811
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4352277855156188,
-          43.57256982322146
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -14001,21 +13446,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4138458191985026,
-          43.6093164678503
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4360574597557751,
           43.57494060264269
         ]
@@ -14391,21 +13821,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4495899106152146,
-          43.598567382362276
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4532077257135678,
           43.59631768900932
         ]
@@ -14429,21 +13844,6 @@
         "genre": "Tilia",
         "espece": "platyphyllos",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4503876011757648,
-          43.598808179879434
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -14796,21 +14196,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4257273749357344,
-          43.60543254680139
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.422002721908806,
           43.60596111018557
         ]
@@ -15133,7 +14518,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -15786,21 +15171,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4603925915943157,
-          43.61273351325512
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4602596983966565,
           43.61296229202613
         ]
@@ -15913,7 +15283,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -16409,21 +15779,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.455032165063407,
-          43.61621880927309
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -17136,21 +16491,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4609883911116246,
-          43.613118191816994
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4562589947846927,
           43.61853482952255
         ]
@@ -17548,22 +16888,7 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.451063738145862,
-          43.59396839160583
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
+        "libellefrancais": "Pêcher"
       }
     },
     {
@@ -18606,21 +17931,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4496838694251288,
-          43.598525836471296
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.419203112858613,
           43.6108418702598
         ]
@@ -19161,21 +18471,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.449567910520936,
-          43.59857032810235
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.442564068237698,
           43.58892792074005
         ]
@@ -19221,21 +18516,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.442078923064584,
-          43.588486835534376
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4534518073384195,
           43.59519057429738
         ]
@@ -19259,21 +18539,6 @@
         "genre": "Tilia",
         "espece": "platyphyllos",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4526184896284622,
-          43.59516929285505
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -19364,21 +18629,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4622895368286488,
-          43.611428941837005
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -19791,21 +19041,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4139574587745676,
-          43.60923118949775
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4423056687181381,
           43.58313809361995
         ]
@@ -19979,21 +19214,6 @@
         "genre": "Quercus",
         "espece": "phellos",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4352535871758771,
-          43.5725776447248
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -20309,21 +19529,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4578661851806853,
-          43.62304399735065
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -20669,21 +19874,6 @@
         "genre": "Amelanchier",
         "espece": "arborea",
         "libellefrancais": "Amélanchier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4607439635772945,
-          43.61010556162468
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -21104,21 +20294,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4419700867971146,
-          43.588267285016016
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -21629,21 +20804,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4142752975810648,
-          43.609292210788055
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -22731,21 +21891,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4303296911475583,
-          43.600406123583305
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.429634239835667,
           43.60040947858469
         ]
@@ -23646,21 +22791,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4257690507083065,
-          43.605425804433736
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.427772907503665,
           43.605695231370944
         ]
@@ -23826,21 +22956,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4334522710610904,
-          43.611857370754365
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4327752494102322,
           43.611383070524695
         ]
@@ -23878,7 +22993,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -24329,21 +23444,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.45270376464187,
-          43.591702047826836
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -24891,21 +23991,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.413865274906195,
-          43.60929389572432
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4198868583352982,
           43.60991515060605
         ]
@@ -24944,21 +24029,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4419539858885067,
-          43.584122403029006
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -25094,21 +24164,6 @@
         "genre": "Quercus",
         "espece": "palustris",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4139779155604792,
-          43.60921776851631
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -25288,7 +24343,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -25911,21 +24966,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4614297134933316,
-          43.612671430891176
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.460172509701029,
           43.61286750698529
         ]
@@ -25949,21 +24989,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4605485907999078,
-          43.61281174998352
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -26841,21 +25866,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.449582467134681,
-          43.59856782265765
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.452325115723821,
           43.59503005917687
         ]
@@ -26893,7 +25903,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -27366,21 +26376,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4394568367898675,
-          43.6105112142766
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4376236983927921,
           43.609558033884944
         ]
@@ -27576,21 +26571,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.461424038259381,
-          43.61266064264206
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4601206998811398,
           43.612696403579875
         ]
@@ -27689,21 +26669,6 @@
         "genre": "Corylus",
         "espece": "avellana",
         "libellefrancais": "Noisetier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4333730552435533,
-          43.60051156368032
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -28071,21 +27036,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.432391869603474,
-          43.61218824592767
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4360444457798585,
           43.575013616465306
         ]
@@ -28281,21 +27231,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4321184295716642,
-          43.61116164604245
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4358288606639167,
           43.584576559241135
         ]
@@ -28424,21 +27359,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.433790037280173,
-          43.577430702365376
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -29001,21 +27921,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4602406361366886,
-          43.612760206834814
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4604930150211817,
           43.61286358329549
         ]
@@ -29159,21 +28064,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4304082020248685,
-          43.60062925164501
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -29384,21 +28274,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4415688778330236,
-          43.57765261106356
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -29878,7 +28753,7 @@
       "properties": {
         "genre": "Punica",
         "espece": "granatum",
-        "libellefrancais": "Grenadier !"
+        "libellefrancais": "Grenadier"
       }
     },
     {
@@ -32196,21 +31071,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.464717447340273,
-          43.607896708330486
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.460512247809127,
           43.61734658816641
         ]
@@ -32383,7 +31243,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -32504,21 +31364,6 @@
         "genre": "Tilia",
         "espece": "platyphyllos",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4138612250132396,
-          43.6093048050719
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -33186,21 +32031,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4609110528942815,
-          43.612514819208336
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4599835330850282,
           43.61275570204253
         ]
@@ -33651,36 +32481,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.432117210272823,
-          43.6123126157216
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4324367357957237,
-          43.61216645644907
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4429593369838418,
           43.58980476924544
         ]
@@ -33749,21 +32549,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4496979367269087,
-          43.59851333183393
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -34244,36 +33029,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.460663067156922,
-          43.61267941024963
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.460710606078711,
-          43.612680943443756
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -35136,36 +33891,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4527169855418607,
-          43.59157623663614
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4527067220103957,
-          43.591673324843015
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4500470553787725,
           43.5923884836492
         ]
@@ -35796,21 +34521,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4587071884560463,
-          43.59145480744786
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.442395457626546,
           43.589099709703
         ]
@@ -36119,21 +34829,6 @@
         "genre": "Morus",
         "espece": "alba",
         "libellefrancais": "Mûrier blanc"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4499095171241672,
-          43.59313703189006
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -36786,36 +35481,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4333298636493395,
-          43.600522510315685
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.433177987434561,
-          43.60057576230417
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4330700139976014,
           43.61107088564942
         ]
@@ -37236,21 +35901,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4638061067051638,
-          43.60986096511786
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4562156752576867,
           43.61848388337989
         ]
@@ -37573,7 +36223,7 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun !"
+        "libellefrancais": "Pêcher"
       }
     },
     {
@@ -38136,21 +36786,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4138755452942537,
-          43.609285808452164
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4359342611383028,
           43.57554471028803
         ]
@@ -38174,21 +36809,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4450545710783447,
-          43.604686213726296
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -38444,21 +37064,6 @@
         "genre": "Pinus",
         "espece": "sylvestris",
         "libellefrancais": "Pin sylvestre"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4325701975981737,
-          43.61205319802139
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
       }
     },
     {
@@ -38961,36 +37566,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.465456797534615,
-          43.60756758876439
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.452529697630863,
-          43.61863905109686
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.430043017566788,
           43.60504986265741
         ]
@@ -39029,21 +37604,6 @@
         "genre": "Quercus",
         "espece": "robur",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4139676929023801,
-          43.60922401996412
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -39201,21 +37761,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.451838597654333,
-          43.59292401132624
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.429764620008666,
           43.582514811500985
         ]
@@ -39359,21 +37904,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4562382109014744,
-          43.62358860630249
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -40911,21 +39441,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.463795044897094,
-          43.60985744226522
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4567771668641294,
           43.611244626495406
         ]
@@ -41789,21 +40304,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4333390984247094,
-          43.6005198627509
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -43371,21 +41871,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4139343917269058,
-          43.60924732039278
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4618498069499257,
           43.609394335244765
         ]
@@ -43574,21 +42059,6 @@
         "genre": "Tilia",
         "espece": "platyphyllos",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.44196652487696,
-          43.59195966065982
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -43979,21 +42449,6 @@
         "genre": "Corylus",
         "espece": "colurna",
         "libellefrancais": "Noisetier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4556145657923822,
-          43.61519402782165
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -44721,21 +43176,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4655154711269691,
-          43.60754001038342
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4593839921251917,
           43.59114755176967
         ]
@@ -45178,7 +43618,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -45568,7 +44008,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -46108,7 +44548,7 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun !"
+        "libellefrancais": "Pêcher"
       }
     },
     {
@@ -46168,7 +44608,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -46356,21 +44796,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4321082672869578,
-          43.61231733769935
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4314328350495453,
           43.59544906782883
         ]
@@ -46454,21 +44879,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4496921141539978,
-          43.598523111315814
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -46723,7 +45133,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -46941,21 +45351,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4139216071950451,
-          43.609255373175884
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4455921618872378,
           43.57954726325711
         ]
@@ -47039,21 +45434,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4423389177606198,
-          43.582737664044956
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -47856,21 +46236,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4331079784640732,
-          43.600599182730704
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.437523691217875,
           43.590802170007976
         ]
@@ -48238,7 +46603,7 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun !"
+        "libellefrancais": "Pêcher"
       }
     },
     {
@@ -48269,21 +46634,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4564102211068581,
-          43.606251142751326
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -48328,7 +46678,7 @@
       "properties": {
         "genre": "Punica",
         "espece": "granatum",
-        "libellefrancais": "Grenadier !"
+        "libellefrancais": "Grenadier"
       }
     },
     {
@@ -48344,21 +46694,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4342651559638229,
-          43.5997805409716
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -48404,21 +46739,6 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4609684081464163,
-          43.61312940371785
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -48764,36 +47084,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.41435120268076,
-          43.60932340096297
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4256491788289694,
-          43.60563616898063
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -49836,21 +48126,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.432212731443731,
-          43.61227955818137
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4412538965684176,
           43.608595112822954
         ]
@@ -50114,21 +48389,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.449633144776196,
-          43.59853312317315
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -51321,21 +49581,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4496988660736152,
-          43.5985206362075
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.422989854248478,
           43.611462627815335
         ]
@@ -51583,7 +49828,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -52026,21 +50271,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4144751195637997,
-          43.6093945540307
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4279080143693612,
           43.60567422085348
         ]
@@ -52378,22 +50608,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4525015200990747,
-          43.593040377981424
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -52746,21 +50961,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4140300439787046,
-          43.60919655385615
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.437692072263353,
           43.60354611476745
         ]
@@ -52881,21 +51081,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4138985525137882,
-          43.60927150423355
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4482405830155258,
           43.60906045405567
         ]
@@ -52934,21 +51119,6 @@
         "genre": "Prunus",
         "espece": "dulcis",
         "libellefrancais": "Amandier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4342008027239728,
-          43.577625843384254
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -53586,21 +51756,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.454747417682282,
-          43.61602682005178
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4490272956026624,
           43.612026580692415
         ]
@@ -53811,21 +51966,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4496962884011826,
-          43.59850507256932
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4243423837607045,
           43.611681327478614
         ]
@@ -53849,21 +51989,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4258432313970264,
-          43.605425896391495
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -55026,21 +53151,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4608676737199267,
-          43.61024062275864
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.432822508823992,
           43.611501587925325
         ]
@@ -55468,7 +53578,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -55821,36 +53931,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4604617863513696,
-          43.61273119389151
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4633095042828483,
-          43.61249009998641
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4631360450721054,
           43.61292800589589
         ]
@@ -55934,21 +54014,6 @@
         "genre": "Arbutus",
         "espece": "unedo",
         "libellefrancais": "Arbousier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.449649555390862,
-          43.598530777624035
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -56489,21 +54554,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4568662765404885,
-          43.60545620534569
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -57741,21 +55791,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4321174906299567,
-          43.612319065203685
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4324903981353498,
           43.61111328821452
         ]
@@ -58723,7 +56758,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -58889,21 +56924,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4260279153609297,
-          43.59407096646781
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -59324,21 +57344,6 @@
         "genre": "Fraxinus",
         "espece": "excelsior",
         "libellefrancais": "Frêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4312953232373407,
-          43.57628006725062
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -60291,21 +58296,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4342330288608878,
-          43.57762272413195
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4611182796316653,
           43.61265468262915
         ]
@@ -60876,21 +58866,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4548580533716091,
-          43.61593092992025
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4438607475608103,
           43.57613022062985
         ]
@@ -60899,21 +58874,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.456427048343259,
-          43.60627648391232
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -61431,21 +59391,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.435156208850191,
-          43.57255084882795
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4388148872168725,
           43.57626335502172
         ]
@@ -61603,7 +59548,7 @@
       "properties": {
         "genre": "Punica",
         "espece": "granatum",
-        "libellefrancais": "Grenadier !"
+        "libellefrancais": "Grenadier"
       }
     },
     {
@@ -61634,21 +59579,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4334052985175867,
-          43.60050100878466
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -61761,21 +59691,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.413883182719516,
-          43.609282258269396
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4318968601975248,
           43.57464100688085
         ]
@@ -61859,21 +59774,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4501930081451244,
-          43.58126329488756
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -62061,21 +59961,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4631543150545718,
-          43.61257148827608
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4629709073842088,
           43.613094423289525
         ]
@@ -62174,36 +60059,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4555365758980081,
-          43.61522062303782
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4556850320827148,
-          43.615229717927996
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
       }
     },
     {
@@ -62654,36 +60509,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4606612476693686,
-          43.60749032704794
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4648492520008682,
-          43.60682344937334
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -63568,7 +61393,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -64191,21 +62016,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4138908914709771,
-          43.60927596333495
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4474380326779692,
           43.60862293218711
         ]
@@ -64536,21 +62346,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4321201648367636,
-          43.61220194493501
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.431862053581994,
           43.585906335071165
         ]
@@ -64559,21 +62354,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.435175335794781,
-          43.57255821984345
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -64694,21 +62474,6 @@
         "genre": "Corylus",
         "espece": "colurna",
         "libellefrancais": "Noisetier"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.459772173240059,
-          43.6129269906617
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -64993,7 +62758,7 @@
       "properties": {
         "genre": "Prunus",
         "espece": "persica",
-        "libellefrancais": "Pêcher commun !"
+        "libellefrancais": "Pêcher"
       }
     },
     {
@@ -65436,21 +63201,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4659590651812475,
-          43.60827170773936
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.437107579255297,
           43.59538290529948
         ]
@@ -65586,36 +63336,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.450624635981672,
-          43.59353930448011
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4509623400234821,
-          43.59393732479585
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4345852894335374,
           43.578680540951964
         ]
@@ -65654,36 +63374,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.433161011522867,
-          43.60058174383101
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4331257922535545,
-          43.60059482399615
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -65924,21 +63614,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.436493137904143,
-          43.57635034214339
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -66291,21 +63966,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4333450633702718,
-          43.6005181611282
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.431802504702822,
           43.576496628601916
         ]
@@ -66344,21 +64004,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.449662983814735,
-          43.59852879717788
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -66584,21 +64229,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4608545057241555,
-          43.612782064514384
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -66989,21 +64619,6 @@
         "genre": "Pinus",
         "espece": "sylvestris",
         "libellefrancais": "Pin sylvestre"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4421895130408264,
-          43.589569694799486
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -67626,21 +65241,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4563954319794736,
-          43.606321568451385
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "plicata",
-        "libellefrancais": "Thuja !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4302465059515728,
           43.58032818217479
         ]
@@ -67904,36 +65504,6 @@
         "genre": "Tilia",
         "espece": "platyphyllos",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4502698151803388,
-          43.59902711332498
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4496723087276713,
-          43.59852743686595
-        ]
-      },
-      "properties": {
-        "genre": "Chamaecyparis",
-        "espece": "lawsoniana",
-        "libellefrancais": "Faux cyprès de Lawson !"
       }
     },
     {
@@ -68354,21 +65924,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4613670405890087,
-          43.60694500124479
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -68803,7 +66358,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -68849,21 +66404,6 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.451296921080075,
-          43.59334535678329
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
       }
     },
     {
@@ -69074,21 +66614,6 @@
         "genre": "Carpinus",
         "espece": "betulus",
         "libellefrancais": "Charme"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4364931898555395,
-          43.576145176937686
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -69531,21 +67056,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4589051554152688,
-          43.59144326875464
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4559764821095127,
           43.62278071450047
         ]
@@ -69689,21 +67199,6 @@
         "genre": "Quercus",
         "espece": "rubra",
         "libellefrancais": "Chêne"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4527209013146423,
-          43.59153901924039
-        ]
-      },
-      "properties": {
-        "genre": "Ligustrum",
-        "espece": "vulgare",
-        "libellefrancais": "Troène !"
       }
     },
     {
@@ -70274,21 +67769,6 @@
         "genre": "Cercis",
         "espece": "siliquastrum",
         "libellefrancais": "Arbre de Judée"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4602702379662915,
-          43.613104398477965
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -71106,21 +68586,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4325904325787762,
-          43.61208736619998
-        ]
-      },
-      "properties": {
-        "genre": "Cryptomeria",
-        "espece": "japonica",
-        "libellefrancais": "Cryptomeria !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4530212985905233,
           43.59647440056563
         ]
@@ -71399,21 +68864,6 @@
         "genre": "Tilia",
         "espece": "platyphyllos",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4520750807677838,
-          43.59571701176489
-        ]
-      },
-      "properties": {
-        "genre": "Cedrus",
-        "espece": "deodara",
-        "libellefrancais": "Cèdre de l'himalaya !"
       }
     },
     {
@@ -72028,7 +69478,7 @@
       "properties": {
         "genre": "Fagus",
         "espece": "sylvatica",
-        "libellefrancais": "Hêtre commun !"
+        "libellefrancais": "Hêtre"
       }
     },
     {
@@ -72419,21 +69869,6 @@
         "genre": "Robinia",
         "espece": "pseudoacacia",
         "libellefrancais": "Robinier, Faux acacia"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4607976662210649,
-          43.61008368088522
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
@@ -73641,21 +71076,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          1.4139113606715477,
-          43.609262542535426
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           1.4473710569066762,
           43.60858639245259
         ]
@@ -73994,21 +71414,6 @@
         "genre": "Tilia",
         "espece": "cordata",
         "libellefrancais": "Tilleul"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.4143201253123079,
-          43.60930927305101
-        ]
-      },
-      "properties": {
-        "genre": "Thuja",
-        "espece": "occidentalis",
-        "libellefrancais": "Thuya occidental, Arbre de paradis !"
       }
     },
     {
