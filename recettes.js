@@ -6,6 +6,13 @@ const recettes = {
       lien: "https://www.marmiton.org/recettes/recette_abricots-rotis_40562.aspx"
     }
   ],
+  "Alisier blanc, Alouchier": [
+    {
+      titre: "Confiture alise-pomme",
+      image: "https://img.over-blog-kiwi.com/0/56/82/94/20151104/ob_83dad8_pb043862.jpg",
+      lien: "https://plantessauvages43.over-blog.com/2015/11/confiture-alise-pomme.html"
+    }
+  ],
   "Amandier": [
     {
       titre: "Chouchous aux amandes",
@@ -326,6 +333,13 @@ const recettes = {
       lien: "https://www.ca-drache.fr/recette/cocktail-chti/frenette-du-mineur/"
     }
   ],
+  "Grenadier": [
+    {
+      titre: "",
+      image: "",
+      lien: ""
+    }
+  ],
   "Glycine": [
     {
       titre: "Beignet de fleur de glycine",
@@ -333,19 +347,134 @@ const recettes = {
       lien: "https://www.julieandrieu.com/recettes/beignets-fleurs-glycines-camille-oger"
     }
   ],
-  "Poirier à fruits": [
+  "Hêtre": [
+    {
+      titre: "Poulet sur branches de bouleau avec baies de cynorhodon et faînes",
+      image: "https://viandesuisse.ch/sites/schweizerfleisch/files/styles/hero_large/public/2019-09/Poulet_auf_Birkenzweigen_mit_Kuerbisspalten_und_Buchennuessen.jpg?h=2b674e33",
+      lien: "https://viandesuisse.ch/recettes/poulet-sur-branches-de-bouleau-avec-baies-de-cynorhodon-et-faines"
+    },
+    {
+      titre: "Faînes grillées",
+      image: "https://www.ma-petite-recette.fr/photos_recettes/base/grande/f/faines_grillees.webp",
+      lien: "https://www.ma-petite-recette.fr/recette/amuse-gueule/fruits-et-agrumes/faine/recette-faines-grillees.htm"
+    },
+    {
+      titre: "Pâtes au butterkin et faînes de hêtre",
+      image: "https://gourmandiz.dhnet.be/wp-content/uploads/2021/12/P%C3%A2tes-au-butterkin-et-fa%C3%AEnes-de-h%C3%AAtre-690x388.jpeg",
+      lien: "https://gourmandiz.dhnet.be/recette/pates-au-butterkin-et-faines-de-hetre"
+    }
+  ],
+  "Magnolia": [
+    {
+      titre: "Sirop de gingembre au magnolia",
+      image: "https://whiskfullyso.com/wp-content/uploads/2021/06/Magnolia-Ginger-Syrup-16-2-768x960.jpg",
+      lien: "https://whiskfullyso.com/homemade-magnolia-ginger-syrup/"
+    },
+    {
+      titre: "Pickles de fleurs de magnolia",
+      image: "https://www.sosbouffe.fr/images/cropped-pickles-fleurs-magnolia.protected.jpg",
+      lien: "https://www.sosbouffe.fr/index.php?option=com_joomrecipe&view=recipe&id=1619&layout=print&tmpl=component"
+    },
+    {
+      titre: "Beignets de magnolia",
+      image: "https://res.cloudinary.com/hv9ssmzrz/image/fetch/c_fill,f_auto,h_488,q_auto,w_650/https://s3-eu-west-1.amazonaws.com/images-ca-1-0-1-eu/recipe_photos/original/54655/vignette.jpg",
+      lien: "https://chefsimon.com/gourmets/la-neuvieme-planete/recettes/beignets-de-magnolia"
+    }
+  ],
+  "Mûrier blanc": [
+    {
+      titre: "Tarte aux mûres blanches",
+      image: "https://www.nutriting.com/wp-content/uploads/2023/06/mures-recette.jpg.webp",
+      lien: "https://www.nutriting.com/recettes-healthy/tarte-mures-blanches"
+    },
+    {
+      titre: "Confiture de mûres",
+      image: "https://encoreungateau.com/wp-content/uploads/2023/06/confiture-de-mures-recette-500x500.jpg",
+      lien: "https://encoreungateau.com/confiture-de-mures-maison/"
+    },
+    {
+      titre: "Moelleux aux mûres",
+      image: "https://i0.wp.com/www.cuisinelolo.fr/wp-content/uploads/2022/07/20220709-moelleux-aux-mures-mascarpone-1.jpg?ssl=1",
+      lien: "https://www.cuisinelolo.fr/2022/08/10/moelleux-aux-mures/"
+    }
+  ],
+  "Noisetier": [
+    {
+      titre: "Biscuits sablés aux noisettes",
+      image: "https://assets.afcdn.com/recipe/20171019/73310_w1024h768c1cx2016cy1608cxt0cyt0cxb4033cyb3216.jpg",
+      lien: "https://www.marmiton.org/recettes/recette_biscuits-sables-aux-noisettes_26136.aspx"
+    },
+    {
+      titre: "Cake aux olives et aux noisettes",
+      image: "https://assets.afcdn.com/recipe/20140814/3153_w1024h768c1cx900cy1350.jpg",
+      lien: "https://www.marmiton.org/recettes/recette_cake-aux-olives-et-aux-noisettes_16461.aspx"
+    },
+    {
+      titre: "Crumble aux pommes et aux noisettes",
+      image: "https://img.cuisineaz.com/660x495/2016/02/10/i92978-crumble-pommes-noisettes.webp",
+      lien: "https://www.cuisineaz.com/recettes/crumble-aux-pommes-et-aux-noisettes-56388.aspx"
+    }
+  ],
+  "Osmanthe": [
+    {
+      titre: "Wrap à la fleur d'Osmanthus",
+      image: "https://media3.neff-international.com/Images/3200x/MCIM03013385_pang_osmanthus-wrap_dish_3200x1848.webp",
+      lien: "https://www.neff-home.com/fr/the-ingredient/recettes/wrap-a-losmanthus-de-pang"
+    },
+    {
+      titre: "Petits gâteaux aux fleurs d'osmanthe",
+      image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg2u8_g85HmoqQ0lcZxDRi15vM-APFNYlefNyFxVcSKPtosdjH9bfVX_48SEh3mgp_R-Sdu3MtUYxciHK8BBX9vGNBbwPeMNyO7YI2erPAEx7RuPH1xvCgxfTQtx4I0TSCOTEHd6e2hNPNx/s400/IMG_2563+-+Copie.JPG",
+      lien: "https://recetteschinoises.blogspot.com/2016/08/petits-gateaux-aux-fleurs-dosmanthe.html"
+    },
+    {
+      titre: "Cake aux fleurs d'osmanthe",
+      image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjupNQ9i34A42OPsKHhLK96_4f1JAawthA2zO74TAoRB81kSMwE6pZVwblZEI7Z4mhEF-usxwkqIxpoc_RgstSurWumppcjvvCg7ffE42cUE15xkp5RadjYf-1sOsGxCPNHR7scj1mEGY_b/s400/IMG_1059+-+Copie.JPG",
+      lien: "https://recetteschinoises.blogspot.com/2015/10/cake-aux-fleurs-dosmanthe-guihua-dangao.html"
+    }
+  ],
+  "Pêcher": [
+    {
+      titre: "",
+      image: "",
+      lien: ""
+    }
+  ],
+  "Pommier": [
+    {
+      titre: "",
+      image: "",
+      lien: ""
+    },
+    {
+      titre: "",
+      image: "",
+      lien: ""
+    },
+    {
+      titre: "",
+      image: "",
+      lien: ""
+    }
+  ],
+  "Poirier": [
     {
       titre: "Poires rôties au cidre",
       image: "https://cache.marieclaire.fr/data/photo/w1500_ci/6z/recette-de-poire-roties-au-cidre.webp",
       lien: "https://www.marieclaire.fr/cuisine/poires-roties-au-cidre,1487547.asp"
     }
   ],
-
+  "Pin sylvestre": [
+    {
+      titre: "Sirop de pin",
+      image: "https://amandebasilic.com/wp-content/uploads/2018/04/Sirop-de-pin-r%C3%A9alisation.jpg",
+      lien: "https://amandebasilic.com/sirop-de-pin-maison/"
+    }
+  ],
   "Charme": [
     {
-      titre: "Poires rôties au cidre",
-      image: "https://cache.marieclaire.fr/data/photo/w1500_ci/6z/recette-de-poire-roties-au-cidre.webp",
-      lien: "https://www.marieclaire.fr/cuisine/poires-roties-au-cidre,1487547.asp"
+      titre: "",
+      image: "",
+      lien: ""
     }
   ],
   "Cormier": [
@@ -368,7 +497,7 @@ const recettes = {
     }
   ],
 
-  "Prunier à fruits": [
+  "Prunier": [
     {
       titre: "Beignets de prunes",
       image: "https://img.cuisineaz.com/660x495/2015/06/29/i17295-beignets-de-prunes.webp",
@@ -428,6 +557,41 @@ const recettes = {
       titre: "Tarte flamande aux prunes",
       image: "https://www.yumelise.fr/wp-content/uploads/2018/07/tarte-prunes.jpg",
       lien: "https://www.yumelise.fr/tarte-flamande-prunes/"
+    }
+  ],
+
+  "Robinier, Faux acacia": [
+    {
+      titre: "Beignets de fleurs d’acacia ou fleurs de robinier",
+      image: "https://encoreungateau.com/wp-content/uploads/2022/05/beignets-fleurs-acacia-500x500.jpg",
+      lien: "https://encoreungateau.com/beignets-fleurs-acacia-robinier/"
+    },
+    {
+      titre: "Sirop de fleurs d’acacia",
+      image: "https://www.cookingout.fr/wp-content/uploads/2018/05/sirop-de-fleurs-dacacia-896x1024.jpg",
+      lien: "https://www.cookingout.fr/sirop-de-fleurs-dacacia/"
+    },
+    {
+      titre: "Tisane glacée féérique à l'acacia",
+      image: "https://back.femininbio.com/attachments/2020/11/20/landscape/w1200/14292-fleurs-p111.jpg",
+      lien: "https://www.femininbio.com/alimentation/recettes-cuisine-bio/tisane-glacee-feerique-a-lacacia-45045"
+    },
+    {
+      titre: "Panna cotta à la fleur d’acacia",
+      image: "https://www.marie.cooking/wp-content/uploads/2021/04/IMG_5339.jpg",
+      lien: "https://www.marie.cooking/fr/panna-cotta-a-la-fleur-dacacia/"
+    },
+    {
+      titre: "Gelée de fleurs d'acacia",
+      image: "https://img.cuisineaz.com/660x495/2021/08/01/i180098-gelee-fleurs-acacia.webp",
+      lien: "https://www.cuisineaz.com/recettes/gelee-de-fleurs-d-acacia-113329.aspx"
+    }
+  ],
+  "Sumac de Virginie": [
+    {
+      titre: "Limonade au sumac",
+      image: "https://www.francoislambert.one/cdn/shop/articles/limonade_au_sumac.jpg?v=1722199510&width=1500",
+      lien: "https://www.francoislambert.one/blogs/recettes/limonade-au-sumac-1"
     }
   ],
   "Sureau": [
