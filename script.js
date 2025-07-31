@@ -3,7 +3,7 @@ const paris = "https://gael-mgn.github.io/divers/paris.geojson";
 const toulouse = "https://gael-mgn.github.io/divers/toulouse.geojson";
 
 
-const root = toulouse;
+const root = paris;
 
 
 
