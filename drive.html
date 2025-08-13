@@ -2,19 +2,34 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Test Enregistrement Audio → Google Drive</title>
+<title>Enregistrement audio vers Google Drive</title>
+<style>
+  body { font-family: sans-serif; margin: 2rem; }
+  button { margin: 0.5rem; padding: 0.5rem 1rem; }
+  #progressContainer { width: 100%; background: #eee; height: 10px; border-radius: 5px; margin-top: 10px; display: none; }
+  #progressBar { height: 100%; background: #4caf50; width: 0%; border-radius: 5px; }
+</style>
 </head>
 <body>
-<h1>Enregistrement audio et envoi vers Google Drive</h1>
-<button id="startBtn">🎙️ Démarrer l'enregistrement</button>
-<button id="stopBtn" disabled>⏹️ Stop</button>
+<h1>🎙️ Enregistrement audio → Google Drive</h1>
+<button id="startBtn">Démarrer</button>
+<button id="stopBtn" disabled>Arrêter</button>
+<div id="progressContainer"><div id="progressBar"></div></div>
 <p id="status"></p>
 
 <script>
-const SCRIPT_URL = "AKfycbwT-CNBYwNurwu7SC8ctDeWJyL143cMm59KxQPaAvrkDRHYo82TvRhKD2T0D8ZAVtuX"; // Colle ici l’URL de ton Google Apps Script
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUCevaR3XeLsN7kO1eUzXf9RfGVGagPmXc7XjNfgFuvlUGFQs1iSjqDYJ0m1YZB3jq/exec"; // URL /exec du déploiement Google Apps Script
 let mediaRecorder;
 let audioChunks = [];
 
+// Génération d'un nom de fichier horodaté
+function getFileName(extension = "webm") {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}.${extension}`;
+}
+
+// Start recording
 document.getElementById("startBtn").onclick = async () => {
     let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder = new MediaRecorder(stream);
@@ -25,28 +40,47 @@ document.getElementById("startBtn").onclick = async () => {
     };
 
     mediaRecorder.onstop = async () => {
-        let blob = new Blob(audioChunks, { type: "audio/webm" });
-        let arrayBuffer = await blob.arrayBuffer();
-        let base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+        let mimeType = mediaRecorder.mimeType || "audio/webm";
+        let extension = mimeType.split("/")[1] || "webm";
+        let blob = new Blob(audioChunks, { type: mimeType });
+        let filename = getFileName(extension);
+
+        let formData = new FormData();
+        formData.append("file", blob);
+        formData.append("filename", filename);
 
         document.getElementById("status").textContent = "Envoi en cours...";
+        document.getElementById("progressContainer").style.display = "block";
 
-        let formData = new URLSearchParams();
-        formData.append("file", base64String);
-        formData.append("filename", "enregistrement_" + Date.now() + ".webm");
-        formData.append("mimeType", "audio/webm");
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", SCRIPT_URL, true);
 
-        let response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: formData
-        });
-        let result = await response.json();
-        
-        if (result.success) {
-            document.getElementById("status").innerHTML = `✅ Fichier enregistré : <a href="${result.fileUrl}" target="_blank">Ouvrir</a>`;
-        } else {
-            document.getElementById("status").textContent = "Erreur : " + result.message;
-        }
+        xhr.upload.onprogress = e => {
+            if (e.lengthComputable) {
+                let percent = (e.loaded / e.total) * 100;
+                document.getElementById("progressBar").style.width = percent + "%";
+            }
+        };
+
+        xhr.onload = () => {
+            document.getElementById("progressContainer").style.display = "none";
+            if (xhr.status === 200) {
+                try {
+                    let result = JSON.parse(xhr.responseText);
+                    if (result.success) {
+                        document.getElementById("status").innerHTML = `✅ Fichier enregistré : <a href="${result.fileUrl}" target="_blank">${filename}</a>`;
+                    } else {
+                        document.getElementById("status").textContent = "Erreur : " + result.message;
+                    }
+                } catch {
+                    document.getElementById("status").textContent = "Réponse inattendue : " + xhr.responseText;
+                }
+            } else {
+                document.getElementById("status").textContent = "Erreur HTTP : " + xhr.status;
+            }
+        };
+
+        xhr.send(formData);
     };
 
     mediaRecorder.start();
@@ -55,6 +89,7 @@ document.getElementById("startBtn").onclick = async () => {
     document.getElementById("status").textContent = "Enregistrement en cours...";
 };
 
+// Stop recording
 document.getElementById("stopBtn").onclick = () => {
     mediaRecorder.stop();
     document.getElementById("startBtn").disabled = false;
