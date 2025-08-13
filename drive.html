@@ -2,79 +2,341 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Enregistrer audio et envoyer vers Drive</title>
+  <title>Enregistrement audio vers Google Drive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* --- Style global sombre --- */
+    body {
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #121212, #1f1f1f);
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      background: linear-gradient(90deg, #4da3ff, #9b6dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    /* --- Boutons --- */
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      padding: 12px 26px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.15s ease, box-shadow 0.3s ease, background 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    button:active { transform: scale(0.96); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    #startBtn { background: linear-gradient(135deg, #28a745, #34d058); color: white; }
+    #stopBtn  { background: linear-gradient(135deg, #dc3545, #f87171); color: white; }
+
+    /* --- Statut --- */
+    #status {
+      margin: 10px 0;
+      font-weight: bold;
+      text-align: center;
+      color: #9cc9ff;
+      min-height: 1.5em;
+    }
+
+    /* --- Zone formulaire ergonomique --- */
+    .metadata-box {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      background: rgba(40, 40, 40, 0.95);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 15px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+      animation: fadeIn 0.4s ease;
+    }
+
+    .metadata-box label {
+      font-weight: 600;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .metadata-box input, 
+    .metadata-box textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background: #1e1e1e;
+      color: #f0f0f0;
+      transition: border-color 0.3s ease, background 0.3s ease;
+      outline: none;
+    }
+
+    .metadata-box input:focus,
+    .metadata-box textarea:focus {
+      border-color: #4da3ff;
+      background: #2a2a2a;
+    }
+
+    .metadata-box textarea {
+      resize: vertical;
+    }
+
+    .metadata-box button {
+      background: linear-gradient(135deg, #007bff, #5a9bff);
+      color: white;
+      padding: 12px;
+      font-size: 15px;
+    }
+
+    /* --- Audio --- */
+    audio { 
+      margin-top: 10px;
+      max-width: 100%;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- Mobile --- */
+    @media (max-width: 600px) {
+      button {
+        flex: 1 1 45%;
+        font-size: 14px;
+        padding: 10px;
+      }
+      .controls { gap: 10px; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Enregistrement audio vers Google Drive</h1>
+  <h1>🎙️ Enregistrement vers Google Drive</h1>
 
-  <button id="startBtn">🎤 Commencer l'enregistrement</button>
-  <button id="stopBtn" disabled>⏹️ Arrêter l'enregistrement</button>
+  <div class="controls">
+    <button id="startBtn">▶ Commencer</button>
+    <button id="stopBtn" disabled>⏹ Arrêter</button>
+  </div>
 
   <p id="status"></p>
-  <audio id="audioPlayback" controls></audio>
+
+  <div id="metadataBox" class="metadata-box">
+    <label for="titreInput">Titre :</label>
+    <input type="text" id="titreInput" placeholder="Titre de l'enregistrement (optionnel)">
+    
+    <label for="descriptionInput">Description :</label>
+    <textarea id="descriptionInput" rows="3" placeholder="Description (optionnel)"></textarea>
+    
+    <audio id="audioPlayback" controls></audio>
+    <button id="submitBtn">📤 Soumettre</button>
+  </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLmQjOdv0KX0BYFa7Lvo6vLyKeDh-t0OEUuozfaMquAF_DUEn1LuMPqOqwK1nDG7q9/exec"; // URL du script déployé
-    const FOLDER_ID = "133Iuv3NsDuwT-sFHP3zEH3zT60r2vXHx";        // ID du dossier Google Drive
 
-    let mediaRecorder;
-    let audioChunks = [];
+  async function googleSheets(values, spreadsheetId, sheetName, date = false) {
+  const payload = {
+    spreadsheetId: spreadsheetId,
+    sheetName: sheetName,
+    values: values,
+    addDate : date
+  };
 
-    const startBtn = document.getElementById("startBtn");
-    const stopBtn = document.getElementById("stopBtn");
-    const status = document.getElementById("status");
-    const audioPlayback = document.getElementById("audioPlayback");
+  const data = encodeURIComponent(JSON.stringify(payload));
+  const body = `data=${data}`;
 
-    startBtn.onclick = async () => {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
+  const url = 'https://script.google.com/macros/s/AKfycbwMA4zcgcZMzSlz9xDjfdQZcMPgSECNe__aRO8Os6J96-XeBHYjX34LIkRIbD_kjfSs/exec';
 
-      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-      mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        audioPlayback.src = URL.createObjectURL(audioBlob);
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: body
+    });
 
-        // Lire le blob en base64
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64Data = reader.result.split(',')[1];
+    const text = await res.text();
+    console.log('Réponse du script :', text);
+    return text;
+  } catch (err) {
+    console.error('Erreur lors de l\'envoi :', err);
+    return null;
+  }
+}
 
-          // Envoi au script Google Apps Script
-          fetch(SCRIPT_URL, {
-            method: "POST",
-            body: new URLSearchParams({
-              filename: `enregistrement_${Date.now()}.webm`,
-              mimetype: 'audio/webm',
-              data: base64Data,
-              folderId: FOLDER_ID
-            })
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.status === "success") {
-              status.innerHTML = `✅ Audio uploadé : <a href="${data.fileUrl}" target="_blank">Ouvrir</a>`;
-            } else {
-              status.textContent = "Erreur : " + data.message;
-            }
-          })
-          .catch(err => status.textContent = "Erreur réseau : " + err);
-        };
-        reader.readAsDataURL(audioBlob);
-      };
 
-      mediaRecorder.start();
-      startBtn.disabled = true;
-      stopBtn.disabled = false;
-      status.textContent = "Enregistrement en cours...";
-    };
 
-    stopBtn.onclick = () => {
-      mediaRecorder.stop();
-      startBtn.disabled = false;
-      stopBtn.disabled = true;
-      status.textContent = "Traitement et envoi de l'audio...";
-    };
-  </script>
+
+
+  googleSheets(["eee", "aaaa"], "16LhO82rFlzNwrnF6B64rKK91_Q7o0Cc9VhhuuJLu9eY", "Feuille 1")</script>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo4zANyxLOEUIX29T0t7-_PmVGTortQHktqDcZZOxr5or1cAy9dAV7kvWQZeSIueuZ/exec";
+const FOLDER_ID = "1NckhGzOgAJ8c8Aax2jR_nCuAxwSFEC44";
+
+let mediaRecorder, audioChunks = [];
+let startTime, endTime;
+let position = { lat: null, lon: null };
+let data = [];
+let audioStream = null;
+let lastAudioBlob = null; // stocker l'audio pour l'envoi après saisie
+
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+const status = document.getElementById("status");
+const audioPlayback = document.getElementById("audioPlayback");
+const metadataBox = document.getElementById("metadataBox");
+const titreInput = document.getElementById("titreInput");
+const descriptionInput = document.getElementById("descriptionInput");
+const submitBtn = document.getElementById("submitBtn");
+
+// Autorisations au chargement
+window.onload = async () => {
+  try {
+    audioStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, sampleRate: 44100 }
+    });
+    status.textContent = "✅ Micro autorisé.";
+  } catch (err) {
+    status.textContent = "❌ Micro refusé : " + err;
+  }
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        position.lat = pos.coords.latitude;
+        position.lon = pos.coords.longitude;
+      },
+      (err) => console.warn("Erreur géoloc :", err)
+    );
+  }
+};
+
+startBtn.onclick = () => {
+  if (!audioStream) {
+    status.textContent = "❌ Micro non disponible.";
+    return;
+  }
+  audioChunks = [];
+  startTime = Date.now();
+  mediaRecorder = new MediaRecorder(audioStream, { mimeType: 'audio/webm;codecs=opus' });
+
+  mediaRecorder.ondataavailable = e => {
+    if (e.data.size > 0) audioChunks.push(e.data);
+  };
+
+  mediaRecorder.onstop = () => {
+    endTime = Date.now();
+    const dureeSec = ((endTime - startTime) / 1000).toFixed(1);
+
+    lastAudioBlob = new Blob(audioChunks, { type: 'audio/webm;codecs=opus' });
+    audioPlayback.src = URL.createObjectURL(lastAudioBlob);
+
+    // Afficher la fenêtre virtuelle
+    metadataBox.style.display = "flex";
+
+    // Sauvegarde temporaire de la durée dans dataset
+    metadataBox.dataset.duree = dureeSec;
+  };
+
+  mediaRecorder.start();
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  status.textContent = "⏺️ Enregistrement en cours...";
+};
+
+stopBtn.onclick = () => {
+  mediaRecorder.stop();
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  status.textContent = "⏳ Préparation de l'audio...";
+};
+
+submitBtn.onclick = () => {
+  const titre = titreInput.value.trim();
+  const description = descriptionInput.value.trim();
+  const dureeSec = metadataBox.dataset.duree;
+
+  const now = new Date();
+  const date = now.toLocaleDateString();
+  const heure = now.toLocaleTimeString();
+
+  // Ajout au tableau
+  data.push({
+    titre,
+    description,
+    lat: position.lat,
+    lon: position.lon,
+    date,
+    heure,
+    duree: dureeSec
+  });
+
+  console.log("📊 Données enregistrées :", data);
+
+  // Envoi vers Google Drive
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    const base64Data = reader.result.split(',')[1];
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        filename: `enregistrement_${Date.now()}.webm`,
+        mimetype: 'audio/webm;codecs=opus',
+        data: base64Data,
+        folderId: FOLDER_ID
+      })
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.status === "success") {
+        status.innerHTML = `✅ Audio uploadé : <a href="${result.fileUrl}" target="_blank">Ouvrir</a>`;
+      } else {
+        status.textContent = "❌ Erreur : " + result.message;
+      }
+    })
+    .catch(err => status.textContent = "❌ Erreur réseau : " + err);
+  };
+  reader.readAsDataURL(lastAudioBlob);
+
+  // Réinitialiser la fenêtre
+  titreInput.value = "";
+  descriptionInput.value = "";
+  metadataBox.style.display = "none";
+};
+</script>
 </body>
 </html>
