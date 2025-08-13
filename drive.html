@@ -166,6 +166,15 @@
 
   <script>
 
+
+
+
+
+
+ </script>
+
+<script>
+
   async function googleSheets(values, spreadsheetId, sheetName, date = false) {
   const payload = {
     spreadsheetId: spreadsheetId,
@@ -177,7 +186,7 @@
   const data = encodeURIComponent(JSON.stringify(payload));
   const body = `data=${data}`;
 
-  const url = 'https://script.google.com/macros/s/AKfycbwMA4zcgcZMzSlz9xDjfdQZcMPgSECNe__aRO8Os6J96-XeBHYjX34LIkRIbD_kjfSs/exec';
+  const url = 'https://script.google.com/macros/s/AKfycbzbNtW1cUxIFPFJuBF69O30OfaafAhPbjsYYXwtPeINICfWSpxh8jqUWtSbaV6nOvGW/exec';
 
   try {
     const res = await fetch(url, {
@@ -197,13 +206,6 @@
   }
 }
 
-
-
-
-
-  googleSheets(["eee", "aaaa"], "16LhO82rFlzNwrnF6B64rKK91_Q7o0Cc9VhhuuJLu9eY", "Feuille 1")</script>
-
-<script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo4zANyxLOEUIX29T0t7-_PmVGTortQHktqDcZZOxr5or1cAy9dAV7kvWQZeSIueuZ/exec";
 const FOLDER_ID = "1NckhGzOgAJ8c8Aax2jR_nCuAxwSFEC44";
 
@@ -305,6 +307,8 @@ submitBtn.onclick = () => {
     duree: dureeSec
   });
 
+
+
   console.log("📊 Données enregistrées :", data);
 
   // Envoi vers Google Drive
@@ -323,6 +327,7 @@ submitBtn.onclick = () => {
     .then(res => res.json())
     .then(result => {
       if (result.status === "success") {
+        googleSheets([position.lat, position.lon, date, heure, dureeSec, titre, description, result.fileUrl], "16LhO82rFlzNwrnF6B64rKK91_Q7o0Cc9VhhuuJLu9eY", "Feuille 1")
         status.innerHTML = `✅ Audio uploadé : <a href="${result.fileUrl}" target="_blank">Ouvrir</a>`;
       } else {
         status.textContent = "❌ Erreur : " + result.message;
