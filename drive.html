@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test Enregistrement Audio → Google Drive</title>
+</head>
+<body>
+<h1>Enregistrement audio et envoi vers Google Drive</h1>
+<button id="startBtn">🎙️ Démarrer l'enregistrement</button>
+<button id="stopBtn" disabled>⏹️ Stop</button>
+<p id="status"></p>
+
+<script>
+const SCRIPT_URL = "AKfycbwT-CNBYwNurwu7SC8ctDeWJyL143cMm59KxQPaAvrkDRHYo82TvRhKD2T0D8ZAVtuX"; // Colle ici l’URL de ton Google Apps Script
+let mediaRecorder;
+let audioChunks = [];
+
+document.getElementById("startBtn").onclick = async () => {
+    let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+
+    mediaRecorder.ondataavailable = e => {
+        if (e.data.size > 0) audioChunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = async () => {
+        let blob = new Blob(audioChunks, { type: "audio/webm" });
+        let arrayBuffer = await blob.arrayBuffer();
+        let base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+
+        document.getElementById("status").textContent = "Envoi en cours...";
+
+        let formData = new URLSearchParams();
+        formData.append("file", base64String);
+        formData.append("filename", "enregistrement_" + Date.now() + ".webm");
+        formData.append("mimeType", "audio/webm");
+
+        let response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: formData
+        });
+        let result = await response.json();
+        
+        if (result.success) {
+            document.getElementById("status").innerHTML = `✅ Fichier enregistré : <a href="${result.fileUrl}" target="_blank">Ouvrir</a>`;
+        } else {
+            document.getElementById("status").textContent = "Erreur : " + result.message;
+        }
+    };
+
+    mediaRecorder.start();
+    document.getElementById("startBtn").disabled = true;
+    document.getElementById("stopBtn").disabled = false;
+    document.getElementById("status").textContent = "Enregistrement en cours...";
+};
+
+document.getElementById("stopBtn").onclick = () => {
+    mediaRecorder.stop();
+    document.getElementById("startBtn").disabled = false;
+    document.getElementById("stopBtn").disabled = true;
+};
+</script>
+</body>
+</html>
