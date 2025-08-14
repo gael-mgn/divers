@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enregistrement audio vers Google Drive (WAV)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* --- Style global sombre --- */
+    body {
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #121212, #1f1f1f);
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+    }
+    h1 {
+      margin-bottom: 15px;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      background: linear-gradient(90deg, #4da3ff, #9b6dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    /* --- Boutons --- */
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      padding: 12px 26px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.15s ease, box-shadow 0.3s ease, background 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+    button:active { transform: scale(0.96); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #startBtn { background: linear-gradient(135deg, #28a745, #34d058); color: white; }
+    #stopBtn  { background: linear-gradient(135deg, #dc3545, #f87171); color: white; }
+    /* --- Statut --- */
+    #status {
+      margin: 10px 0;
+      font-weight: bold;
+      text-align: center;
+      color: #9cc9ff;
+      min-height: 1.5em;
+    }
+    /* --- Zone formulaire ergonomique --- */
+    .metadata-box {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      background: rgba(40, 40, 40, 0.95);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 15px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+      animation: fadeIn 0.4s ease;
+    }
+    .metadata-box label { font-weight: 600; font-size: 14px; color: #ddd; }
+    .metadata-box input, .metadata-box textarea {
+      width: 100%; padding: 12px; font-size: 15px; border: 1px solid #444; border-radius: 8px;
+      background: #1e1e1e; color: #f0f0f0; transition: border-color 0.3s ease, background 0.3s ease; outline: none;
+    }
+    .metadata-box input:focus, .metadata-box textarea:focus { border-color: #4da3ff; background: #2a2a2a; }
+    .metadata-box textarea { resize: vertical; }
+    .metadata-box button { background: linear-gradient(135deg, #007bff, #5a9bff); color: white; padding: 12px; font-size: 15px; }
+    /* --- Audio --- */
+    audio { margin-top: 10px; max-width: 100%; border-radius: 8px; outline: none; }
+    /* --- Animations --- */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    /* --- Mobile --- */
+    @media (max-width: 600px) {
+      button { flex: 1 1 45%; font-size: 14px; padding: 10px; }
+      .controls { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎙️ Enregistrement vers Google Drive (WAV)</h1>
+
+  <div class="controls">
+    <button id="startBtn">▶ Commencer</button>
+    <button id="stopBtn" disabled>⏹ Arrêter</button>
+  </div>
+
+  <p id="status"></p>
+
+  <div id="metadataBox" class="metadata-box">
+    <label for="titreInput">Titre :</label>
+    <input type="text" id="titreInput" placeholder="Titre de l'enregistrement (optionnel)">
+    <label for="descriptionInput">Description :</label>
+    <textarea id="descriptionInput" rows="3" placeholder="Description (optionnel)"></textarea>
+    <audio id="audioPlayback" controls></audio>
+    <button id="submitBtn">📤 Soumettre</button>
+  </div>
+
+  <script>
+    /************ CONFIG À REMPLACER ************/
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo4zANyxLOEUIX29T0t7-_PmVGTortQHktqDcZZOxr5or1cAy9dAV7kvWQZeSIueuZ/exec"; // <- ton URL Apps Script
+    const FOLDER_ID  = "1NckhGzOgAJ8c8Aax2jR_nCuAxwSFEC44"; // <- ID du dossier Drive de destination
+    /********************************************/
+
+    // Éléments DOM
+    const startBtn       = document.getElementById("startBtn");
+    const stopBtn        = document.getElementById("stopBtn");
+    const submitBtn      = document.getElementById("submitBtn");
+    const statusEl       = document.getElementById("status");
+    const metadataBox    = document.getElementById("metadataBox");
+    const titreInput     = document.getElementById("titreInput");
+    const descriptionInput = document.getElementById("descriptionInput");
+    const audioPlayback  = document.getElementById("audioPlayback");
+
+    // État / données
+    let audioStream, audioContext, sourceNode, processorNode, silentGain;
+    let audioBufferData = [];
+    let sampleRate = 44100;
+    let recording = false;
+    let startTime = 0, endTime = 0;
+    let lastAudioBlob = null;
+
+    // Optionnel : collecte de la position
+    let position = { lat: null, lon: null };
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        ({coords}) => { position.lat = coords.latitude; position.lon = coords.longitude; },
+        () => {}, { enableHighAccuracy: true, maximumAge: 10_000, timeout: 5_000 }
+      );
+    }
+
+    // Journal local
+    const data = [];
+
+    async function initMic() {
+      try {
+        audioStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            sampleRate: 48000,
+            channelCount: 1,
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false
+          }
+        });
+
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        sampleRate = audioContext.sampleRate;
+
+        sourceNode = audioContext.createMediaStreamSource(audioStream);
+        processorNode = audioContext.createScriptProcessor(4096, 1, 1);
+
+        // Gain à zéro pour éviter tout larsen/monitoring audible
+        silentGain = audioContext.createGain();
+        silentGain.gain.value = 0;
+
+        processorNode.onaudioprocess = e => {
+          if (!recording) return;
+          const channelData = e.inputBuffer.getChannelData(0);
+          // Copier le chunk pour ne pas referencer le buffer réutilisé
+          audioBufferData.push(new Float32Array(channelData));
+        };
+
+        // Chaîne : source -> processor -> silentGain -> destination
+        sourceNode.connect(processorNode);
+        processorNode.connect(silentGain);
+        silentGain.connect(audioContext.destination);
+
+      } catch (err) {
+        statusEl.textContent = "❌ Accès micro refusé ou indisponible.";
+        console.error(err);
+        throw err;
+      }
+    }
+
+    function floatTo16BitPCM(float32Array) {
+      const buffer = new ArrayBuffer(float32Array.length * 2);
+      const view = new DataView(buffer);
+      let offset = 0;
+      for (let i = 0; i < float32Array.length; i++, offset += 2) {
+        let s = Math.max(-1, Math.min(1, float32Array[i]));
+        view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+      }
+      return view;
+    }
+
+    function writeString(view, offset, string) {
+      for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
+    }
+
+    function writeWAV(samples, sampleRate) {
+      const buffer = new ArrayBuffer(44 + samples.length * 2);
+      const view = new DataView(buffer);
+
+      // RIFF header
+      writeString(view, 0, 'RIFF');
+      view.setUint32(4, 36 + samples.length * 2, true);
+      writeString(view, 8, 'WAVE');
+
+      // fmt chunk
+      writeString(view, 12, 'fmt ');
+      view.setUint32(16, 16, true); // chunk size
+      view.setUint16(20, 1, true);  // PCM
+      view.setUint16(22, 1, true);  // mono
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true); // byte rate
+      view.setUint16(32, 2, true); // block align
+      view.setUint16(34, 16, true); // bits per sample
+
+      // data chunk
+      writeString(view, 36, 'data');
+      view.setUint32(40, samples.length * 2, true);
+
+      const pcmData = floatTo16BitPCM(samples);
+      new Uint8Array(buffer, 44).set(new Uint8Array(pcmData.buffer));
+      return buffer;
+    }
+
+    startBtn.onclick = async () => {
+      try {
+        if (!audioStream) await initMic();
+        audioBufferData = [];
+        recording = true;
+        startTime = Date.now();
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        statusEl.textContent = "⏺️ Enregistrement en cours...";
+        metadataBox.style.display = "none";
+        lastAudioBlob = null;
+      } catch (e) { /* déjà géré */ }
+    };
+
+    stopBtn.onclick = () => {
+      if (!recording) return;
+      recording = false;
+      endTime = Date.now();
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+
+      // Fusionner les chunks
+      const totalLength = audioBufferData.reduce((acc, cur) => acc + cur.length, 0);
+      if (totalLength === 0) {
+        statusEl.textContent = "⚠️ Aucun échantillon capturé.";
+        return;
+      }
+      const merged = new Float32Array(totalLength);
+      let offset = 0;
+      for (const chunk of audioBufferData) { merged.set(chunk, offset); offset += chunk.length; }
+
+      const wavBuffer = writeWAV(merged, sampleRate);
+      lastAudioBlob = new Blob([wavBuffer], { type: "audio/wav" });
+      audioPlayback.src = URL.createObjectURL(lastAudioBlob);
+
+      const dureeSec = ((endTime - startTime) / 1000).toFixed(1);
+      metadataBox.dataset.duree = dureeSec;
+      metadataBox.style.display = "flex";
+      statusEl.textContent = `✅ Fichier WAV prêt (${dureeSec}s). Renseigne les infos puis "Soumettre".`;
+    };
+
+    submitBtn.onclick = () => {
+      if (!lastAudioBlob) {
+        statusEl.textContent = "❌ Aucun fichier à envoyer. Enregistre d'abord.";
+        return;
+      }
+      if (!SCRIPT_URL || SCRIPT_URL.includes("REMPLACE_MOI")) {
+        statusEl.textContent = "❌ SCRIPT_URL non configurée.";
+        return;
+      }
+      if (!FOLDER_ID || FOLDER_ID.includes("REMPLACE_MOI")) {
+        statusEl.textContent = "❌ FOLDER_ID non configuré.";
+        return;
+      }
+
+      const titre = titreInput.value.trim();
+      const description = descriptionInput.value.trim();
+      const dureeSec = metadataBox.dataset.duree || ((endTime - startTime) / 1000).toFixed(1);
+
+      const now = new Date();
+      const date = now.toLocaleDateString();
+      const heure = now.toLocaleTimeString();
+
+      // Journal local
+      data.push({
+        titre,
+        description,
+        lat: position.lat,
+        lon: position.lon,
+        date,
+        heure,
+        duree: dureeSec
+      });
+      console.log("📊 Données enregistrées :", data);
+
+      statusEl.textContent = "⏳ Préparation du fichier (Base64)…";
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        try {
+          const base64Data = (reader.result || "").toString().split(',')[1];
+          if (!base64Data) {
+            statusEl.textContent = "❌ Conversion Base64 échouée.";
+            return;
+          }
+          statusEl.textContent = "⏫ Envoi vers Google Drive…";
+          fetch(SCRIPT_URL, {
+            method: "POST",
+            body: new URLSearchParams({
+              filename: `enregistrement_${Date.now()}.wav`,
+              mimetype: "audio/wav",
+              data: base64Data,
+              folderId: FOLDER_ID
+            })
+          })
+          .then(res => res.json())
+          .then(result => {
+            if (result.status === "success") {
+              // Si tu as une fonction googleSheets disponible, on l'appelle
+              if (typeof googleSheets === "function") {
+                googleSheets(
+                  [position.lat, position.lon, date, heure, dureeSec, titre, description, result.fileUrl],
+                  "16LhO82rFlzNwrnF6B64rKK91_Q7o0Cc9VhhuuJLu9eY",
+                  "Feuille 1"
+                );
+              }
+              statusEl.innerHTML = `✅ Audio uploadé : <a href="${result.fileUrl}" target="_blank" rel="noopener">Ouvrir</a>`;
+              // Reset léger
+              titreInput.value = "";
+              descriptionInput.value = "";
+              metadataBox.style.display = "none";
+            } else {
+              statusEl.textContent = "❌ Erreur Apps Script : " + (result.message || "Inconnue");
+            }
+          })
+          .catch(err => {
+            console.error(err);
+            statusEl.textContent = "❌ Erreur réseau : " + err;
+          });
+        } catch (e) {
+          console.error(e);
+          statusEl.textContent = "❌ Erreur lors de la préparation du fichier.";
+        }
+      };
+      reader.readAsDataURL(lastAudioBlob);
+    };
+
+    // Nettoyage audio quand on quitte la page
+    window.addEventListener("beforeunload", () => {
+      try {
+        if (processorNode) processorNode.disconnect();
+        if (silentGain) silentGain.disconnect();
+        if (sourceNode) sourceNode.disconnect();
+        if (audioContext) audioContext.close();
+        if (audioStream) audioStream.getTracks().forEach(t => t.stop());
+      } catch {}
+    });
+  </script>
+</body>
+</html>
