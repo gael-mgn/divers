@@ -62,7 +62,15 @@
   </style>
 </head>
 <body>
-  <h1>Ce que la Ville murmure</h1>
+
+  <div style="max-width:1000px; text-align: center;">
+
+      <h1>Ce que la Ville murmure</h1>
+
+  <p style="color: #C2BCD7;">La ville parle, mais rarement on l’écoute. Ses voix se mêlent, se superposent, se perdent parfois dans le bruit de fond de notre quotidien, et si nous enregistrions cette partition vivante ?</p>
+    
+  </div>
+
 
   <div class="controls">
    <button id="startBtn">
@@ -379,7 +387,7 @@
       const dureeSec = ((endTime - startTime) / 1000).toFixed(1);
       metadataBox.dataset.duree = dureeSec;
       metadataBox.style.display = "flex";
-      statusEl.textContent = `Fichier WAV prêt (${dureeSec}s). Renseigne les infos puis "Soumettre".`;
+      statusEl.textContent = `Fichier WAV prêt (${dureeSec}s). Renseignez les infos puis "Soumettre".`;
     };
 
     submitBtn.onclick = () => {
