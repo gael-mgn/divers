@@ -4,10 +4,14 @@
   <meta charset="UTF-8" />
   <title>Enregistrement audio vers Google Drive (WAV)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+
+
   <style>
     /* --- Style global sombre --- */
     body {
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      font-family: 'Outfit', sans-serif;
       background: linear-gradient(135deg, #121212, #1f1f1f);
       color: #f0f0f0;
       display: flex;
@@ -18,13 +22,11 @@
       min-height: 100vh;
     }
     h1 {
-      margin-bottom: 15px;
+      margin-bottom: 0px;
       font-size: clamp(1.6rem, 4vw, 2.2rem);
-      background: linear-gradient(90deg, #4da3ff, #9b6dff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       font-weight: 700;
     }
+
     /* --- Boutons --- */
     .controls {
       display: flex;
@@ -36,77 +38,185 @@
     button {
       padding: 12px 26px;
       border: none;
-      border-radius: 12px;
+      border-radius: 99px;
       cursor: pointer;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 500;
       transition: transform 0.15s ease, box-shadow 0.3s ease, background 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
     button:active { transform: scale(0.96); }
     button:disabled { opacity: 0.5; cursor: not-allowed; }
-    #startBtn { background: linear-gradient(135deg, #28a745, #34d058); color: white; }
-    #stopBtn  { background: linear-gradient(135deg, #dc3545, #f87171); color: white; }
+    #startBtn { background: linear-gradient(135deg, #762B84, #9d44b8); color: white; }
+    #stopBtn  {  color: white;  background: transparent;
+      border: solid #762B84 3px;}
     /* --- Statut --- */
     #status {
       margin: 10px 0;
       font-weight: bold;
       text-align: center;
-      color: #9cc9ff;
+      color: #C2BCD7;
       min-height: 1.5em;
-    }
-    /* --- Zone formulaire ergonomique --- */
-    .metadata-box {
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-      background: rgba(40, 40, 40, 0.95);
-      border-radius: 14px;
-      padding: 20px;
-      margin-top: 15px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.5);
-      animation: fadeIn 0.4s ease;
-    }
-    .metadata-box label { font-weight: 600; font-size: 14px; color: #ddd; }
-    .metadata-box input, .metadata-box textarea {
-      width: 100%; padding: 12px; font-size: 15px; border: 1px solid #444; border-radius: 8px;
-      background: #1e1e1e; color: #f0f0f0; transition: border-color 0.3s ease, background 0.3s ease; outline: none;
-    }
-    .metadata-box input:focus, .metadata-box textarea:focus { border-color: #4da3ff; background: #2a2a2a; }
-    .metadata-box textarea { resize: vertical; }
-    .metadata-box button { background: linear-gradient(135deg, #007bff, #5a9bff); color: white; padding: 12px; font-size: 15px; }
-    /* --- Audio --- */
-    audio { margin-top: 10px; max-width: 100%; border-radius: 8px; outline: none; }
-    /* --- Animations --- */
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    /* --- Mobile --- */
-    @media (max-width: 600px) {
-      button { flex: 1 1 45%; font-size: 14px; padding: 10px; }
-      .controls { gap: 10px; }
     }
   </style>
 </head>
 <body>
-  <h1>🎙️ Enregistrement vers Google Drive (WAV)</h1>
+  <h1>Ce que la Ville murmure</h1>
 
   <div class="controls">
-    <button id="startBtn">▶ Commencer</button>
-    <button id="stopBtn" disabled>⏹ Arrêter</button>
+   <button id="startBtn">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 5v14l11-7z"/>
+  </svg>
+  <span>COMMENCER</span>
+</button>
+
+<style>
+#startBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;        /* alignement vertical */
+  justify-content: center;    /* alignement horizontal */
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  min-width: 200px;           /* optionnel : largeur fixe pour montrer le centrage */
+  text-align: center;
+}
+
+#startBtn svg {
+  display: block;
+}
+</style>
+
+    <button id="stopBtn" disabled>ARRÊTER</button>
   </div>
 
   <p id="status"></p>
+<style>
+/* --- Zone formulaire redesign --- */
+.metadata-box {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(145deg, rgba(30, 30, 30, 0.98), rgba(45, 45, 45, 0.98));
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px auto 0;
+  width: 90%;
+  max-width: 460px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.6);
+  animation: fadeIn 0.4s ease;
+  font-family: 'Outfit', sans-serif;
+}
 
-  <div id="metadataBox" class="metadata-box">
-    <label for="titreInput">Titre :</label>
-    <input type="text" id="titreInput" placeholder="Titre de l'enregistrement (optionnel)">
-    <label for="descriptionInput">Description :</label>
-    <textarea id="descriptionInput" rows="3" placeholder="Description (optionnel)"></textarea>
-    <audio id="audioPlayback" controls></audio>
-    <button id="submitBtn">📤 Soumettre</button>
-  </div>
+.metadata-box label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #e4e4e4;
+}
+
+.metadata-box input,
+.metadata-box textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  background: #1e1e1e;
+  color: #f8f8f8;
+  transition: all 0.25s ease;
+  outline: none;
+  box-sizing: border-box; /* ✅ Empêche le dépassement */
+}
+
+.metadata-box input:focus,
+.metadata-box textarea:focus {
+  border-color: #C2BCD7;
+  box-shadow: 0 0 4px rgba(194, 188, 215, 0.6);
+  background: #262626;
+}
+
+.metadata-box textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.metadata-box button {
+  background: linear-gradient(135deg, #762B84, #9d44b8);
+  color: white;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+}
+
+.metadata-box button:hover {
+  background: linear-gradient(135deg, #8b35a0, #b75cd2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(183, 92, 210, 0.4);
+}
+
+/* --- Audio --- */
+.metadata-box audio {
+  margin-top: 8px;
+  
+  width: 90%;
+  margin: auto;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Mobile --- */
+@media (max-width: 600px) {
+  .metadata-box {
+    padding: 18px;
+    gap: 14px;
+  }
+  .metadata-box button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+</style>
+
+<div id="metadataBox" class="metadata-box">
+  <label for="titreInput">Titre :</label>
+  <input type="text" id="titreInput" placeholder="Titre de l'enregistrement (optionnel)">
+
+  <label for="descriptionInput">Description :</label>
+  <textarea id="descriptionInput" rows="3" placeholder="Description (optionnel)"></textarea>
+
+  <audio id="audioPlayback" controls></audio>
+
+  <button id="submitBtn">SOUMETTRE</button>
+</div>
+
+
+
+
+
+
+
+
+
+
 
   <script>
     /************ CONFIG À REMPLACER ************/
@@ -140,9 +250,6 @@
         () => {}, { enableHighAccuracy: true, maximumAge: 10_000, timeout: 5_000 }
       );
     }
-
-    // Journal local
-    const data = [];
 
     async function initMic() {
       try {
@@ -184,6 +291,12 @@
         throw err;
       }
     }
+
+    initMic();
+
+     // Journal local
+    const data = [];
+
 
     function floatTo16BitPCM(float32Array) {
       const buffer = new ArrayBuffer(float32Array.length * 2);
@@ -230,13 +343,13 @@
 
     startBtn.onclick = async () => {
       try {
-        if (!audioStream) await initMic();
+        /*if (!audioStream) await initMic();*/
         audioBufferData = [];
         recording = true;
         startTime = Date.now();
         startBtn.disabled = true;
         stopBtn.disabled = false;
-        statusEl.textContent = "⏺️ Enregistrement en cours...";
+        statusEl.textContent = "Enregistrement en cours...";
         metadataBox.style.display = "none";
         lastAudioBlob = null;
       } catch (e) { /* déjà géré */ }
@@ -266,7 +379,7 @@
       const dureeSec = ((endTime - startTime) / 1000).toFixed(1);
       metadataBox.dataset.duree = dureeSec;
       metadataBox.style.display = "flex";
-      statusEl.textContent = `✅ Fichier WAV prêt (${dureeSec}s). Renseigne les infos puis "Soumettre".`;
+      statusEl.textContent = `Fichier WAV prêt (${dureeSec}s). Renseigne les infos puis "Soumettre".`;
     };
 
     submitBtn.onclick = () => {
@@ -301,9 +414,9 @@
         heure,
         duree: dureeSec
       });
-      console.log("📊 Données enregistrées :", data);
+      console.log("Données enregistrées :", data);
 
-      statusEl.textContent = "⏳ Préparation du fichier (Base64)…";
+      statusEl.textContent = "Préparation du fichier (Base64)…";
       const reader = new FileReader();
       reader.onloadend = () => {
         try {
@@ -312,7 +425,7 @@
             statusEl.textContent = "❌ Conversion Base64 échouée.";
             return;
           }
-          statusEl.textContent = "⏫ Envoi vers Google Drive…";
+          statusEl.textContent = "Envoi vers Google Drive…";
           fetch(SCRIPT_URL, {
             method: "POST",
             body: new URLSearchParams({
@@ -333,7 +446,7 @@
                   "Feuille 1"
                 );
               }
-              statusEl.innerHTML = `✅ Audio uploadé : <a href="${result.fileUrl}" target="_blank" rel="noopener">Ouvrir</a>`;
+              statusEl.innerHTML = `Audio uploadé : <a href="${result.fileUrl}" target="_blank" rel="noopener">Ouvrir</a>`;
               // Reset léger
               titreInput.value = "";
               descriptionInput.value = "";
