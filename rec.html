@@ -243,46 +243,6 @@ nav a:hover::after {
 
 
 
-<script>
-const micSelect = document.getElementById("micSelect");
-
-// Récupère la liste des périphériques audio
-async function listMics() {
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  const audioInputs = devices.filter(d => d.kind === "audioinput");
-
-  micSelect.innerHTML = ""; // reset
-
-  audioInputs.forEach(device => {
-    const option = document.createElement("option");
-    option.value = device.deviceId;
-    option.textContent = device.label || `Micro ${micSelect.length + 1}`;
-    micSelect.appendChild(option);
-  });
-}
-
-// ⚠️ Il faut demander d'abord la permission micro pour voir les noms
-navigator.mediaDevices.getUserMedia({ audio: true })
-  .then(() => listMics())
-  .catch(err => console.error("Accès micro refusé", err));
-
-// Fonction pour récupérer le flux avec le micro choisi
-async function getSelectedMicStream() {
-  const deviceId = micSelect.value;
-  return navigator.mediaDevices.getUserMedia({
-    audio: {
-      deviceId: deviceId ? { exact: deviceId } : undefined,
-      sampleRate: 48000,
-      channelCount: 1,
-      echoCancellation: false,
-      noiseSuppression: false,
-      autoGainControl: false
-    }
-  });
-}
-</script>
-
-
   <div class="controls">
    <button id="startBtn">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -455,14 +415,110 @@ async function getSelectedMicStream() {
     const descriptionInput = document.getElementById("descriptionInput");
     const audioPlayback  = document.getElementById("audioPlayback");
 
-    // État / données
-    let audioStream, audioContext, sourceNode, processorNode, silentGain;
-    let audioBufferData = [];
-    let sampleRate = 44100;
-    let recording = false;
-    let startTime = 0, endTime = 0;
-    let lastAudioBlob = null;
+const micSelect = document.getElementById("micSelect");
 
+// Liste des micros
+async function listMics() {
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const audioInputs = devices.filter(d => d.kind === "audioinput");
+
+  micSelect.innerHTML = "";
+  audioInputs.forEach((device, index) => {
+    const option = document.createElement("option");
+    option.value = device.deviceId;
+    option.textContent = device.label || `Micro ${index + 1}`;
+    micSelect.appendChild(option);
+  });
+}
+
+// On demande la permission juste pour peupler la liste
+navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(() => listMics())
+  .catch(err => console.error("Accès micro refusé", err));
+
+// Fonction pour ouvrir un flux avec le micro choisi
+async function getSelectedMicStream() {
+  const deviceId = micSelect.value;
+  return navigator.mediaDevices.getUserMedia({
+    audio: {
+      deviceId: deviceId ? { exact: deviceId } : undefined,
+      sampleRate: 48000,
+      channelCount: 1,
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: false
+    }
+  });
+}
+
+// === Enregistrement ===
+let audioStream, audioContext, sourceNode, processorNode, silentGain;
+let audioBufferData = [], sampleRate = 44100, recording = false, startTime = 0, endTime = 0, lastAudioBlob = null;
+
+async function initMic() {
+  if (audioStream) {
+    audioStream.getTracks().forEach(track => track.stop());
+  }
+  audioStream = await getSelectedMicStream();
+
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  sampleRate = audioContext.sampleRate;
+
+  sourceNode = audioContext.createMediaStreamSource(audioStream);
+  processorNode = audioContext.createScriptProcessor(8192, 1, 1);
+  silentGain = audioContext.createGain();
+  silentGain.gain.value = 0;
+
+  processorNode.onaudioprocess = e => {
+    if (!recording) return;
+    const channelData = e.inputBuffer.getChannelData(0);
+    audioBufferData.push(new Float32Array(channelData));
+  };
+
+  sourceNode.connect(processorNode);
+  processorNode.connect(silentGain);
+  silentGain.connect(audioContext.destination);
+}
+
+startBtn.onclick = async () => {
+  await initMic(); // initialise avec le micro choisi
+  audioBufferData = [];
+  recording = true;
+  startTime = Date.now();
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  statusEl.textContent = "Enregistrement en cours...";
+  metadataBox.style.display = "none";
+  lastAudioBlob = null;
+};
+
+stopBtn.onclick = () => {
+  recording = false;
+  endTime = Date.now();
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  
+  const totalLength = audioBufferData.reduce((acc, cur) => acc + cur.length, 0);
+  if (totalLength === 0) {
+    statusEl.textContent = "⚠️ Aucun échantillon capturé.";
+    return;
+  }
+  const merged = new Float32Array(totalLength);
+  let offset = 0;
+  for (const chunk of audioBufferData) {
+    merged.set(chunk, offset);
+    offset += chunk.length;
+  }
+
+  const wavBuffer = writeWAV(merged, sampleRate);
+  lastAudioBlob = new Blob([wavBuffer], { type: "audio/wav" });
+  audioPlayback.src = URL.createObjectURL(lastAudioBlob);
+  metadataBox.dataset.duree = ((endTime - startTime) / 1000).toFixed(1);
+  metadataBox.style.display = "flex";
+  statusEl.textContent = "Fichier WAV prêt.";
+};
+
+// Tes fonctions floatTo16BitPCM et writeWAV restent inchangées
 
 
 
@@ -476,38 +532,6 @@ async function getSelectedMicStream() {
       );
     }
 
-    async function initMic() {
-      try {
-        audioStream = await getSelectedMicStream();
-
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        sampleRate = audioContext.sampleRate;
-
-        sourceNode = audioContext.createMediaStreamSource(audioStream);
-        processorNode = audioContext.createScriptProcessor(8192, 1, 1);
-
-        // Gain à zéro pour éviter tout larsen/monitoring audible
-        silentGain = audioContext.createGain();
-        silentGain.gain.value = 0;
-
-        processorNode.onaudioprocess = e => {
-          if (!recording) return;
-          const channelData = e.inputBuffer.getChannelData(0);
-          // Copier le chunk pour ne pas referencer le buffer réutilisé
-          audioBufferData.push(new Float32Array(channelData));
-        };
-
-        // Chaîne : source -> processor -> silentGain -> destination
-        sourceNode.connect(processorNode);
-        processorNode.connect(silentGain);
-        silentGain.connect(audioContext.destination);
-
-      } catch (err) {
-        statusEl.textContent = "❌ Accès micro refusé ou indisponible.";
-        console.error(err);
-        throw err;
-      }
-    }
 
     initMic();
 
