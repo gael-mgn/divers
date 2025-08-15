@@ -392,36 +392,43 @@ nav a:hover::after {
 
 
 
+  <script>/************ CONFIG À REMPLACER ************/
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo4zANyxLOEUIX29T0t7-_PmVGTortQHktqDcZZOxr5or1cAy9dAV7kvWQZeSIueuZ/exec";
+const FOLDER_ID  = "1NckhGzOgAJ8c8Aax2jR_nCuAxwSFEC44";
+/********************************************/
 
+// Éléments DOM
+const startBtn          = document.getElementById("startBtn");
+const stopBtn           = document.getElementById("stopBtn");
+const submitBtn         = document.getElementById("submitBtn");
+const statusEl          = document.getElementById("status");
+const metadataBox       = document.getElementById("metadataBox");
+const titreInput        = document.getElementById("titreInput");
+const descriptionInput  = document.getElementById("descriptionInput");
+const audioPlayback     = document.getElementById("audioPlayback");
+const micSelect         = document.getElementById("micSelect");
 
+// Variables d'enregistrement
+let audioStream, audioContext, sourceNode, processorNode, silentGain;
+let audioBufferData = [], sampleRate = 44100, recording = false, startTime = 0, endTime = 0, lastAudioBlob = null;
 
+// Position GPS
+let position = { lat: null, lon: null };
+if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition(
+    ({coords}) => { position.lat = coords.latitude; position.lon = coords.longitude; },
+    () => {},
+    { enableHighAccuracy: true, maximumAge: 10_000, timeout: 5_000 }
+  );
+}
 
+// Journal local
+const data = [];
 
-
-
-  <script>
-    /************ CONFIG À REMPLACER ************/
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo4zANyxLOEUIX29T0t7-_PmVGTortQHktqDcZZOxr5or1cAy9dAV7kvWQZeSIueuZ/exec"; // <- ton URL Apps Script
-    const FOLDER_ID  = "1NckhGzOgAJ8c8Aax2jR_nCuAxwSFEC44"; // <- ID du dossier Drive de destination
-    /********************************************/
-
-    // Éléments DOM
-    const startBtn       = document.getElementById("startBtn");
-    const stopBtn        = document.getElementById("stopBtn");
-    const submitBtn      = document.getElementById("submitBtn");
-    const statusEl       = document.getElementById("status");
-    const metadataBox    = document.getElementById("metadataBox");
-    const titreInput     = document.getElementById("titreInput");
-    const descriptionInput = document.getElementById("descriptionInput");
-    const audioPlayback  = document.getElementById("audioPlayback");
-
-const micSelect = document.getElementById("micSelect");
-
-// Liste des micros
+// Fonctions utilitaires
 async function listMics() {
   const devices = await navigator.mediaDevices.enumerateDevices();
   const audioInputs = devices.filter(d => d.kind === "audioinput");
-
   micSelect.innerHTML = "";
   audioInputs.forEach((device, index) => {
     const option = document.createElement("option");
@@ -431,12 +438,6 @@ async function listMics() {
   });
 }
 
-// On demande la permission juste pour peupler la liste
-navigator.mediaDevices.getUserMedia({ audio: true })
-  .then(() => listMics())
-  .catch(err => console.error("Accès micro refusé", err));
-
-// Fonction pour ouvrir un flux avec le micro choisi
 async function getSelectedMicStream() {
   const deviceId = micSelect.value;
   return navigator.mediaDevices.getUserMedia({
@@ -451,16 +452,9 @@ async function getSelectedMicStream() {
   });
 }
 
-// === Enregistrement ===
-let audioStream, audioContext, sourceNode, processorNode, silentGain;
-let audioBufferData = [], sampleRate = 44100, recording = false, startTime = 0, endTime = 0, lastAudioBlob = null;
-
 async function initMic() {
-  if (audioStream) {
-    audioStream.getTracks().forEach(track => track.stop());
-  }
+  if (audioStream) audioStream.getTracks().forEach(track => track.stop());
   audioStream = await getSelectedMicStream();
-
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
   sampleRate = audioContext.sampleRate;
 
@@ -470,9 +464,9 @@ async function initMic() {
   silentGain.gain.value = 0;
 
   processorNode.onaudioprocess = e => {
-    if (!recording) return;
-    const channelData = e.inputBuffer.getChannelData(0);
-    audioBufferData.push(new Float32Array(channelData));
+    if (recording) {
+      audioBufferData.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+    }
   };
 
   sourceNode.connect(processorNode);
@@ -480,8 +474,65 @@ async function initMic() {
   silentGain.connect(audioContext.destination);
 }
 
+function floatTo16BitPCM(float32Array) {
+  const buffer = new ArrayBuffer(float32Array.length * 2);
+  const view = new DataView(buffer);
+  let offset = 0;
+  for (let i = 0; i < float32Array.length; i++, offset += 2) {
+    let s = Math.max(-1, Math.min(1, float32Array[i]));
+    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+  }
+  return view;
+}
+
+function writeString(view, offset, string) {
+  for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
+}
+
+function writeWAV(samples, sampleRate) {
+  const buffer = new ArrayBuffer(44 + samples.length * 2);
+  const view = new DataView(buffer);
+  writeString(view, 0, 'RIFF');
+  view.setUint32(4, 36 + samples.length * 2, true);
+  writeString(view, 8, 'WAVE');
+  writeString(view, 12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeString(view, 36, 'data');
+  view.setUint32(40, samples.length * 2, true);
+  new Uint8Array(buffer, 44).set(new Uint8Array(floatTo16BitPCM(samples).buffer));
+  return buffer;
+}
+
+async function googleSheets(values, spreadsheetId, sheetName, date = false) {
+  const payload = { spreadsheetId, sheetName, values, addDate: date };
+  const body = `data=${encodeURIComponent(JSON.stringify(payload))}`;
+  const url = 'https://script.google.com/macros/s/AKfycbzbNtW1cUxIFPFJuBF69O30OfaafAhPbjsYYXwtPeINICfWSpxh8jqUWtSbaV6nOvGW/exec';
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    });
+    return await res.text();
+  } catch (err) {
+    console.error('Erreur envoi Google Sheets :', err);
+    return null;
+  }
+}
+
+// Boutons
 startBtn.onclick = async () => {
-  await initMic(); // initialise avec le micro choisi
+  if (!micSelect.options.length) {
+    await navigator.mediaDevices.getUserMedia({ audio: true });
+    await listMics();
+  }
+  await initMic();
   audioBufferData = [];
   recording = true;
   startTime = Date.now();
@@ -497,12 +548,13 @@ stopBtn.onclick = () => {
   endTime = Date.now();
   startBtn.disabled = false;
   stopBtn.disabled = true;
-  
+
   const totalLength = audioBufferData.reduce((acc, cur) => acc + cur.length, 0);
   if (totalLength === 0) {
     statusEl.textContent = "⚠️ Aucun échantillon capturé.";
     return;
   }
+
   const merged = new Float32Array(totalLength);
   let offset = 0;
   for (const chunk of audioBufferData) {
@@ -510,253 +562,83 @@ stopBtn.onclick = () => {
     offset += chunk.length;
   }
 
-  const wavBuffer = writeWAV(merged, sampleRate);
-  lastAudioBlob = new Blob([wavBuffer], { type: "audio/wav" });
+  lastAudioBlob = new Blob([writeWAV(merged, sampleRate)], { type: "audio/wav" });
   audioPlayback.src = URL.createObjectURL(lastAudioBlob);
   metadataBox.dataset.duree = ((endTime - startTime) / 1000).toFixed(1);
   metadataBox.style.display = "flex";
   statusEl.textContent = "Fichier WAV prêt.";
 };
 
-// Tes fonctions floatTo16BitPCM et writeWAV restent inchangées
+micSelect.addEventListener("change", async () => {
+  if (recording) await initMic();
+});
 
-
-
-
-    // Optionnel : collecte de la position
-    let position = { lat: null, lon: null };
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        ({coords}) => { position.lat = coords.latitude; position.lon = coords.longitude; },
-        () => {}, { enableHighAccuracy: true, maximumAge: 10_000, timeout: 5_000 }
-      );
-    }
-
-
-    initMic();
-
-     // Journal local
-    const data = [];
-
-
-    function floatTo16BitPCM(float32Array) {
-      const buffer = new ArrayBuffer(float32Array.length * 2);
-      const view = new DataView(buffer);
-      let offset = 0;
-      for (let i = 0; i < float32Array.length; i++, offset += 2) {
-        let s = Math.max(-1, Math.min(1, float32Array[i]));
-        view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-      }
-      return view;
-    }
-
-    function writeString(view, offset, string) {
-      for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
-    }
-
-    function writeWAV(samples, sampleRate) {
-      const buffer = new ArrayBuffer(44 + samples.length * 2);
-      const view = new DataView(buffer);
-
-      // RIFF header
-      writeString(view, 0, 'RIFF');
-      view.setUint32(4, 36 + samples.length * 2, true);
-      writeString(view, 8, 'WAVE');
-
-      // fmt chunk
-      writeString(view, 12, 'fmt ');
-      view.setUint32(16, 16, true); // chunk size
-      view.setUint16(20, 1, true);  // PCM
-      view.setUint16(22, 1, true);  // mono
-      view.setUint32(24, sampleRate, true);
-      view.setUint32(28, sampleRate * 2, true); // byte rate
-      view.setUint16(32, 2, true); // block align
-      view.setUint16(34, 16, true); // bits per sample
-
-      // data chunk
-      writeString(view, 36, 'data');
-      view.setUint32(40, samples.length * 2, true);
-
-      const pcmData = floatTo16BitPCM(samples);
-      new Uint8Array(buffer, 44).set(new Uint8Array(pcmData.buffer));
-      return buffer;
-    }
-
-    startBtn.onclick = async () => {
-      try {
-        /*if (!audioStream) await initMic();*/
-        audioBufferData = [];
-        recording = true;
-        startTime = Date.now();
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
-        statusEl.textContent = "Enregistrement en cours...";
-        metadataBox.style.display = "none";
-        lastAudioBlob = null;
-      } catch (e) { /* déjà géré */ }
-    };
-
-    stopBtn.onclick = () => {
-      if (!recording) return;
-      recording = false;
-      endTime = Date.now();
-      startBtn.disabled = false;
-      stopBtn.disabled = true;
-
-      // Fusionner les chunks
-      const totalLength = audioBufferData.reduce((acc, cur) => acc + cur.length, 0);
-      if (totalLength === 0) {
-        statusEl.textContent = "⚠️ Aucun échantillon capturé.";
-        return;
-      }
-      const merged = new Float32Array(totalLength);
-      let offset = 0;
-      for (const chunk of audioBufferData) { merged.set(chunk, offset); offset += chunk.length; }
-
-      const wavBuffer = writeWAV(merged, sampleRate);
-      lastAudioBlob = new Blob([wavBuffer], { type: "audio/wav" });
-      audioPlayback.src = URL.createObjectURL(lastAudioBlob);
-
-      const dureeSec = ((endTime - startTime) / 1000).toFixed(1);
-      metadataBox.dataset.duree = dureeSec;
-      metadataBox.style.display = "flex";
-      statusEl.textContent = `Fichier WAV prêt (${dureeSec}s). Renseignez les infos puis "Soumettre".`;
-    };
-
-    submitBtn.onclick = () => {
-      if (!lastAudioBlob) {
-        statusEl.textContent = "❌ Aucun fichier à envoyer. Enregistre d'abord.";
-        return;
-      }
-      if (!SCRIPT_URL || SCRIPT_URL.includes("REMPLACE_MOI")) {
-        statusEl.textContent = "❌ SCRIPT_URL non configurée.";
-        return;
-      }
-      if (!FOLDER_ID || FOLDER_ID.includes("REMPLACE_MOI")) {
-        statusEl.textContent = "❌ FOLDER_ID non configuré.";
-        return;
-      }
-
-
-      const now = new Date();
-
-      const titre = titreInput.value.trim() || `Enregistrement`;
-      const description = descriptionInput.value.trim() || `${titre} — ${now.toLocaleDateString()}`;
-      const dureeSec = metadataBox.dataset.duree || ((endTime - startTime) / 1000).toFixed(1);
-
-      const date = now.toLocaleDateString();
-      const heure = now.toLocaleTimeString();
-
-      if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        ({coords}) => { position.lat = coords.latitude; position.lon = coords.longitude; },
-        () => {}, { enableHighAccuracy: true, maximumAge: 10_000, timeout: 5_000 }
-      );
-    }
-
-      // Journal local
-      data.push({
-        titre,
-        description,
-        lat: position.lat,
-        lon: position.lon,
-        date,
-        heure,
-        duree: dureeSec
-      });
-      console.log("Données enregistrées :", data);
-
-      statusEl.textContent = "Préparation du fichier (Base64)…";
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        try {
-          const base64Data = (reader.result || "").toString().split(',')[1];
-          if (!base64Data) {
-            statusEl.textContent = "❌ Conversion Base64 échouée.";
-            return;
-          }
-          statusEl.textContent = "Envoi vers Google Drive…";
-          fetch(SCRIPT_URL, {
-            method: "POST",
-            body: new URLSearchParams({
-              filename: `enregistrement_${Date.now()}.wav`,
-              mimetype: "audio/wav",
-              data: base64Data,
-              folderId: FOLDER_ID
-            })
-          })
-          .then(res => res.json())
-          .then(result => {
-            if (result.status === "success") {
-                async function googleSheets(values, spreadsheetId, sheetName, date = false) {
-  const payload = {
-    spreadsheetId: spreadsheetId,
-    sheetName: sheetName,
-    values: values,
-    addDate : date
-  };
-
-  const data = encodeURIComponent(JSON.stringify(payload));
-  const body = `data=${data}`;
-
-  const url = 'https://script.google.com/macros/s/AKfycbzbNtW1cUxIFPFJuBF69O30OfaafAhPbjsYYXwtPeINICfWSpxh8jqUWtSbaV6nOvGW/exec';
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: body
-    });
-
-    const text = await res.text();
-    console.log('Réponse du script :', text);
-    return text;
-  } catch (err) {
-    console.error('Erreur lors de l\'envoi :', err);
-    return null;
+submitBtn.onclick = () => {
+  if (!lastAudioBlob) {
+    statusEl.textContent = "❌ Aucun fichier à envoyer.";
+    return;
   }
-}
 
-              googleSheets(
-                  [position.lat, position.lon, date, heure, dureeSec, titre, description, result.fileUrl],
-                  "16LhO82rFlzNwrnF6B64rKK91_Q7o0Cc9VhhuuJLu9eY",
-                  "Feuille 1"
-              );
+  const now = new Date();
+  const titre = titreInput.value.trim() || "Enregistrement";
+  const description = descriptionInput.value.trim() || `${titre} — ${now.toLocaleDateString()}`;
+  const dureeSec = metadataBox.dataset.duree;
+  const date = now.toLocaleDateString();
+  const heure = now.toLocaleTimeString();
 
+  data.push({ titre, description, lat: position.lat, lon: position.lon, date, heure, duree: dureeSec });
+  console.log("Données enregistrées :", data);
 
-              statusEl.innerHTML = `Audio uploadé : <a href="${result.fileUrl}" target="_blank" rel="noopener">Ouvrir</a>`;
-              // Reset léger
-              titreInput.value = "";
-              descriptionInput.value = "";
-              metadataBox.style.display = "none";
-            } else {
-              statusEl.textContent = "❌ Erreur Apps Script : " + (result.message || "Inconnue");
-            }
-          })
-          .catch(err => {
-            console.error(err);
-            statusEl.textContent = "❌ Erreur réseau : " + err;
-          });
-        } catch (e) {
-          console.error(e);
-          statusEl.textContent = "❌ Erreur lors de la préparation du fichier.";
-        }
-      };
-      reader.readAsDataURL(lastAudioBlob);
-    };
-
-    // Nettoyage audio quand on quitte la page
-    window.addEventListener("beforeunload", () => {
-      try {
-        if (processorNode) processorNode.disconnect();
-        if (silentGain) silentGain.disconnect();
-        if (sourceNode) sourceNode.disconnect();
-        if (audioContext) audioContext.close();
-        if (audioStream) audioStream.getTracks().forEach(t => t.stop());
-      } catch {}
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    const base64Data = (reader.result || "").toString().split(',')[1];
+    if (!base64Data) {
+      statusEl.textContent = "❌ Conversion Base64 échouée.";
+      return;
+    }
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        filename: `enregistrement_${Date.now()}.wav`,
+        mimetype: "audio/wav",
+        data: base64Data,
+        folderId: FOLDER_ID
+      })
+    })
+    .then(res => res.json())
+    .then(async result => {
+      if (result.status === "success") {
+        await googleSheets(
+          [position.lat, position.lon, date, heure, dureeSec, titre, description, result.fileUrl],
+          "16LhO82rFlzNwrnF6B64rKK91_Q7o0Cc9VhhuuJLu9eY",
+          "Feuille 1"
+        );
+        statusEl.innerHTML = `Audio uploadé : <a href="${result.fileUrl}" target="_blank" rel="noopener">Ouvrir</a>`;
+        titreInput.value = "";
+        descriptionInput.value = "";
+        metadataBox.style.display = "none";
+      } else {
+        statusEl.textContent = "❌ Erreur Apps Script : " + (result.message || "Inconnue");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      statusEl.textContent = "❌ Erreur réseau : " + err;
     });
+  };
+  reader.readAsDataURL(lastAudioBlob);
+};
+
+window.addEventListener("beforeunload", () => {
+  try {
+    processorNode?.disconnect();
+    silentGain?.disconnect();
+    sourceNode?.disconnect();
+    audioContext?.close();
+    audioStream?.getTracks().forEach(t => t.stop());
+  } catch {}
+});
+
   </script>
 </main>
 </body>
