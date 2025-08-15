@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Testeur de micro</title>
+  <style>
+    :root{
+      --bg:#0b1020;--card:#121a33;--muted:#8a93b2;--accent:#6ae3ff;--ok:#37d399;--warn:#ffb020;--err:#ff5c7a;--ring:#2b3b80;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 800px at 80% -10%, #1b2452 0%, transparent 60%) , var(--bg);
+      color:#eef2ff; display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .app{
+      width:min(980px,100%); background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.08); border-radius:24px; box-shadow:0 20px 60px rgba(0,0,0,.45);
+      overflow:hidden;
+    }
+    header{padding:24px 28px 12px; border-bottom:1px solid rgba(255,255,255,0.06)}
+    h1{margin:0; font-size:clamp(20px,3.5vw,30px)}
+    p.sub{margin:6px 0 0; color:var(--muted); font-size:14px}
+
+    .controls{display:grid; gap:14px; grid-template-columns: 1fr auto auto; padding:18px 28px; align-items:end}
+    label{font-size:12px; color:var(--muted); display:block; margin-bottom:6px}
+    select, button{
+      height:42px; padding:0 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.12);
+      background:#0f1630; color:#eaf0ff; outline:none;
+    }
+    select{width:100%}
+    button{cursor:pointer; transition: transform .06s ease, background .2s ease, border-color .2s ease}
+    button:hover{transform: translateY(-1px)}
+    button.primary{background: linear-gradient(180deg, #1b2b7a, #15235e); border-color:#2740a5}
+    button.stop{background: linear-gradient(180deg, #6a1a1a, #551414); border-color:#9a2a2a}
+
+    .panel{display:grid; gap:18px; grid-template-columns: 300px 1fr; padding:10px 28px 28px}
+    .meterCard, .waveCard{
+      background:var(--card); border-radius:20px; border:1px solid rgba(255,255,255,0.08); overflow:hidden;
+    }
+    .cardHead{display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.06)}
+    .cardHead h3{margin:0; font-size:14px; color:#c9d4ff; letter-spacing:.2px}
+
+    .meterWrap{padding:18px 16px}
+    .meterBar{height:14px; width:100%; background:#0f1630; border-radius:999px; border:1px solid rgba(255,255,255,0.08); overflow:hidden}
+    .meterFill{height:100%; width:0%; background: linear-gradient(90deg, var(--ok), var(--warn), var(--err)); transition: width .08s linear}
+    .meterNum{margin-top:10px; font-variant-numeric: tabular-nums}
+    .status{margin-top:12px; font-size:12px; color:var(--muted)}
+
+    canvas{display:block; width:100%; height:220px; background:#0b1228}
+
+    .badges{display:flex; gap:8px; align-items:center}
+    .badge{font-size:11px; color:#cfe7ff; background:#0f1630; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.08)}
+    .badge.ok{border-color:rgba(55,211,153,.45); box-shadow:0 0 0 2px rgba(55,211,153,.12) inset}
+    .badge.warn{border-color:rgba(255,176,32,.45); box-shadow:0 0 0 2px rgba(255,176,32,.12) inset}
+    .badge.err{border-color:rgba(255,92,122,.45); box-shadow:0 0 0 2px rgba(255,92,122,.12) inset}
+
+    footer{padding:12px 28px 24px; color:var(--muted); font-size:12px}
+    a{color:var(--accent)}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+    @media (max-width: 880px){ .panel{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <div class="app" role="application" aria-labelledby="app-title">
+    <header>
+      <h1 id="app-title">Testeur de micro (sélection de périphérique)</h1>
+      <p class="sub">Autorisez l'accès au micro, choisissez le périphérique, puis lancez le test pour visualiser le niveau et l'onde.</p>
+    </header>
+
+    <div class="controls">
+      <div>
+        <label for="deviceSelect">Microphone</label>
+        <select id="deviceSelect" aria-label="Choisir le microphone"></select>
+      </div>
+      <div>
+        <button id="refreshBtn" title="Rafraîchir la liste">Rafraîchir</button>
+      </div>
+      <div>
+        <button id="toggleBtn" class="primary" title="Démarrer / Arrêter le test">Démarrer le test</button>
+      </div>
+    </div>
+
+    <section class="panel">
+      <article class="meterCard" aria-live="polite">
+        <div class="cardHead">
+          <h3>Niveau</h3>
+          <div class="badges">
+            <span class="badge ok">Faible &lt; -30 dB</span>
+            <span class="badge warn">Correct ~ -20 dB</span>
+            <span class="badge err">Fort &gt; -10 dB</span>
+          </div>
+        </div>
+        <div class="meterWrap">
+          <div class="meterBar" aria-hidden="true"><div class="meterFill" id="meterFill"></div></div>
+          <div class="meterNum"><span id="levelPct">0</span>% · <span id="approxDb">–∞</span> dBFS</div>
+          <div class="status" id="status"></div>
+        </div>
+      </article>
+
+      <article class="waveCard">
+        <div class="cardHead">
+          <h3>Oscilloscope</h3>
+          <span class="badge">AnalyserNode</span>
+        </div>
+        <canvas id="wave"></canvas>
+      </article>
+    </section>
+
+    <footer>
+      <p>Conseils : si les noms des micros sont vides, commencez un test une première fois pour autoriser l'accès. Changez de périphérique via le menu déroulant. Fonctionne avec les navigateurs modernes (HTTPS requis).</p>
+    </footer>
+  </div>
+
+  <script>
+    const deviceSelect = document.getElementById('deviceSelect');
+    const refreshBtn   = document.getElementById('refreshBtn');
+    const toggleBtn    = document.getElementById('toggleBtn');
+    const meterFill    = document.getElementById('meterFill');
+    const levelPctTxt  = document.getElementById('levelPct');
+    const approxDbTxt  = document.getElementById('approxDb');
+    const statusEl     = document.getElementById('status');
+    const canvas       = document.getElementById('wave');
+    const ctx          = canvas.getContext('2d');
+
+    let currentStream = null;
+    let audioCtx = null;
+    let analyser = null;
+    let sourceNode = null;
+    let rafId = null;
+    let currentDeviceId = null;
+
+    // Resize canvas to device pixels for crisp lines
+    function fitCanvas(){
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    new ResizeObserver(fitCanvas).observe(canvas);
+
+    async function listMics(){
+      try{
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const mics = devices.filter(d => d.kind === 'audioinput');
+        deviceSelect.innerHTML = '';
+        if(mics.length === 0){
+          const opt = document.createElement('option');
+          opt.textContent = 'Aucun micro détecté';
+          opt.disabled = true; opt.selected = true; deviceSelect.appendChild(opt);
+          return;
+        }
+        for(const d of mics){
+          const opt = document.createElement('option');
+          opt.value = d.deviceId;
+          opt.textContent = d.label || `Micro ${deviceSelect.length+1}`;
+          deviceSelect.appendChild(opt);
+        }
+        if(currentDeviceId){
+          const found = [...deviceSelect.options].find(o => o.value === currentDeviceId);
+          if(found) deviceSelect.value = currentDeviceId;
+        }
+      }catch(err){
+        console.error(err);
+        setStatus('Impossible de lister les périphériques : ' + err.message, 'err');
+      }
+    }
+
+    async function ensurePermission(){
+      // To reveal device labels in some browsers, we must call getUserMedia at least once
+      try{
+        const temp = await navigator.mediaDevices.getUserMedia({audio:true});
+        temp.getTracks().forEach(t => t.stop());
+      }catch(err){
+        // If user denies, we still proceed (labels will be empty)
+        console.warn('Permission non accordée encore:', err);
+      }
+    }
+
+    function stopStream(){
+      if(rafId) cancelAnimationFrame(rafId); rafId = null;
+      if(analyser) analyser.disconnect(); analyser = null;
+      if(sourceNode) sourceNode.disconnect(); sourceNode = null;
+      if(audioCtx){ /* keep context for reuse */ }
+      if(currentStream){ currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
+      toggleBtn.textContent = 'Démarrer le test';
+      toggleBtn.classList.remove('stop');
+      toggleBtn.classList.add('primary');
+      setStatus('Test arrêté.');
+    }
+
+    async function startWithDevice(deviceId){
+      try{
+        stopStream();
+        setStatus('Initialisation…');
+        const constraints = { audio: { deviceId: deviceId ? { exact: deviceId } : undefined, echoCancellation: false, noiseSuppression: false, autoGainControl: false } };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        currentStream = stream; currentDeviceId = deviceId || null;
+
+        if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 2048;
+        analyser.smoothingTimeConstant = 0.85;
+        sourceNode = audioCtx.createMediaStreamSource(stream);
+        sourceNode.connect(analyser);
+
+        toggleBtn.textContent = 'Arrêter le test';
+        toggleBtn.classList.remove('primary');
+        toggleBtn.classList.add('stop');
+        setStatus('Test en cours… Parlez pour voir le niveau.');
+        draw();
+        await listMics(); // refresh labels once permission granted
+      }catch(err){
+        console.error(err);
+        setStatus('Échec du démarrage : ' + err.message, 'err');
+        stopStream();
+      }
+    }
+
+    function draw(){
+      // Level (RMS) + waveform
+      const bufferLength = analyser.fftSize;
+      const timeData = new Uint8Array(bufferLength);
+
+      const drawFrame = () =>{
+        analyser.getByteTimeDomainData(timeData);
+        // Compute RMS from [-1,1]
+        let sumSquares = 0;
+        for(let i=0;i<timeData.length;i++){
+          const v = (timeData[i]-128)/128; sumSquares += v*v;
+        }
+        const rms = Math.sqrt(sumSquares / timeData.length); // 0..1
+        const pct = Math.min(100, Math.max(0, Math.round(rms*140))); // scale a bit for UI
+        meterFill.style.width = pct + '%';
+        levelPctTxt.textContent = pct.toString();
+        const db = 20 * Math.log10(rms || 1e-8); // relative dBFS
+        approxDbTxt.textContent = (isFinite(db)? db.toFixed(1) : '-∞');
+
+        // Draw waveform
+        const w = canvas.width; const h = canvas.height; const mid = h/2;
+        ctx.clearRect(0,0,w,h);
+        ctx.lineWidth = 2; ctx.strokeStyle = '#7fd7ff';
+        ctx.beginPath();
+        const slice = w / bufferLength;
+        for(let i=0;i<bufferLength;i++){
+          const x = i*slice;
+          const y = mid + (timeData[i]-128)/128 * (h*0.4);
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+
+        rafId = requestAnimationFrame(drawFrame);
+      };
+      drawFrame();
+    }
+
+    function setStatus(msg, tone){
+      statusEl.textContent = msg;
+      statusEl.style.color = tone==='err' ? 'var(--err)' : 'var(--muted)';
+    }
+
+    // Event wiring
+    toggleBtn.addEventListener('click', () =>{
+      if(currentStream){ stopStream(); } else { startWithDevice(deviceSelect.value || null); }
+    });
+
+    refreshBtn.addEventListener('click', async () =>{
+      await ensurePermission();
+      await listMics();
+      setStatus('Liste des micros mise à jour.');
+    });
+
+    deviceSelect.addEventListener('change', () =>{
+      if(currentStream){ startWithDevice(deviceSelect.value); }
+    });
+
+    // React to device changes (USB casque branché, etc.)
+    if(navigator.mediaDevices && 'ondevicechange' in navigator.mediaDevices){
+      navigator.mediaDevices.addEventListener('devicechange', async ()=>{
+        await listMics();
+        setStatus('Changement de périphérique détecté.');
+      });
+    }
+
+    // Init
+    (async function init(){
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        setStatus('Votre navigateur ne supporte pas getUserMedia. Essayez Chrome/Edge/Firefox récent.', 'err');
+        return;
+      }
+      fitCanvas();
+      await ensurePermission();
+      await listMics();
+      setStatus('Choisissez un micro puis cliquez sur “Démarrer le test”.');
+    })();
+  </script>
+</body>
+</html>
