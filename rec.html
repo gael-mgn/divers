@@ -478,21 +478,13 @@ async function getSelectedMicStream() {
 
     async function initMic() {
       try {
-        audioStream = await navigator.mediaDevices.getUserMedia({
-          audio: {
-            sampleRate: 48000,
-            channelCount: 1,
-            echoCancellation: false,
-            noiseSuppression: false,
-            autoGainControl: false
-          }
-        });
+        audioStream = await getSelectedMicStream();
 
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         sampleRate = audioContext.sampleRate;
 
         sourceNode = audioContext.createMediaStreamSource(audioStream);
-        processorNode = audioContext.createScriptProcessor(4096, 1, 1);
+        processorNode = audioContext.createScriptProcessor(8192, 1, 1);
 
         // Gain à zéro pour éviter tout larsen/monitoring audible
         silentGain = audioContext.createGain();
