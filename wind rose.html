@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cercles concentriques — rectangle tangentiel (Monte Carlo + CENTER)</title>
+<style>
+  :root{
+    --bg: #0f1724;
+    --cardinal-color: #ffffff;
+    --label-font: 14px/1 "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    --panel-bg: rgba(255,255,255,0.03);
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    background:var(--bg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:#e6eef8;
+  }
+  .frame{
+    width:min(980px, 98vw);
+    aspect-ratio:1.0/0.65;
+    display:grid;
+    grid-template-columns: 1fr 380px;
+    gap:12px;
+    padding:1rem;
+    align-items:center;
+  }
+  svg{width:100%;height:100%;}
+  .outer-circle{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:2;}
+  .inner-circle{fill:none;stroke:rgba(255,255,255,0.04);stroke-width:2;}
+  .segment{stroke: rgba(0,0,0,0.12); stroke-width:1; }
+  .label{
+    fill: var(--cardinal-color);
+    font: var(--label-font);
+    text-anchor:middle;
+    dominant-baseline:middle;
+    pointer-events:none;
+    user-select:none;
+  }
+  .tick{
+    stroke: rgba(255,255,255,0.6);
+    stroke-width:1.4;
+    stroke-linecap:round;
+  }
+  .guide-line{
+    stroke: rgba(255,255,255,0.9);
+    stroke-width:2;
+    stroke-linecap:butt;
+  }
+  .guide-line.tangent{
+    stroke-dasharray: 4 6;
+    stroke-width:1.6;
+    opacity:0.9;
+  }
+  .tangent-rect{
+    fill: rgba(255,0,0,0.18);
+    stroke: none;
+  }
+
+  /* panneau droit */
+  .panel{
+    background: var(--panel-bg);
+    border-radius: 10px;
+    padding:12px;
+    min-height: 100%;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    font-size:13px;
+  }
+  .panel h3{margin:0 0 6px 0;color:#fff;font-size:15px;}
+  .controls{display:flex;flex-direction:column;gap:8px;}
+  .row{display:flex;gap:8px;align-items:center;}
+  label{font-size:13px;color:#cbd5e1;min-width:140px;}
+  input[type=number], input[type=range], select{
+    flex:1;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);
+    background:transparent;color:#fff;
+  }
+  button{
+    padding:8px 10px;border-radius:8px;border:0;background:#0ea5a4;color:#042a2a;font-weight:700;
+    cursor:pointer;
+  }
+  .small{font-size:12px;color:#9fb0c7;}
+  .results{display:flex;flex-direction:column;gap:6px;overflow:auto;padding-right:6px;max-height:320px;}
+  .seg{
+    display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);
+  }
+  .swatch{width:18px;height:18px;border-radius:4px;border:1px solid rgba(0,0,0,0.15);}
+  .seg .info{display:flex;flex-direction:column;flex:1;}
+  .seg .title{font-weight:700;font-size:13px;}
+  .seg .meta{font-size:12px;color:#cbd5e1;display:flex;gap:12px;align-items:center;}
+  .seg .coeff{width:86px;}
+  .footer{margin-top:auto;font-size:12px;color:#9fb0c7;}
+  .progress{height:6px;background:rgba(255,255,255,0.04);border-radius:6px;overflow:hidden;}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,#10b981,#06b6d4);width:0%;}
+  .hint{font-size:12px;color:#9fb0c7;}
+  .controls .inline{display:flex;gap:8px;align-items:center;}
+  .points-layer circle{opacity:0.14;}
+  .totals{
+    display:flex;flex-direction:column;gap:8px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);
+  }
+  .tot-row{display:flex;justify-content:space-between;gap:8px;align-items:center;}
+  input.coeff-input{width:100%;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;}
+  .center-row{display:flex;gap:8px;align-items:center;justify-content:space-between;}
+  .center-row input{width:140px;}
+</style>
+</head>
+<body>
+<div class="frame">
+  <!-- SVG principal -->
+  <svg id="viz" viewBox="-300 -300 600 600" role="img"
+       aria-label="Deux cercles concentriques, rectangle tangentiel et droites rotatives">
+
+    <!-- Cercles (leurs r seront fixés par JS) -->
+    <circle id="outerCircle" r="0" class="outer-circle"/>
+    <circle id="innerCircle" r="0" class="inner-circle"/>
+
+    <!-- Groupe des lignes rotatives (rectangle + guides) -->
+    <g id="lines">
+      <!-- Rectangle formé par les 4 droites tangentes -->
+      <rect id="trect" x="0" y="0" width="0" height="0" class="tangent-rect" />
+
+      <!-- Droite centrale -->
+      <line id="centerLine" x1="0" y1="0" x2="0" y2="0" class="guide-line" />
+
+      <!-- Tangentes verticales (innerR) -->
+      <line id="tvertPos" class="guide-line tangent" />
+      <line id="tvertNeg" class="guide-line tangent" />
+
+      <!-- Tangentes horizontales (outerR) -->
+      <line id="thorPos" class="guide-line tangent" />
+      <line id="thorNeg" class="guide-line tangent" />
+    </g>
+
+    <!-- Segments colorés -->
+    <g id="segments"></g>
+
+    <!-- Échantillons (optionnel) -->
+    <g id="points" class="points-layer"></g>
+
+    <!-- Labels -->
+    <g id="labels"></g>
+
+    <!-- Centre -->
+    <circle r="8" fill="#fff" opacity="0.9"/>
+  </svg>
+
+  <!-- panneau droit pour contrôles + résultats -->
+  <div class="panel" id="panel">
+    <h3>Monte Carlo — recouvrement par le rectangle</h3>
+
+    <div class="controls">
+      <div class="row inline">
+        <label for="samples">Échantillons</label>
+        <input id="samples" type="number" min="1000" max="2000000" step="1000" value="200000" />
+      </div>
+
+      <div class="row inline">
+        <label for="showPoints">Afficher points</label>
+        <select id="showPoints">
+          <option value="none">Non</option>
+          <option value="500">Oui — 500</option>
+          <option value="2000">Oui — 2 000</option>
+          <option value="5000">Oui — 5 000</option>
+        </select>
+      </div>
+
+      <div class="row inline">
+        <label for="autorun">Auto run sur rotation</label>
+        <select id="autorun"><option value="1">Oui</option><option value="0">Non</option></select>
+      </div>
+
+      <div class="row" style="gap:6px;">
+        <button id="runBtn">Lancer simulation</button>
+        <button id="clearBtn" style="background:#ef4444;color:#fff;">Effacer points</button>
+      </div>
+
+      <div class="small hint">Utilise ← / → pour faire tourner le rectangle. Si <strong>Auto run</strong> est activé, la simulation se relancera automatiquement.</div>
+
+      <div style="margin-top:12px;">
+        <div class="progress" aria-hidden="true"><i id="progBar"></i></div>
+      </div>
+    </div>
+
+    <div style="margin-top:6px;">
+      <div class="small">Angle (deg) : <span id="angleDisplay">0</span>°</div>
+      <div class="small">Points totaux générés : <span id="genCount">0</span></div>
+      <div class="small">Points visibles (si activés) : <span id="shownCount">0</span></div>
+    </div>
+
+    <h3 style="margin-top:8px;">Résultats par segment (modifiable)</h3>
+    <div class="results" id="results"></div>
+
+    <div class="totals" id="totalsBox" aria-live="polite">
+      <div class="center-row">
+        <div class="small">Valeur CENTER (ajoutée à la somme)</div>
+        <input id="centerInput" class="coeff-input" inputmode="decimal" step="any" value="0" />
+      </div>
+      <div class="tot-row"><div class="small">Somme des coefficients (zones) + CENTER :</div><div id="sumCoeffs">0</div></div>
+      <div class="tot-row"><div class="small">Score pondéré (Σ coverage_fraction × coeff_zone + CENTER) :</div><div id="weightedScore">0 (0%)</div></div>
+      <div class="small">Le score pondéré additionne pour chaque zone la fraction de recouvrement (entre 0 et 1) multipliée par le coefficient assigné, puis ajoute la valeur CENTER.</div>
+    </div>
+
+    <div class="footer">
+      <div>Approx. écart-type (erreur standard) affiché pour chaque pourcentage.</div>
+      <div style="margin-top:8px;">Note : augmente <em>Échantillons</em> pour améliorer la précision.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /****************************************************************
+   * CONFIGURATION : rayons (modifiable ici)
+   ****************************************************************/
+  // change ces valeurs pour adapter tout le dessin / la géométrie
+  let innerR = 100;   // anciennement 100
+  let outerR = 200;   // anciennement 200
+  const pad = 80;     // marge visuelle autour du dessin (pour viewBox et lignes guides)
+
+  /****************************************************************
+   * CONFIGURATION : map de démarrage (clé: valeur)
+   ****************************************************************/
+  const initialMap = {
+    CENTER: 75.455,
+    NW: 0.112,
+    N: 1.763,
+    NE: 4.779,
+    E: 4.879,
+    SE: 4.531,
+    S: 2.739,
+    SW: 1.148,
+    W: 4.594
+  };
+
+  /****************************************************************
+   * Code principal
+   ****************************************************************/
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById('viz');
+  const gSegments = document.getElementById('segments');
+  const gLabels = document.getElementById('labels');
+  const gLines = document.getElementById('lines');
+  const gPoints = document.getElementById('points');
+  const trect = document.getElementById('trect');
+
+  // sélection des éléments modifiables
+  const outerCircleEl = document.getElementById('outerCircle');
+  const innerCircleEl = document.getElementById('innerCircle');
+  const centerLineEl = document.getElementById('centerLine');
+  const tvertPos = document.getElementById('tvertPos');
+  const tvertNeg = document.getElementById('tvertNeg');
+  const thorPos = document.getElementById('thorPos');
+  const thorNeg = document.getElementById('thorNeg');
+
+  const segmentsCount = 8;
+  const startDeg0 = -90 + (360/segmentsCount)/2; // -67.5°
+  const colors = [
+    "#ef476f","#ffd166","#06d6a0","#118ab2",
+    "#8338ec","#ff6b6b","#ffd9b3","#4cc9f0"
+  ];
+  const labelsText = ["N","NE","E","SE","S","SW","W","NW"];
+
+  const deg2rad = d => d * Math.PI / 180;
+  const rad2deg = r => r * 180 / Math.PI;
+
+  function polarToCartesian(radius, angleDeg){
+    const a = deg2rad(angleDeg);
+    return { x: Math.cos(a) * radius, y: Math.sin(a) * radius };
+  }
+
+  function annulusPath(startDeg, endDeg, rInner, rOuter){
+    const startOuter = polarToCartesian(rOuter, endDeg);
+    const endOuter   = polarToCartesian(rOuter, startDeg);
+    const startInner = polarToCartesian(rInner, startDeg);
+    const endInner   = polarToCartesian(rInner, endDeg);
+    const largeArcOuter = ((endDeg - startDeg + 360) % 360) > 180 ? 1 : 0;
+    const largeArcInner = largeArcOuter;
+    const d = [
+      `M ${startOuter.x} ${startOuter.y}`,
+      `A ${rOuter} ${rOuter} 0 ${largeArcOuter} 0 ${endOuter.x} ${endOuter.y}`,
+      `L ${startInner.x} ${startInner.y}`,
+      `A ${rInner} ${rInner} 0 ${largeArcInner} 1 ${endInner.x} ${endInner.y}`,
+      "Z"
+    ].join(" ");
+    return d;
+  }
+
+  // Met à jour viewBox et éléments dépendants des rayons
+  function layoutFromRadii(){
+    const maxR = Math.max(innerR, outerR);
+    const extent = maxR + pad;
+    const vb = `${-extent} ${-extent} ${2*extent} ${2*extent}`;
+    svg.setAttribute('viewBox', vb);
+
+    // cercles
+    outerCircleEl.setAttribute('r', String(outerR));
+    innerCircleEl.setAttribute('r', String(innerR));
+
+    // rectangle tangentiel centré sur l'origine
+    const rx = -innerR;
+    const ry = -outerR;
+    const rw = innerR * 2;
+    const rh = outerR * 2;
+    trect.setAttribute('x', String(rx));
+    trect.setAttribute('y', String(ry));
+    trect.setAttribute('width', String(rw));
+    trect.setAttribute('height', String(rh));
+
+    // droites guides : les extrémités s'étendent au-delà de l'aire visible
+    const long = extent + 40;
+    // centre
+    centerLineEl.setAttribute('x1', '0'); centerLineEl.setAttribute('y1', String(-long));
+    centerLineEl.setAttribute('x2', '0'); centerLineEl.setAttribute('y2', String(long));
+    // tangentes verticales (x = ±innerR)
+    tvertPos.setAttribute('x1', String(innerR)); tvertPos.setAttribute('y1', String(-long));
+    tvertPos.setAttribute('x2', String(innerR)); tvertPos.setAttribute('y2', String(long));
+    tvertNeg.setAttribute('x1', String(-innerR)); tvertNeg.setAttribute('y1', String(-long));
+    tvertNeg.setAttribute('x2', String(-innerR)); tvertNeg.setAttribute('y2', String(long));
+    // tangentes horizontales (y = ±outerR)
+    thorPos.setAttribute('x1', String(-long)); thorPos.setAttribute('y1', String(outerR));
+    thorPos.setAttribute('x2', String(long)); thorPos.setAttribute('y2', String(outerR));
+    thorNeg.setAttribute('x1', String(-long)); thorNeg.setAttribute('y1', String(-outerR));
+    thorNeg.setAttribute('x2', String(long)); thorNeg.setAttribute('y2', String(-outerR));
+
+    // recolor/clear segments & labels to force recreation (simple approach)
+    gSegments.innerHTML = '';
+    gLabels.innerHTML = '';
+
+    // (re)create segments
+    for(let i=0;i<segmentsCount;i++){
+      const sDeg = startDeg0 + i*(360/segmentsCount);
+      const eDeg = sDeg + (360/segmentsCount);
+      const path = document.createElementNS(svgNS,"path");
+      path.setAttribute("d", annulusPath(sDeg, eDeg, innerR, outerR));
+      path.setAttribute("fill", colors[i % colors.length]);
+      path.setAttribute("class","segment");
+      gSegments.appendChild(path);
+    }
+
+    // labels cardinaux
+    for(let i=0;i<labelsText.length;i++){
+      const angle = -90 + i*(360/labelsText.length);
+      const pos = polarToCartesian(outerR + 24, angle);
+      const tickStart = polarToCartesian(outerR - 6, angle);
+      const tickEnd   = polarToCartesian(outerR + 10, angle);
+
+      const line = document.createElementNS(svgNS,"line");
+      line.setAttribute("x1", tickStart.x);
+      line.setAttribute("y1", tickStart.y);
+      line.setAttribute("x2", tickEnd.x);
+      line.setAttribute("y2", tickEnd.y);
+      line.setAttribute("class","tick");
+      gLabels.appendChild(line);
+
+      const text = document.createElementNS(svgNS,"text");
+      text.setAttribute("x", pos.x);
+      text.setAttribute("y", pos.y);
+      text.setAttribute("class", "label");
+      text.textContent = labelsText[i];
+      if(labelsText[i].length > 1){
+        text.setAttribute("font-weight","600");
+        text.setAttribute("font-size","13");
+      } else {
+        text.setAttribute("font-size","15");
+        text.setAttribute("font-weight","700");
+      }
+      gLabels.appendChild(text);
+    }
+  }
+
+  /****************************************************************
+   * reste du code (Monte Carlo, UI, etc.)
+   ****************************************************************/
+  // UI elements
+  const samplesEl = document.getElementById('samples');
+  const runBtn = document.getElementById('runBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const showPointsEl = document.getElementById('showPoints');
+  const autorunEl = document.getElementById('autorun');
+  const progBar = document.getElementById('progBar');
+  const angleDisplay = document.getElementById('angleDisplay');
+  const genCount = document.getElementById('genCount');
+  const shownCount = document.getElementById('shownCount');
+  const resultsDiv = document.getElementById('results');
+  const sumCoeffsEl = document.getElementById('sumCoeffs');
+  const weightedScoreEl = document.getElementById('weightedScore');
+  const centerInput = document.getElementById('centerInput');
+
+  // état
+  let angleDeg = 0;
+  let lastRunId = 0;
+  let lastStats = null; // stocke stats dernier run pour calcul pondéré
+  // coeffs par zone (indexé selon labelsText)
+  let coeffs = new Array(segmentsCount).fill(1);
+  // center value ajoutée à somme et au score
+  let centerValue = 0;
+
+  // initialise coeffs & center depuis la map initiale
+  (function loadFromInitialMap(){
+    // CENTER
+    if(initialMap && Object.prototype.hasOwnProperty.call(initialMap,'CENTER')){
+      centerValue = Number(initialMap['CENTER']) || 0;
+    } else {
+      centerValue = 0;
+    }
+    // zones
+    for(let i=0;i<segmentsCount;i++){
+      const key = labelsText[i];
+      if(initialMap && Object.prototype.hasOwnProperty.call(initialMap,key)){
+        coeffs[i] = Number(initialMap[key]) || 0;
+      } else {
+        coeffs[i] = 0; // par défaut 0 si absent (évite surprises)
+      }
+    }
+  })();
+
+  // affiche CENTER initial dans input
+  centerInput.value = String(centerValue);
+
+  function updateRotation(){
+    gLines.setAttribute("transform", `rotate(${angleDeg})`);
+    angleDisplay.textContent = (Math.round(angleDeg*10)/10).toString();
+  }
+
+  document.addEventListener("keydown", e => {
+    if(e.key === "ArrowRight"){
+      angleDeg += 2;
+      updateRotation();
+      if(autorunEl.value === "1") runMonteCarlo();
+    } else if(e.key === "ArrowLeft"){
+      angleDeg -= 2;
+      updateRotation();
+      if(autorunEl.value === "1") runMonteCarlo();
+    }
+  });
+
+  // ---- Géométrie : fonctions d'aide ----
+  function norm360(d){ return ((d % 360) + 360) % 360; }
+  function angleInRange(angle, start, end){
+    const a = norm360(angle);
+    const s = norm360(start);
+    const e = norm360(end);
+    if(s < e) return a >= s && a < e;
+    return a >= s || a < e;
+  }
+
+  function pointInRectRotated(px, py, angleDeg){
+    // rotate point by -angleDeg (ramène le rectangle aligné avec axes)
+    const a = deg2rad(-angleDeg);
+    const rx = px * Math.cos(a) - py * Math.sin(a);
+    const ry = px * Math.sin(a) + py * Math.cos(a);
+    // bornes déduites des rayons
+    return (rx >= -innerR && rx <= innerR && ry >= -outerR && ry <= outerR);
+  }
+
+  // Monte Carlo : tirage uniforme sur l'anneau (aire)
+  function samplePointOnAnnulus(){
+    const u = Math.random();
+    // r ~ sqrt( (R2^2 - R1^2)*u + R1^2 )
+    const r = Math.sqrt((outerR*outerR - innerR*innerR) * u + innerR*innerR);
+    const theta = Math.random() * 2 * Math.PI;
+    return { x: r * Math.cos(theta), y: r * Math.sin(theta), theta };
+  }
+
+  // Normalisation d'une chaîne numérique acceptant virgule ou point
+  function parseUserNumber(str){
+    if(typeof str !== 'string') str = String(str || '');
+    const norm = str.replace(',', '.').trim();
+    const v = parseFloat(norm);
+    return isNaN(v) ? 0 : v;
+  }
+
+  // Render results list (create DOM if absent)
+  function renderResults(stats){
+    // stats: array of {hit,total}
+    lastStats = stats; // stocke pour calcul pondéré
+    resultsDiv.innerHTML = "";
+    for(let i=0;i<segmentsCount;i++){
+      const s = stats[i];
+      const n = s.total;
+      const k = s.hit;
+      let pct = (n>0) ? (k / n * 100) : NaN;
+      let se = (n>0) ? Math.sqrt((pct/100)*(1-(pct/100))/n) * 100 : NaN;
+
+      const row = document.createElement('div');
+      row.className = 'seg';
+
+      const sw = document.createElement('div');
+      sw.className = 'swatch';
+      sw.style.background = colors[i % colors.length];
+
+      const info = document.createElement('div');
+      info.className = 'info';
+
+      const title = document.createElement('div');
+      title.className='title';
+      /*title.textContent = `${labelsText[i]} (seg ${i})`;*/
+
+      const meta = document.createElement('div');
+      meta.className='meta';
+
+      const metaText = document.createElement('div');
+      if(n === 0){
+        metaText.textContent = `Aucun point dans ce segment (échantillons insuffisants)`;
+      } else {
+        metaText.textContent = `${k} / ${n} → ${isNaN(pct) ? "N/A" : pct.toFixed(2) + " %"}  (± ${isNaN(se) ? "N/A" : se.toFixed(3) + " %"})`;
+      }
+      metaText.style.minWidth = "170px";
+
+      // coefficient input (accept virgule ou point)
+      const coeffWrap = document.createElement('div');
+      coeffWrap.style.display = 'flex';
+      coeffWrap.style.alignItems = 'center';
+      coeffWrap.style.gap = '6px';
+
+      const coeffInput = document.createElement('input');
+      coeffInput.type = 'number';
+      coeffInput.step = 'any'; // accepte décimales
+      coeffInput.inputMode = 'decimal';
+      coeffInput.lang = 'fr';
+      coeffInput.min = '0';
+      coeffInput.value = String(Number.isFinite(coeffs[i]) ? coeffs[i] : 0);
+      coeffInput.className = 'coeff-input coeff';
+      coeffInput.setAttribute('aria-label', `Coefficient pour ${labelsText[i]}`);
+
+      coeffInput.addEventListener('input', (ev) => {
+        const raw = ev.target.value;
+        const v = parseUserNumber(raw);
+        coeffs[i] = (v < 0 || isNaN(v)) ? 0 : v;
+        updateTotals(); // recalcul instantané
+      });
+
+      // Affichage local cov × coeff
+      const localCalc = document.createElement('div');
+      localCalc.className = 'small';
+      localCalc.style.minWidth = '120px';
+      const frac = (n>0) ? (k / n) : 0;
+      localCalc.textContent = `cov × coeff = ${(frac * coeffs[i]).toFixed(4)} (${((frac*100).toFixed(2))}% × ${coeffs[i]})`;
+
+      coeffWrap.appendChild(coeffInput);
+      coeffWrap.appendChild(localCalc);
+
+      meta.appendChild(metaText);
+      meta.appendChild(coeffWrap);
+
+      info.appendChild(title);
+      info.appendChild(meta);
+
+      row.appendChild(sw);
+      row.appendChild(info);
+      resultsDiv.appendChild(row);
+
+      // store reference to localCalc so we can update it when coefficients change
+      stats[i].__localCalcEl = localCalc;
+      stats[i].__coeffInput = coeffInput;
+    }
+
+    updateTotals(); // calcule somme et score pondéré et met à jour l'affichage
+  }
+
+  // Efface les points affichés
+  function clearPoints(){
+    gPoints.innerHTML = "";
+    shownCount.textContent = "0";
+  }
+
+  // Met à jour les totaux et le score pondéré à partir de lastStats et coeffs
+  function updateTotals(){
+    const stats = lastStats;
+    let sumCoeffsZones = 0;
+    let weighted = 0; // Σ (coverage_fraction * coeff_zone)
+    if(stats){
+      for(let i=0;i<segmentsCount;i++){
+        const s = stats[i];
+        const n = s.total;
+        const k = s.hit;
+        const cov = (n>0) ? (k / n) : 0;
+        // si l'élément input existe, préférer sa valeur (normalisée)
+        let inputVal = coeffs[i];
+        if(s.__coeffInput){
+          inputVal = parseUserNumber(s.__coeffInput.value);
+          coeffs[i] = inputVal;
+        }
+        const c = (isNaN(inputVal) || inputVal < 0) ? 0 : inputVal;
+        sumCoeffsZones += c;
+        weighted += cov * c;
+
+        if(s.__localCalcEl){
+          s.__localCalcEl.textContent = `cov × coeff = ${(cov * c).toFixed(4)} (${(cov*100).toFixed(2)}% × ${c})`;
+        }
+      }
+    } else {
+      sumCoeffsZones = coeffs.reduce((a,b)=>a+(Number.isFinite(b)?b:0),0);
+      weighted = 0;
+    }
+
+    // CENTER : lire depuis input (normaliser virgule)
+    centerValue = parseUserNumber(centerInput.value);
+
+    const totalSum = sumCoeffsZones + centerValue;
+    const weightedTotal = weighted + centerValue;
+
+    sumCoeffsEl.textContent = totalSum.toFixed(6);
+    const weightedPct = (weightedTotal * 100).toFixed(4);
+    weightedScoreEl.textContent = `${weightedTotal.toFixed(6)} (${weightedPct}%)`;
+  }
+
+  // écouteur CENTER input
+  centerInput.addEventListener('input', () => {
+    centerValue = parseUserNumber(centerInput.value);
+    updateTotals();
+  });
+
+  // Monte Carlo with batching to keep UI responsive
+  function runMonteCarlo(){
+    const runId = ++lastRunId;
+    clearPoints();
+    progBar.style.width = "0%";
+    const samples = Math.max(1000, Math.min(200000, parseInt(samplesEl.value || 20000, 10)));
+    const showOpt = showPointsEl.value;
+    const showLimit = (showOpt === "none") ? 0 : parseInt(showOpt, 10);
+    const stats = Array.from({length:segmentsCount}, ()=>({hit:0, total:0}));
+    let generated = 0;
+    const batch = 5000; // taille de lot
+    let shown = 0;
+
+    genCount.textContent = "0";
+    shownCount.textContent = "0";
+    progBar.style.width = `0%`;
+
+    function processBatch(){
+      if(runId !== lastRunId) return; // canceled by new run
+      const toDo = Math.min(batch, samples - generated);
+      for(let j=0;j<toDo;j++){
+        const p = samplePointOnAnnulus();
+        generated++;
+        const angDeg = norm360(rad2deg(p.theta));
+        let idx = -1;
+        for(let s=0;s<segmentsCount;s++){
+          // compute segment start/end consistent with creation order
+          const sDeg = startDeg0 + s*(360/segmentsCount);
+          const eDeg = sDeg + (360/segmentsCount);
+          if(angleInRange(angDeg, sDeg, eDeg)){
+            idx = s;
+            break;
+          }
+        }
+        if(idx === -1) continue;
+        stats[idx].total++;
+        const inside = pointInRectRotated(p.x, p.y, angleDeg);
+        if(inside) stats[idx].hit++;
+
+        if(showLimit > 0 && shown < showLimit){
+          const c = document.createElementNS(svgNS,"circle");
+          c.setAttribute("cx", p.x);
+          c.setAttribute("cy", p.y);
+          c.setAttribute("r", 1.2);
+          c.setAttribute("fill", inside ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.6)');
+          c.setAttribute("stroke","none");
+          gPoints.appendChild(c);
+          shown++;
+        }
+      }
+      genCount.textContent = generated.toString();
+      shownCount.textContent = shown.toString();
+      const prog = Math.round((generated / samples) * 100);
+      progBar.style.width = prog + "%";
+
+      if(generated < samples){
+        window.requestAnimationFrame(processBatch);
+      } else {
+        // terminé — afficher résultats et conserver stats
+        lastStats = stats;
+        // assurer cohérence de coeffs
+        if(coeffs.length !== segmentsCount) coeffs = new Array(segmentsCount).fill(0);
+        renderResults(stats);
+      }
+    }
+
+    processBatch();
+  }
+
+  // boutons
+  runBtn.addEventListener("click", () => {
+    runMonteCarlo();
+  });
+  clearBtn.addEventListener("click", () => {
+    clearPoints();
+  });
+
+  // initial layout + initial render
+  layoutFromRadii();
+  updateRotation();
+
+  // initial render : on affiche les coefficients chargés depuis initialMap (même si pas encore de stats)
+  (function initialRenderBlank(){
+    lastStats = null;
+    resultsDiv.innerHTML = "";
+    for(let i=0;i<segmentsCount;i++){
+      const row = document.createElement('div');
+      row.className = 'seg';
+      const sw = document.createElement('div');
+      sw.className = 'swatch';
+      sw.style.background = colors[i % colors.length];
+      const info = document.createElement('div');
+      info.className = 'info';
+      const title = document.createElement('div');
+      title.className='title';
+      title.textContent = `${labelsText[i]} (seg ${i})`;
+      const meta = document.createElement('div');
+      meta.className='meta';
+      const metaText = document.createElement('div');
+      metaText.textContent = `Aucun résultat (lancer la simulation)`;
+      metaText.style.minWidth = "170px";
+      const coeffWrap = document.createElement('div');
+      coeffWrap.style.display = 'flex';
+      coeffWrap.style.alignItems = 'center';
+      coeffWrap.style.gap = '6px';
+      const coeffInput = document.createElement('input');
+      coeffInput.type = 'number'; coeffInput.step='any'; coeffInput.inputMode='decimal'; coeffInput.min='0';
+      coeffInput.value = String(coeffs[i]); coeffInput.className='coeff-input coeff';
+      coeffInput.addEventListener('input',(ev)=>{ const v = parseUserNumber(ev.target.value); coeffs[i] = (v<0||isNaN(v))?0:v; updateTotals();});
+      const localCalc = document.createElement('div'); localCalc.className='small'; localCalc.style.minWidth='120px';
+      localCalc.textContent = `cov × coeff = 0.0000 (0% × ${coeffs[i]})`;
+      coeffWrap.appendChild(coeffInput); coeffWrap.appendChild(localCalc);
+      meta.appendChild(metaText); meta.appendChild(coeffWrap);
+      info.appendChild(title); info.appendChild(meta);
+      row.appendChild(sw); row.appendChild(info);
+      resultsDiv.appendChild(row);
+    }
+    updateTotals();
+  })();
+
+  // démarre une simulation initiale (optionnel)
+  runMonteCarlo();
+
+  // Expose une petite API dans console pour debug : changer radii et relayout
+  window.__viz = {
+    setRadii: (rInner, rOuter, newPad) => {
+      innerR = Number(rInner) || innerR;
+      outerR = Number(rOuter) || outerR;
+      if(typeof newPad === 'number') { /* optionnel */ }
+      layoutFromRadii();
+      updateRotation();
+    }
+  };
+})();
+</script>
+</body>
+</html>
