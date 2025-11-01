@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Envoi d’e-mail</title>
+  <title>Envoyer un e-mail via Apps Script</title>
 </head>
 <body>
-  <h2>Envoyer un e-mail via Apps Script</h2>
+  <h2>Envoyer un e-mail</h2>
 
   <form id="emailForm">
     <input type="email" id="email" placeholder="Destinataire" required><br><br>
@@ -20,6 +20,12 @@
     const form = document.getElementById('emailForm');
     const response = document.getElementById('response');
 
+    // Ton URL Apps Script
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxAtgvo9TZxt9aLS23SKTw0UPzdQ-JjsOT7uXXM4FlY7MYyJx66dngaBYgxmWfEvGgs/exec";
+
+    // Proxy CORS Anywhere
+    const proxy = "https://cors-anywhere-t7kn.onrender.com/";
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -29,30 +35,25 @@
         message: document.getElementById('message').value
       };
 
-      // URL de ton Web App Google Apps Script :
-      const url = 'https://script.google.com/macros/s/AKfycbz5jBmc8Ae-snRznc32G6iewSuzHKFfGrrf2JoFao7OcHKQKrKSI5LN_iVFQCb-EzMr/exec';
-
-      response.textContent = "Envoi en cours...";
+      response.textContent = "⏳ Envoi en cours...";
 
       try {
-        const res = await fetch(url + '?options=true', {
-  method: 'POST',
-  body: JSON.stringify(data),
-  headers: { 'Content-Type': 'application/json' },
-  mode: 'cors'
-});
+        const res = await fetch(proxy + scriptURL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        });
 
         const result = await res.json();
-
         if (result.status === 'ok') {
           response.textContent = "✅ E-mail envoyé avec succès !";
           form.reset();
         } else {
           response.textContent = "❌ Erreur : " + result.message;
         }
-      } catch (error) {
-        response.textContent = "⚠️ Une erreur est survenue.";
-        console.error(error);
+      } catch (err) {
+        console.error(err);
+        response.textContent = "⚠️ Impossible d’envoyer le mail.";
       }
     });
   </script>
