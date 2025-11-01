@@ -30,16 +30,18 @@
       };
 
       // URL de ton Web App Google Apps Script :
-      const url = 'https://script.google.com/macros/s/AKfycbxRWFfDPKvlemH4CJMnQ-PS9QXj_-oa65PIYxaljxm4tTDt7GXlOTVyjocewnBOEWTJ/exec';
+      const url = 'https://script.google.com/macros/s/AKfycbz5jBmc8Ae-snRznc32G6iewSuzHKFfGrrf2JoFao7OcHKQKrKSI5LN_iVFQCb-EzMr/exec';
 
       response.textContent = "Envoi en cours...";
 
       try {
-        const res = await fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {'Content-Type': 'application/json'}
-        });
+        const res = await fetch(url + '?options=true', {
+  method: 'POST',
+  body: JSON.stringify(data),
+  headers: { 'Content-Type': 'application/json' },
+  mode: 'cors'
+});
+
         const result = await res.json();
 
         if (result.status === 'ok') {
