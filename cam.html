@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prendre une photo</title>
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --primary: #007bff;
+      --primary-hover: #0056b3;
+      --danger: #dc3545;
+      --modal-bg: rgba(0,0,0,0.7);
+      --max-width: 420px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: var(--bg);
+      margin: 0;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover { background-color: var(--primary-hover); }
+
+    .secondary {
+      background: #6c757d;
+    }
+
+    .danger { background: var(--danger); }
+
+    /* Modal */
+    .modal {
+      display: none; /* togglé via JS */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--modal-bg);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal[aria-hidden="false"] { display: flex; }
+
+    .modal-content {
+      background: white;
+      padding: 16px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: var(--max-width);
+      box-sizing: border-box;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    video, canvas, img.preview {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .tc {
+      font-size: 14px;
+    }
+
+    a.download-link {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: white;
+      background: #28a745;
+      font-weight: 600;
+    }
+
+    /* small screens */
+    @media (max-width: 420px) {
+      .modal-content { padding: 12px; }
+      button { padding: 10px 14px; font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Prendre une photo avec la caméra</h2>
+  <button id="openCameraBtn">📸 Ouvrir la caméra</button>
+
+  <!-- Modal -->
+  <div class="modal" id="cameraModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+    <div class="modal-content" id="modalContent">
+      <h3 id="modalTitle" class="tc" style="margin:0 0 6px 0;">Caméra</h3>
+
+      <!-- Video preview -->
+      <video id="video" autoplay playsinline></video>
+
+      <!-- Image preview (result) -->
+      <img id="photoPreview" class="preview" alt="Aperçu de la photo" style="display:none;" />
+
+      <!-- Hidden canvas used to capture -->
+      <canvas id="canvas" style="display:none;"></canvas>
+
+      <div class="controls">
+        <button id="takePhotoBtn">📷 Prendre la photo</button>
+        <button id="retakeBtn" class="secondary" style="display:none;">↺ Reprendre</button>
+        <a id="downloadLink" class="download-link" style="display:none;" download="photo.png">⬇️ Télécharger</a>
+        <button id="closeBtn" class="danger">Fermer</button>
+      </div>
+      <p id="status" class="tc" style="margin:0; font-size:13px; color:#555;"></p>
+    </div>
+  </div>
+
+  <script>
+    const openCameraBtn = document.getElementById('openCameraBtn');
+    const cameraModal = document.getElementById('cameraModal');
+    const modalContent = document.getElementById('modalContent');
+    const video = document.getElementById('video');
+    const takePhotoBtn = document.getElementById('takePhotoBtn');
+    const retakeBtn = document.getElementById('retakeBtn');
+    const canvas = document.getElementById('canvas');
+    const photoPreview = document.getElementById('photoPreview');
+    const downloadLink = document.getElementById('downloadLink');
+    const closeBtn = document.getElementById('closeBtn');
+    const status = document.getElementById('status');
+
+    let stream = null;
+
+    // Ouvre le modal et démarre la caméra
+    openCameraBtn.addEventListener('click', async () => {
+      cameraModal.setAttribute('aria-hidden', 'false');
+      status.textContent = 'Ouverture de la caméra…';
+
+      // Première tentative : essayer caméra arrière si possible (ideal)
+      const constraintsList = [
+        { video: { facingMode: { ideal: "environment" } } },
+        { video: { facingMode: "environment" } },
+        { video: true } // fallback générique
+      ];
+
+      let got = false;
+      for (const c of constraintsList) {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia(c);
+          got = true;
+          break;
+        } catch (err) {
+          // essayer la contrainte suivante
+          console.warn('getUserMedia failed for', c, err && err.name ? err.name : err);
+        }
+      }
+
+      if (!got) {
+        status.textContent = "Erreur : impossible d'accéder à la caméra (vérifiez les permissions).";
+        return;
+      }
+
+      // Affecte le flux au <video> et attend qu'il soit prêt
+      video.srcObject = stream;
+      try {
+        // On attend la métadonnée pour s'assurer des dimensions
+        await new Promise((resolve) => {
+          if (video.readyState >= 2) resolve();
+          else video.onloadedmetadata = () => resolve();
+        });
+        await video.play().catch(()=>{}); // play() peut rejeter si autoplay bloqué
+        status.textContent = '';
+        takePhotoBtn.focus();
+      } catch (playErr) {
+        console.warn('video play error', playErr);
+        status.textContent = '';
+      }
+    });
+
+    // Capture la photo (dessine sur canvas puis crée un blob + preview)
+    takePhotoBtn.addEventListener('click', () => {
+      if (!stream) {
+        status.textContent = "Caméra non disponible.";
+        return;
+      }
+
+      // Assurer que le video contient des dimensions valides
+      const vW = video.videoWidth || video.clientWidth;
+      const vH = video.videoHeight || video.clientHeight;
+      if (!vW || !vH) {
+        status.textContent = "Impossible de lire la vidéo pour capturer (dimensions manquantes).";
+        return;
+      }
+
+      canvas.width = vW;
+      canvas.height = vH;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convertir en blob pour téléchargement et preview
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          status.textContent = "Échec de la capture.";
+          return;
+        }
+
+        const url = URL.createObjectURL(blob);
+        photoPreview.src = url;
+        photoPreview.style.display = 'block';
+        downloadLink.href = url;
+        downloadLink.style.display = 'inline-block';
+        retakeBtn.style.display = 'inline-block';
+
+        // Masquer le flux vidéo pour mettre l'accent sur la photo capturée
+        video.style.display = 'none';
+        takePhotoBtn.style.display = 'none';
+        status.textContent = 'Photo prise — téléchargez-la ou reprenez.';
+      }, 'image/png');
+    });
+
+    // Reprendre une photo (remet le vidéo visible)
+    retakeBtn.addEventListener('click', () => {
+      // libérer l'URL de l'aperçu précédent si besoin
+      if (photoPreview.src) {
+        try { URL.revokeObjectURL(photoPreview.src); } catch (e) {}
+      }
+      photoPreview.style.display = 'none';
+      downloadLink.style.display = 'none';
+      retakeBtn.style.display = 'none';
+      video.style.display = 'block';
+      takePhotoBtn.style.display = 'inline-block';
+      takePhotoBtn.focus();
+      status.textContent = '';
+    });
+
+    // Fermeture propre du modal (arrêt des tracks)
+    function closeModal() {
+      cameraModal.setAttribute('aria-hidden', 'true');
+      status.textContent = '';
+      // masquer preview si existante et révoquer URL
+      if (photoPreview.src) {
+        try { URL.revokeObjectURL(photoPreview.src); } catch(e){}
+      }
+      photoPreview.style.display = 'none';
+      downloadLink.style.display = 'none';
+      retakeBtn.style.display = 'none';
+      takePhotoBtn.style.display = 'inline-block';
+      video.style.display = 'block';
+
+      if (stream) {
+        stream.getTracks().forEach(t => t.stop());
+        stream = null;
+      }
+      video.srcObject = null;
+      openCameraBtn.focus();
+    }
+
+    // Bouton fermer
+    closeBtn.addEventListener('click', closeModal);
+
+    // Fermer en cliquant sur le fond (et pas sur le contenu)
+    cameraModal.addEventListener('click', (ev) => {
+      if (ev.target === cameraModal) {
+        closeModal();
+      }
+    });
+
+    // Échap pour fermer
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && cameraModal.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
+    });
+
+    // Nettoyage si l'onglet se ferme / refresh
+    window.addEventListener('beforeunload', () => {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+    });
+  </script>
+
+</body>
+</html>
