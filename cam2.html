@@ -69,7 +69,6 @@
     flex-direction: column;
     gap: 10px;
     animation: popIn 0.25s ease;
-    position: relative;
   }
 
   @keyframes popIn {
@@ -92,7 +91,9 @@
     pointer-events: none;
   }
 
-  .flash.active { opacity: 0.9; }
+  .flash.active {
+    opacity: 0.9;
+  }
 
   .controls {
     display: flex;
@@ -105,24 +106,6 @@
     font-size: 14px;
     color: #555;
     margin: 0;
-  }
-
-  /* Indicateur visuel du point de focus */
-  .focus-ring {
-    position: absolute;
-    border: 2px solid #00ff80;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    pointer-events: none;
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.2);
-    transition: opacity 0.2s, transform 0.3s ease-out;
-  }
-
-  .focus-ring.active {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
   }
 
   @media (max-width: 420px) {
@@ -140,7 +123,6 @@
   <div class="modal-content">
     <h3 id="modalTitle" class="tc">Caméra</h3>
     <div class="flash" id="flashEffect"></div>
-    <div class="focus-ring" id="focusRing"></div> <!-- 👈 Indicateur de focus -->
     <video id="video" autoplay playsinline></video>
     <img id="photoPreview" class="preview" alt="Aperçu" style="display:none;">
     <canvas id="canvas" style="display:none;"></canvas>
@@ -167,12 +149,179 @@ const els = {
   download: document.getElementById('downloadLink'),
   closeBtn: document.getElementById('closeBtn'),
   status: document.getElementById('status'),
-  flash: document.getElementById('flashEffect'),
-  focusRing: document.getElementById('focusRing')
+  flash: document.getElementById('flashEffect')
 };
-
 let stream = null;
-let track = null;
+
+// --- Styles pour l'indicateur de mise au point (injecté dynamiquement) ---
+(function injectFocusStyles() {
+  const css = `
+  .focus-overlay { position: absolute; inset: 0; pointer-events: none; }
+  .focus-ring {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    opacity: 0.95;
+    animation: focus-pulse 900ms ease-out;
+    pointer-events: none;
+  }
+  @keyframes focus-pulse {
+    0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.0; }
+    30% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.95; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0.0; }
+  }`;
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(css));
+  document.head.appendChild(style);
+})();
+
+// Crée une couche d'overlay au-dessus de la vidéo pour positionner l'anneau
+function ensureFocusOverlay() {
+  let overlay = els.video.parentElement.querySelector('.focus-overlay');
+  // vidéo parent doit être position:relative pour que l'overlay fonctionne correctement
+  const parent = els.video.parentElement;
+  if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'focus-overlay';
+    parent.appendChild(overlay);
+  }
+  return overlay;
+}
+
+// Fonction qui affiche brièvement l'anneau de mise au point
+function showFocusRing(clientX, clientY) {
+  const overlay = ensureFocusOverlay();
+  const ring = document.createElement('div');
+  ring.className = 'focus-ring';
+  // positionner en coordonnées relatives à l'overlay
+  const rect = overlay.getBoundingClientRect();
+  ring.style.left = (clientX - rect.left) + 'px';
+  ring.style.top = (clientY - rect.top) + 'px';
+  overlay.appendChild(ring);
+  // Retirer l'anneau après animation
+  setTimeout(() => {
+    ring.remove();
+  }, 900);
+}
+
+// Calcule les coordonnées normalisées (0..1) dans le flux vidéo à partir des coordonnées du clic
+function getNormalizedPointFromClick(e) {
+  const rect = els.video.getBoundingClientRect();
+  // coordonnées du clic dans le rectangle de la vidéo (prise en compte du letterbox / object-fit)
+  const clickX = e.clientX - rect.left;
+  const clickY = e.clientY - rect.top;
+
+  // Maintenant, adapter si la vidéo n'occupe pas toute la boîte (to handle object-fit / aspect-ratio)
+  const videoAspect = els.video.videoWidth / els.video.videoHeight || 1;
+  const boxAspect = rect.width / rect.height || 1;
+
+  let normX, normY;
+
+  if (boxAspect > videoAspect) {
+    // boîte plus large -> bandes horizontales left-right
+    const displayedVideoHeight = rect.height;
+    const displayedVideoWidth = displayedVideoHeight * videoAspect;
+    const offsetX = (rect.width - displayedVideoWidth) / 2;
+    const xInVideo = clickX - offsetX;
+    normX = xInVideo / displayedVideoWidth;
+    normY = clickY / displayedVideoHeight;
+  } else {
+    // boîte plus haute -> bandes top-bottom
+    const displayedVideoWidth = rect.width;
+    const displayedVideoHeight = displayedVideoWidth / videoAspect;
+    const offsetY = (rect.height - displayedVideoHeight) / 2;
+    const xInVideo = clickX;
+    const yInVideo = clickY - offsetY;
+    normX = xInVideo / displayedVideoWidth;
+    normY = yInVideo / displayedVideoHeight;
+  }
+
+  // clamp 0..1
+  normX = Math.max(0, Math.min(1, normX));
+  normY = Math.max(0, Math.min(1, normY));
+  return { x: normX, y: normY };
+}
+
+// Essaye d'appliquer la mise au point au point normalisé (0..1). Comportements différents selon le support.
+async function applyFocusAtPoint(normPoint) {
+  if (!stream) {
+    els.status.textContent = 'Caméra non initialisée.';
+    return;
+  }
+  const [track] = stream.getVideoTracks();
+  if (!track || typeof track.getCapabilities !== 'function') {
+    els.status.textContent = 'Mise au point non supportée (pas de support track).';
+    return;
+  }
+
+  const caps = track.getCapabilities();
+  try {
+    // Si le device expose pointsOfInterest, on l'utilise
+    if (Array.isArray(caps.pointsOfInterest) || caps.pointsOfInterest !== undefined) {
+      const advanced = [{ pointsOfInterest: [ { x: normPoint.x, y: normPoint.y } ] }];
+      // si focusMode est exposé et propose 'single-shot' on le demande
+      if (Array.isArray(caps.focusMode) && caps.focusMode.includes('single-shot')) {
+        advanced[0].focusMode = 'single-shot';
+      } else if (Array.isArray(caps.focusMode) && caps.focusMode.includes('continuous')) {
+        advanced[0].focusMode = 'continuous';
+      }
+      await track.applyConstraints({ advanced });
+      els.status.textContent = 'Mise au point effectuée.';
+      return;
+    }
+
+    // Sinon, si focusMode est disponible (sans pointsOfInterest), on tente de déclencher un single-shot
+    if (Array.isArray(caps.focusMode) && (caps.focusMode.includes('single-shot') || caps.focusMode.includes('continuous'))) {
+      const mode = caps.focusMode.includes('single-shot') ? 'single-shot' : 'continuous';
+      await track.applyConstraints({ advanced: [{ focusMode: mode }] });
+      els.status.textContent = 'Mise au point déclenchée.';
+      return;
+    }
+
+    // Tentative via ImageCapture pour forcer un recommencement d'AF (certains Android/Chrome réagissent)
+    if (typeof window.ImageCapture === 'function') {
+      try {
+        const ic = new ImageCapture(track);
+        // Lecture rapide des capacités photo (peut forcer un cycle AF sur certains périphériques)
+        await ic.getPhotoCapabilities();
+        // pas d'API de pointsOfInterest ici standardisée pour ImageCapture, mais l'appel peut aider
+        els.status.textContent = 'Mise au point tentée via ImageCapture (si prise en charge).';
+        return;
+      } catch (err) {
+        // ignore, on continuera vers message de non support
+      }
+    }
+
+    // Si aucune API disponible
+    els.status.textContent = "Mise au point non prise en charge par cet appareil / navigateur.";
+  } catch (err) {
+    console.warn('applyFocusAtPoint error', err);
+    els.status.textContent = "Erreur lors de la mise au point : " + (err && err.message ? err.message : err);
+  }
+}
+
+// Gestion du clic sur la vidéo pour demander la mise au point
+els.video.addEventListener('click', async (e) => {
+  // Montrer visuel
+  showFocusRing(e.clientX, e.clientY);
+
+  const norm = getNormalizedPointFromClick(e);
+  els.status.textContent = 'Mise au point...';
+  await applyFocusAtPoint(norm);
+  // effacer le statut après un petit délai si la mise au point a réussi
+  setTimeout(() => {
+    if (els.status.textContent && els.status.textContent.startsWith('Mise au point')) {
+      // garder si erreur; sinon effacer
+      if (els.status.textContent.includes('non') || els.status.textContent.includes('Erreur')) return;
+      els.status.textContent = '';
+    }
+  }, 1500);
+});
 
 // Ouvrir la caméra
 els.openBtn.addEventListener('click', async () => {
@@ -188,45 +337,11 @@ els.openBtn.addEventListener('click', async () => {
       audio: false
     });
     els.video.srcObject = stream;
-    track = stream.getVideoTracks()[0];
     await els.video.play();
     els.status.textContent = '';
     els.takeBtn.focus();
   } catch (err) {
     els.status.textContent = "Impossible d'accéder à la caméra : " + err.message;
-  }
-});
-
-// 📱 Mise au point sur clic/tap
-els.video.addEventListener('click', async (e) => {
-  if (!track) return;
-
-  const rect = els.video.getBoundingClientRect();
-  const x = (e.clientX - rect.left) / rect.width;
-  const y = (e.clientY - rect.top) / rect.height;
-
-  // Positionne l'indicateur de focus
-  els.focusRing.style.left = `${e.clientX - rect.left}px`;
-  els.focusRing.style.top = `${e.clientY - rect.top}px`;
-  els.focusRing.classList.add('active');
-  setTimeout(() => els.focusRing.classList.remove('active'), 800);
-
-  // Essaie la mise au point via les contraintes
-  const capabilities = track.getCapabilities?.();
-  if (capabilities && capabilities.focusMode) {
-    try {
-      await track.applyConstraints({
-        advanced: [
-          { focusMode: "manual" },
-          { pointsOfInterest: [{ x, y }] }
-        ]
-      });
-      els.status.textContent = "📍 Mise au point effectuée.";
-    } catch (err) {
-      els.status.textContent = "⚠️ Mise au point non supportée sur ce périphérique.";
-    }
-  } else {
-    els.status.textContent = "👆 Mise au point visuelle (non supportée matériellement).";
   }
 });
 
@@ -255,7 +370,7 @@ els.takeBtn.addEventListener('click', () => {
     els.retakeBtn.style.display = 'inline-block';
     els.takeBtn.style.display = 'none';
     els.status.textContent = 'Photo capturée.';
-  }, 'image/jpeg', 0.9);
+  }, 'image/jpeg', 0.9); // JPEG plus léger
 });
 
 // Reprendre
@@ -279,7 +394,6 @@ function closeModal() {
   if (stream) {
     stream.getTracks().forEach(t => t.stop());
     stream = null;
-    track = null;
   }
   els.video.srcObject = null;
 }
@@ -288,5 +402,6 @@ els.modal.addEventListener('click', e => { if (e.target === els.modal) closeModa
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && els.modal.getAttribute('aria-hidden') === 'false') closeModal(); });
 window.addEventListener('beforeunload', () => { if (stream) stream.getTracks().forEach(t => t.stop()); });
 </script>
+
 </body>
 </html>
