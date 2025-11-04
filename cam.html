@@ -1,265 +1,532 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prendre une photo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Prendre une photo — Caméra optimisée mobile</title>
   <style>
-    :root {
-      --bg: #f5f5f5;
-      --primary: #007bff;
-      --primary-hover: #0056b3;
-      --danger: #dc3545;
-      --modal-bg: rgba(0,0,0,0.7);
-      --max-width: 420px;
+    :root{
+      --bg:#f5f5f5; --primary:#007bff; --primary-hover:#0056b3; --danger:#dc3545;
+      --modal-bg: rgba(0,0,0,0.75); --max-width:900px;
     }
-
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px;
-      background: var(--bg);
-      margin: 0;
-    }
-
-    button {
-      padding: 12px 20px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover { background-color: var(--primary-hover); }
-
-    .secondary {
-      background: #6c757d;
-    }
-
-    .danger { background: var(--danger); }
-
-    /* Modal */
-    .modal {
-      display: none; /* togglé via JS */
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--modal-bg);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .modal[aria-hidden="false"] { display: flex; }
-
-    .modal-content {
-      background: white;
-      padding: 16px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: var(--max-width);
-      box-sizing: border-box;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    video, canvas, img.preview {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      background: #000;
-    }
-
-    .controls {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .tc {
-      font-size: 14px;
-    }
-
-    a.download-link {
-      display: inline-block;
-      padding: 10px 14px;
-      border-radius: 6px;
-      text-decoration: none;
-      color: white;
-      background: #28a745;
-      font-weight: 600;
-    }
-
-    /* small screens */
-    @media (max-width: 420px) {
-      .modal-content { padding: 12px; }
-      button { padding: 10px 14px; font-size: 15px; }
+    html,body{height:100%; margin:0; font-family: Arial, sans-serif; background:var(--bg); color:#222;}
+    .wrap{display:flex;align-items:center;justify-content:center;height:100%;padding:20px;}
+    button{padding:12px 18px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer}
+    button:hover{background:var(--primary-hover)}
+    .secondary{background:#6c757d}
+    .danger{background:var(--danger)}
+    /* Modal full-screen mobile-friendly */
+    .modal{display:none;position:fixed;inset:0;z-index:9999;background:var(--modal-bg);align-items:center;justify-content:center;padding:env(safe-area-inset);box-sizing:border-box}
+    .modal[aria-hidden="false"]{display:flex}
+    .modal-content{width:100%;max-width:var(--max-width);background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;gap:8px;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+    header.modal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#fafafa;border-bottom:1px solid #eee}
+    header.modal-header h3{margin:0;font-size:16px}
+    .camera-stage{position:relative;background:#000;display:flex;align-items:center;justify-content:center;min-height:60vw;max-height:80vh}
+    video{width:100%;height:100%;object-fit:cover;display:block;-webkit-transform:translateZ(0)} /* object-fit:cover pour "fill" l'écran */
+    img.preview{width:100%;height:auto;display:block;object-fit:contain;background:#000}
+    .controls{display:flex;gap:8px;padding:10px;flex-wrap:wrap;justify-content:center}
+    .status{font-size:13px;color:#555;text-align:center;padding:0 12px 10px}
+    .small{font-size:13px;padding:8px 10px}
+    .hidden{display:none !important}
+    .toggles{display:flex;gap:8px;align-items:center;}
+    /* boutons icônes */
+    .icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 10px;border-radius:8px;background:#f2f2f2;color:#222;border:1px solid #e1e1e1;cursor:pointer}
+    @media (max-width:520px){
+      .modal-content{border-radius:0;height:100vh;max-width:100%}
+      header.modal-header{padding:10px}
+      .camera-stage{min-height:70vw}
+      button{font-size:15px}
     }
   </style>
 </head>
 <body>
-
-  <h2>Prendre une photo avec la caméra</h2>
-  <button id="openCameraBtn">📸 Ouvrir la caméra</button>
+  <div class="wrap">
+    <div>
+      <h2>Prendre une photo (mobile optimisé)</h2>
+      <button id="openCameraBtn">📸 Ouvrir la caméra</button>
+    </div>
+  </div>
 
   <!-- Modal -->
-  <div class="modal" id="cameraModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+  <div id="cameraModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
     <div class="modal-content" id="modalContent">
-      <h3 id="modalTitle" class="tc" style="margin:0 0 6px 0;">Caméra</h3>
+      <header class="modal-header">
+        <h3 id="modalTitle">Caméra</h3>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="switchBtn" class="icon-btn" title="Changer caméra">🔁</button>
+          <button id="torchBtn" class="icon-btn hidden" title="Lampe">🔦</button>
+          <button id="closeBtn" class="icon-btn danger" title="Fermer">✕</button>
+        </div>
+      </header>
 
-      <!-- Video preview -->
-      <video id="video" autoplay playsinline></video>
+      <div class="camera-stage" id="cameraStage">
+        <video id="video" autoplay playsinline muted></video>
+        <img id="photoPreview" class="preview hidden" alt="Aperçu de la photo" />
+      </div>
 
-      <!-- Image preview (result) -->
-      <img id="photoPreview" class="preview" alt="Aperçu de la photo" style="display:none;" />
-
-      <!-- Hidden canvas used to capture -->
       <canvas id="canvas" style="display:none;"></canvas>
 
       <div class="controls">
-        <button id="takePhotoBtn">📷 Prendre la photo</button>
-        <button id="retakeBtn" class="secondary" style="display:none;">↺ Reprendre</button>
-        <a id="downloadLink" class="download-link" style="display:none;" download="photo.png">⬇️ Télécharger</a>
-        <button id="closeBtn" class="danger">Fermer</button>
+        <button id="takePhotoBtn">📷 Capturer</button>
+        <button id="retakeBtn" class="secondary hidden">↺ Reprendre</button>
+        <a id="downloadLink" class="secondary hidden" download>⬇️ Télécharger</a>
+        <div class="toggles" style="margin-left:6px">
+          <label class="small" style="margin:0">Qualité
+            <select id="qualitySelect">
+              <option value="1.0">Max (1.0)</option>
+              <option value="0.85">Bonne (0.85)</option>
+              <option value="0.7">Économie (0.7)</option>
+            </select>
+          </label>
+        </div>
       </div>
-      <p id="status" class="tc" style="margin:0; font-size:13px; color:#555;"></p>
+      <p id="status" class="status"> </p>
     </div>
   </div>
 
   <script>
-const openCameraBtn = document.getElementById('openCameraBtn');
-const cameraModal = document.getElementById('cameraModal');
-const video = document.getElementById('video');
-const takePhotoBtn = document.getElementById('takePhotoBtn');
-const retakeBtn = document.getElementById('retakeBtn');
-const canvas = document.getElementById('canvas');
-const photoPreview = document.getElementById('photoPreview');
-const downloadLink = document.getElementById('downloadLink');
-const closeBtn = document.getElementById('closeBtn');
-const status = document.getElementById('status');
+  // --- éléments DOM ---
+  const openCameraBtn = document.getElementById('openCameraBtn');
+  const cameraModal = document.getElementById('cameraModal');
+  const video = document.getElementById('video');
+  const takePhotoBtn = document.getElementById('takePhotoBtn');
+  const retakeBtn = document.getElementById('retakeBtn');
+  const canvas = document.getElementById('canvas');
+  const photoPreview = document.getElementById('photoPreview');
+  const downloadLink = document.getElementById('downloadLink');
+  const closeBtn = document.getElementById('closeBtn');
+  const status = document.getElementById('status');
+  const switchBtn = document.getElementById('switchBtn');
+  const torchBtn = document.getElementById('torchBtn');
+  const qualitySelect = document.getElementById('qualitySelect');
+  const cameraStage = document.getElementById('cameraStage');
 
-let stream = null;
+  // --- état ---
+  let stream = null;
+  let track = null;
+  let imageCapture = null;
+  let usingFront = false; // false = rear (environment)
+  let capabilities = {};
+  let settings = {};
+  let lastBlobUrl = null;
+  let currentZoom = 1;
+  let maxZoom = 1;
+  let pinch = {start: null, initialZoom: 1};
+  let supportsTorch = false;
 
-async function openCamera() {
-  cameraModal.setAttribute('aria-hidden', 'false');
-  status.textContent = 'Initialisation de la caméra…';
+  // --- helpers ---
+  const log = (...args) => { console.log(...args) };
+  function setStatus(text){ status.textContent = text; }
 
-  const constraints = {
-    video: {
-      facingMode: { ideal: "environment" },
-      width: { ideal: 4096, max: 7680 }, // 4K à 8K si dispo
-      height: { ideal: 2160, max: 4320 },
-      frameRate: { ideal: 60, max: 120 },
-      focusMode: "continuous",
-      zoom: true,
-      advanced: [
-        { exposureMode: "continuous" },
-        { whiteBalanceMode: "continuous" },
-        { imageStabilization: true }
-      ]
+  // Choisit des contraintes adaptées au mobile & à l'écran :
+  function buildConstraints(useFront) {
+    const dpr = window.devicePixelRatio || 1;
+    const viewW = Math.round(window.innerWidth * dpr);
+    const viewH = Math.round(window.innerHeight * dpr);
+
+    // Limit max capture size to something reasonable to avoid OOM on low-end mobiles
+    const maxDim = Math.min(Math.max(viewW, viewH), 3840); // cap ~4k
+    const aspect = viewW / viewH;
+
+    // Request camera with ideal resolution near screen size * DPR for best sharpness
+    const videoConstraints = {
+      facingMode: useFront ? "user" : { ideal: "environment" },
+      width: { ideal: Math.round(maxDim * aspect), max: 7680 },
+      height: { ideal: Math.round(maxDim / aspect), max: 4320 },
+      frameRate: { ideal: 30, max: 60 }, // 30fps is usually enough on mobile
+      // advanced: [{ imageStabilization: true }] // browser-dependent
+    };
+
+    return { video: videoConstraints, audio: false };
+  }
+
+  // Ouverture caméra + setup
+  async function openCamera(useFront = false){
+    cameraModal.setAttribute('aria-hidden','false');
+    setStatus('Initialisation caméra… autorisez l’accès si demandé');
+
+    // build constraints dynamiquement
+    const constraints = buildConstraints(useFront);
+
+    try {
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+    } catch (err) {
+      console.warn('getUserMedia failed with constraints, falling back to basic:', err);
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      } catch (err2) {
+        setStatus('Impossible d’accéder à la caméra. Vérifiez les permissions.');
+        console.error(err2);
+        return;
+      }
     }
-  };
 
-  try {
-    stream = await navigator.mediaDevices.getUserMedia(constraints);
-  } catch {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    track = stream.getVideoTracks()[0];
+    capabilities = track.getCapabilities ? track.getCapabilities() : {};
+    settings = track.getSettings ? track.getSettings() : {};
+
+    log('Capabilities', capabilities);
+    log('Settings', settings);
+
+    // ImageCapture si disponible (meilleure qualité pour takePhoto)
+    if ('ImageCapture' in window) {
+      try {
+        imageCapture = new ImageCapture(track);
+      } catch (e) {
+        imageCapture = null;
+      }
+    } else {
+      imageCapture = null;
+    }
+
+    // Torch support (rare on desktops, possible sur mobiles rear)
+    supportsTorch = !!(capabilities.torch === true || (capabilities.torch && typeof capabilities.torch === 'boolean'));
+    if (supportsTorch) {
+      torchBtn.classList.remove('hidden');
+    } else {
+      torchBtn.classList.add('hidden');
+    }
+
+    // Zoom support
+    if (capabilities.zoom) {
+      maxZoom = capabilities.zoom.max || 1;
+      currentZoom = settings.zoom || 1;
+      // clamp
+      currentZoom = Math.min(Math.max(currentZoom, capabilities.zoom.min || 1), maxZoom);
+    } else {
+      maxZoom = 1;
+      currentZoom = 1;
+    }
+
+    // Autofocus availability
+    const focusAvailable = capabilities.focusMode && capabilities.focusMode.length;
+    if (focusAvailable) {
+      try {
+        // prefer continuous focus if available
+        if (capabilities.focusMode.includes('continuous')) {
+          await track.applyConstraints({ advanced: [{ focusMode: 'continuous' }] });
+        }
+      } catch (e) {
+        console.warn('Cannot apply focusMode constraints', e);
+      }
+    }
+
+    // Apply initial zoom if available (slightly boost to get nearer focal length)
+    if (maxZoom > 1) {
+      const preferred = Math.min(maxZoom, (capabilities.zoom && capabilities.zoom.max ? capabilities.zoom.max * 0.6 : 1.5));
+      try {
+        await track.applyConstraints({ advanced: [{ zoom: preferred }] });
+        currentZoom = preferred;
+      } catch (e) {
+        console.warn('unable to set initial zoom', e);
+      }
+    }
+
+    // Connect stream to video element
+    video.srcObject = stream;
+    // small hack: unmute to allow autoplay in some Android browsers
+    video.muted = true;
+    try { await video.play(); } catch(e) { /* ignore */ }
+
+    setStatus('Prêt · tap pour focus, pince pour zoom, appuyez Capturer');
   }
 
-  const track = stream.getVideoTracks()[0];
-  const capabilities = track.getCapabilities?.() || {};
-  const settings = track.getSettings?.() || {};
-
-  console.log("Capacités caméra :", capabilities);
-  console.log("Réglages obtenus :", settings);
-
-  // Auto-focus si disponible
-  if (capabilities.focusMode && capabilities.focusMode.includes("continuous")) {
-    await track.applyConstraints({ advanced: [{ focusMode: "continuous" }] });
+  // cleanup
+  function stopStream() {
+    if (!stream) return;
+    stream.getTracks().forEach(t => { try{ t.stop(); } catch(e){} });
+    stream = null; track = null; imageCapture = null;
+    capabilities = {}; settings = {};
+    currentZoom = 1; maxZoom = 1;
   }
 
-  // ⚡ Boost qualité si zoom supporté (meilleure focale)
-  if (capabilities.zoom) {
-    await track.applyConstraints({
-      advanced: [{ zoom: capabilities.zoom.max * 0.6 }]
+  // Fermeture modal
+  function closeModal(){
+    cameraModal.setAttribute('aria-hidden','true');
+    setStatus('');
+    if (lastBlobUrl) {
+      try { URL.revokeObjectURL(lastBlobUrl); } catch(e){}
+      lastBlobUrl = null;
+    }
+    stopStream();
+    video.srcObject = null;
+    // restore UI
+    photoPreview.classList.add('hidden');
+    video.classList.remove('hidden');
+    takePhotoBtn.classList.remove('hidden');
+    retakeBtn.classList.add('hidden');
+    downloadLink.classList.add('hidden');
+  }
+
+  // Switch caméra (front/back)
+  async function switchCamera(){
+    usingFront = !usingFront;
+    stopStream();
+    video.srcObject = null;
+    await openCamera(usingFront);
+  }
+
+  // Torch toggle (if supported)
+  let torchOn = false;
+  async function toggleTorch(){
+    if (!track) return;
+    if (!('torch' in capabilities || capabilities.torch)) {
+      setStatus('Torch non supportée par cet appareil');
+      return;
+    }
+    try {
+      torchOn = !torchOn;
+      await track.applyConstraints({ advanced: [{ torch: torchOn }] });
+      torchBtn.textContent = torchOn ? '🔦 ON' : '🔦';
+    } catch (e) {
+      console.warn('Erreur torch', e);
+      setStatus('Impossible d’activer la lampe');
+    }
+  }
+
+  // Tap to focus (attempts to set point of interest if supported)
+  async function handleTapToFocus(e) {
+    if (!capabilities || !track) return;
+
+    // get relative point within video element
+    const rect = video.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+
+    // Some browsers support pointsOfInterest or focusMode+pointsOfInterest
+    if (capabilities.pointsOfInterest || capabilities.focusMode && capabilities.focusMode.includes('single-shot')) {
+      try {
+        const apply = { advanced: [] };
+        if (capabilities.pointsOfInterest) {
+          apply.advanced.push({ pointsOfInterest: [{x, y}] });
+        }
+        if (capabilities.focusMode && capabilities.focusMode.includes('single-shot')) {
+          apply.advanced.push({ focusMode: 'single-shot' });
+        }
+        await track.applyConstraints(apply);
+        setStatus('Focus ajusté');
+        return;
+      } catch (err) {
+        console.warn('tap-to-focus failed', err);
+      }
+    }
+
+    // Fallback: try toggle continuous focus to nudge AF
+    if (capabilities.focusMode && capabilities.focusMode.includes('continuous')) {
+      try {
+        await track.applyConstraints({ advanced: [{ focusMode: 'continuous' }] });
+        setStatus('Focus continous réinitialisé');
+      } catch (err) { console.warn(err); }
+    }
+  }
+
+  // Pinch-to-zoom handlers
+  function handleTouchStart(e){
+    if (!capabilities.zoom) return;
+    if (e.touches.length === 2) {
+      const [a,b] = e.touches;
+      const dist = Math.hypot(a.pageX - b.pageX, a.pageY - b.pageY);
+      pinch.start = dist;
+      pinch.initialZoom = currentZoom;
+    }
+  }
+  async function handleTouchMove(e){
+    if (!capabilities.zoom) return;
+    if (e.touches.length === 2 && pinch.start) {
+      const [a,b] = e.touches;
+      const dist = Math.hypot(a.pageX - b.pageX, a.pageY - b.pageY);
+      const ratio = dist / pinch.start;
+      let newZoom = pinch.initialZoom * ratio;
+      newZoom = Math.max(capabilities.zoom.min || 1, Math.min(newZoom, capabilities.zoom.max || newZoom));
+      try {
+        await track.applyConstraints({ advanced: [{ zoom: newZoom }] });
+        currentZoom = newZoom;
+        setStatus(`Zoom: ${newZoom.toFixed(2)}x`);
+      } catch (err) {
+        // ignore
+      }
+    }
+  }
+  function handleTouchEnd(e){
+    if (e.touches.length < 2) { pinch.start = null; pinch.initialZoom = 1; }
+  }
+
+  // Prise de photo : utilise ImageCapture.takePhoto si dispo, sinon fallback canvas
+  async function takePhoto(){
+    if (!track && !stream) { setStatus('Caméra non prête'); return; }
+    setStatus('Capture en cours…');
+
+    // prefer ImageCapture.takePhoto (garde meilleurs réglages)
+    try {
+      if (imageCapture && typeof imageCapture.takePhoto === 'function') {
+        // optionally pass photo settings (width/height) — but browsers ignore often
+        const quality = parseFloat(qualitySelect.value);
+        const blob = await imageCapture.takePhoto(); // photoSettings option is not widely supported
+        handleCapturedBlob(blob, quality);
+        return;
+      }
+    } catch (e) {
+      console.warn('ImageCapture.takePhoto failed — fallback to canvas', e);
+      // continue to canvas fallback
+    }
+
+    // Canvas fallback: draw current frame, correct orientation and optionally downscale
+    try {
+      const vW = video.videoWidth;
+      const vH = video.videoHeight;
+      if (!vW || !vH) {
+        setStatus('Frame non disponible — réessayer');
+        return;
+      }
+
+      // To limit memory/size, downscale to maxWidth (keep aspect ratio)
+      const MAX_OUTPUT = 1920; // cap width or height to 1920
+      let outW = vW, outH = vH;
+      if (Math.max(outW, outH) > MAX_OUTPUT) {
+        const ratio = MAX_OUTPUT / Math.max(outW, outH);
+        outW = Math.round(outW * ratio);
+        outH = Math.round(outH * ratio);
+      }
+
+      // handle device orientation rotation if needed
+      const angle = (screen.orientation && screen.orientation.angle) ? screen.orientation.angle : (window.orientation || 0);
+
+      canvas.width = outW;
+      canvas.height = outH;
+      const ctx = canvas.getContext('2d');
+
+      // If rotation needed, rotate canvas accordingly
+      if (angle === 90 || angle === -270) {
+        // rotate 90
+        const tmp = document.createElement('canvas');
+        tmp.width = outH; tmp.height = outW;
+        const tctx = tmp.getContext('2d');
+        tctx.translate(tmp.width/2, tmp.height/2);
+        tctx.rotate(Math.PI/2);
+        tctx.drawImage(video, -outW/2, -outH/2, outW, outH);
+        // draw tmp to main canvas
+        canvas.width = tmp.width; canvas.height = tmp.height;
+        ctx.drawImage(tmp, 0, 0);
+      } else if (angle === -90 || angle === 270) {
+        // rotate -90
+        const tmp = document.createElement('canvas');
+        tmp.width = outH; tmp.height = outW;
+        const tctx = tmp.getContext('2d');
+        tctx.translate(tmp.width/2, tmp.height/2);
+        tctx.rotate(-Math.PI/2);
+        tctx.drawImage(video, -outW/2, -outH/2, outW, outH);
+        canvas.width = tmp.width; canvas.height = tmp.height;
+        ctx.drawImage(tmp, 0, 0);
+      } else if (angle === 180 || angle === -180) {
+        ctx.translate(outW, outH);
+        ctx.rotate(Math.PI);
+        ctx.drawImage(video, 0, 0, outW, outH);
+      } else {
+        // default no rotation
+        ctx.drawImage(video, 0, 0, outW, outH);
+      }
+
+      const quality = parseFloat(qualitySelect.value) || 0.9;
+      canvas.toBlob(blob => {
+        handleCapturedBlob(blob, quality);
+      }, 'image/jpeg', quality);
+
+    } catch (err) {
+      console.error('Erreur capture canvas', err);
+      setStatus('Erreur capture');
+    }
+  }
+
+  // Gestion du blob capturé (affichage, download link, nettoyage)
+  function handleCapturedBlob(blob, qualityHint){
+    if (!blob) {
+      setStatus('Capture invalide');
+      return;
+    }
+    if (lastBlobUrl) try { URL.revokeObjectURL(lastBlobUrl); } catch(e){}
+    const url = URL.createObjectURL(blob);
+    lastBlobUrl = url;
+    photoPreview.src = url;
+    photoPreview.classList.remove('hidden');
+    video.classList.add('hidden');
+
+    downloadLink.href = url;
+    const ext = 'jpg';
+    const ts = new Date().toISOString().replace(/[:.]/g, '-');
+    downloadLink.download = `photo-${ts}.${ext}`;
+    downloadLink.classList.remove('hidden');
+
+    takePhotoBtn.classList.add('hidden');
+    retakeBtn.classList.remove('hidden');
+
+    setStatus('Photo capturée ✅');
+  }
+
+  // Reprendre
+  function retake(){
+    if (lastBlobUrl) { try { URL.revokeObjectURL(lastBlobUrl); } catch(e){} lastBlobUrl = null; }
+    photoPreview.src = '';
+    photoPreview.classList.add('hidden');
+    downloadLink.classList.add('hidden');
+    retakeBtn.classList.add('hidden');
+    takePhotoBtn.classList.remove('hidden');
+    video.classList.remove('hidden');
+    setStatus('Prêt · Appuyez pour capturer');
+  }
+
+  // --- Listeners ---
+  openCameraBtn.addEventListener('click', () => openCamera(usingFront));
+  closeBtn.addEventListener('click', closeModal);
+  cameraModal.addEventListener('click', e => { if (e.target === cameraModal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  takePhotoBtn.addEventListener('click', takePhoto);
+  retakeBtn.addEventListener('click', retake);
+  switchBtn.addEventListener('click', switchCamera);
+  torchBtn.addEventListener('click', toggleTorch);
+
+  // TAP-to-focus on video
+  video.addEventListener('click', handleTapToFocus);
+
+  // Touch gestures for pinch-to-zoom
+  cameraStage.addEventListener('touchstart', handleTouchStart, {passive:true});
+  cameraStage.addEventListener('touchmove', handleTouchMove, {passive:false});
+  cameraStage.addEventListener('touchend', handleTouchEnd, {passive:true});
+
+  // Clean up when page unloads
+  window.addEventListener('pagehide', stopStream);
+  window.addEventListener('beforeunload', stopStream);
+
+  // Attempt to keep screen awake (if supported)
+  if ('wakeLock' in navigator) {
+    let wakeLock = null;
+    cameraModal.addEventListener('transitionend', async () => {
+      if (cameraModal.getAttribute('aria-hidden') === 'false') {
+        try { wakeLock = await navigator.wakeLock.request('screen'); } catch(e) { /* ignore */ }
+      } else {
+        if (wakeLock) { try { await wakeLock.release(); } catch(e){} wakeLock = null; }
+      }
     });
   }
 
-  video.srcObject = stream;
-  await video.play();
-  status.textContent = 'Appuyez pour capturer 📷';
-}
-
-openCameraBtn.addEventListener('click', openCamera);
-
-takePhotoBtn.addEventListener('click', () => {
-  const vW = video.videoWidth;
-  const vH = video.videoHeight;
-
-  canvas.width = vW;
-  canvas.height = vH;
-  const context = canvas.getContext('2d');
-
-  context.drawImage(video, 0, 0, vW, vH);
-
-  canvas.toBlob(
-    blob => {
-      const url = URL.createObjectURL(blob);
-      photoPreview.src = url;
-      photoPreview.style.display = 'block';
-      downloadLink.href = url;
-      downloadLink.style.display = 'inline-block';
-      retakeBtn.style.display = 'inline-block';
-      video.style.display = 'none';
-      takePhotoBtn.style.display = 'none';
-
-      status.textContent = 'Photo capturée ✅';
-    },
-    'image/jpeg',
-    1.0
-  );
-});
-
-retakeBtn.addEventListener('click', () => {
-  photoPreview.style.display = 'none';
-  downloadLink.style.display = 'none';
-  retakeBtn.style.display = 'none';
-  video.style.display = 'block';
-  takePhotoBtn.style.display = 'inline-block';
-  status.textContent = 'Appuyez pour capturer 📷';
-});
-
-function closeModal() {
-  cameraModal.setAttribute('aria-hidden', 'true');
-  status.textContent = '';
-
-  if (photoPreview.src) URL.revokeObjectURL(photoPreview.src);
-
-  if (stream) {
-    stream.getTracks().forEach(t => t.stop());
-    stream = null;
+  // Friendly fallback messages for unsupported features
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    openCameraBtn.disabled = true;
+    setStatus('Votre navigateur ne supporte pas getUserMedia.');
   }
 
-  video.srcObject = null;
+  // Quick UX: long-press on capture to change quality quickly (example)
+  let holdTimer = null;
+  takePhotoBtn.addEventListener('touchstart', e => {
+    holdTimer = setTimeout(()=> {
+      // toggle quality quick
+      qualitySelect.value = qualitySelect.value === '1.0' ? '0.85' : '1.0';
+      setStatus(`Qualité: ${qualitySelect.value}`);
+    }, 700);
+  }, {passive:true});
+  takePhotoBtn.addEventListener('touchend', ()=> { clearTimeout(holdTimer); });
 
-  video.style.display = 'block';
-  takePhotoBtn.style.display = 'inline-block';
-}
-
-closeBtn.addEventListener('click', closeModal);
-cameraModal.addEventListener('click', e => { if (e.target === cameraModal) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === "Escape") closeModal(); });
-
-
+  // Fin du script
   </script>
-
 </body>
 </html>
