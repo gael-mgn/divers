@@ -1,450 +1,236 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prendre une photo</title>
-  <style>
-    :root {
-      --bg: #f5f5f5;
-      --primary: #007bff;
-      --primary-hover: #0056b3;
-      --danger: #dc3545;
-      --modal-bg: rgba(0,0,0,0.7);
-      --max-width: 420px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prendre une photo</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --primary: #007bff;
+    --primary-hover: #0056b3;
+    --danger: #dc3545;
+    --success: #28a745;
+    --modal-bg: rgba(0,0,0,0.75);
+    --max-width: 420px;
+  }
 
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px;
-      background: var(--bg);
-      margin: 0;
-    }
+  body {
+    font-family: system-ui, sans-serif;
+    text-align: center;
+    padding: 30px;
+    background: var(--bg);
+    margin: 0;
+  }
 
-    button {
-      padding: 12px 20px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+  button, a.download-link {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.25s;
+  }
 
-    button:hover { background-color: var(--primary-hover); }
+  button:hover { opacity: 0.9; }
+  button.primary { background: var(--primary); }
+  button.secondary { background: #6c757d; }
+  button.danger { background: var(--danger); }
+  a.download-link { background: var(--success); }
 
-    .secondary {
-      background: #6c757d;
-    }
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--modal-bg);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: opacity 0.25s;
+  }
 
-    .danger { background: var(--danger); }
+  .modal[aria-hidden="false"] {
+    display: flex;
+    opacity: 1;
+  }
 
-    /* Modal */
-    .modal {
-      display: none; /* togglé via JS */
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--modal-bg);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+  .modal-content {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: var(--max-width);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: popIn 0.25s ease;
+  }
 
-    .modal[aria-hidden="false"] { display: flex; }
+  @keyframes popIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
 
-    .modal-content {
-      background: white;
-      padding: 16px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: var(--max-width);
-      box-sizing: border-box;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+  video, canvas, img.preview {
+    width: 100%;
+    border-radius: 8px;
+    background: #000;
+  }
 
-    video, canvas, img.preview {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      background: #000;
-    }
+  .flash {
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
 
-    .controls {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+  .flash.active {
+    opacity: 0.9;
+  }
 
-    .tc {
-      font-size: 14px;
-    }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
 
-    a.download-link {
-      display: inline-block;
-      padding: 10px 14px;
-      border-radius: 6px;
-      text-decoration: none;
-      color: white;
-      background: #28a745;
-      font-weight: 600;
-    }
+  p.tc {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+  }
 
-    /* small screens */
-    @media (max-width: 420px) {
-      .modal-content { padding: 12px; }
-      button { padding: 10px 14px; font-size: 15px; }
-    }
-  </style>
+  @media (max-width: 420px) {
+    button, a.download-link { font-size: 15px; padding: 10px 14px; }
+    .modal-content { padding: 12px; }
+  }
+</style>
 </head>
 <body>
 
-  <h2>Prendre une photo avec la caméra</h2>
-  <button id="openCameraBtn">📸 Ouvrir la caméra</button>
+<h2>Prendre une photo avec la caméra</h2>
+<button id="openCameraBtn" class="primary">📸 Ouvrir la caméra</button>
 
-  <!-- Modal -->
-  <div class="modal" id="cameraModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
-    <div class="modal-content" id="modalContent">
-      <h3 id="modalTitle" class="tc" style="margin:0 0 6px 0;">Caméra</h3>
+<div class="modal" id="cameraModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <h3 id="modalTitle" class="tc">Caméra</h3>
+    <div class="flash" id="flashEffect"></div>
+    <video id="video" autoplay playsinline></video>
+    <img id="photoPreview" class="preview" alt="Aperçu" style="display:none;">
+    <canvas id="canvas" style="display:none;"></canvas>
 
-      <!-- Video preview -->
-      <video id="video" autoplay playsinline></video>
-
-      <!-- Image preview (result) -->
-      <img id="photoPreview" class="preview" alt="Aperçu de la photo" style="display:none;" />
-
-      <!-- Hidden canvas used to capture and process full-res -->
-      <canvas id="canvas" style="display:none;"></canvas>
-
-      <div class="controls">
-        <button id="takePhotoBtn">📷 Prendre la photo</button>
-        <button id="retakeBtn" class="secondary" style="display:none;">↺ Reprendre</button>
-        <a id="downloadLink" class="download-link" style="display:none;" download="photo.jpg">⬇️ Télécharger</a>
-        <button id="closeBtn" class="danger">Fermer</button>
-      </div>
-      <p id="status" class="tc" style="margin:0; font-size:13px; color:#555;"></p>
+    <div class="controls">
+      <button id="takePhotoBtn" class="primary">📷 Prendre</button>
+      <button id="retakeBtn" class="secondary" style="display:none;">↺ Reprendre</button>
+      <a id="downloadLink" class="download-link" download="photo.png" style="display:none;">⬇️ Télécharger</a>
+      <button id="closeBtn" class="danger">Fermer</button>
     </div>
+    <p id="status" class="tc"></p>
   </div>
+</div>
 
-  <script>
-    const openCameraBtn = document.getElementById('openCameraBtn');
-    const cameraModal = document.getElementById('cameraModal');
-    const video = document.getElementById('video');
-    const takePhotoBtn = document.getElementById('takePhotoBtn');
-    const retakeBtn = document.getElementById('retakeBtn');
-    const canvas = document.getElementById('canvas');
-    const photoPreview = document.getElementById('photoPreview');
-    const downloadLink = document.getElementById('downloadLink');
-    const closeBtn = document.getElementById('closeBtn');
-    const status = document.getElementById('status');
+<script>
+const els = {
+  openBtn: document.getElementById('openCameraBtn'),
+  modal: document.getElementById('cameraModal'),
+  video: document.getElementById('video'),
+  canvas: document.getElementById('canvas'),
+  photo: document.getElementById('photoPreview'),
+  takeBtn: document.getElementById('takePhotoBtn'),
+  retakeBtn: document.getElementById('retakeBtn'),
+  download: document.getElementById('downloadLink'),
+  closeBtn: document.getElementById('closeBtn'),
+  status: document.getElementById('status'),
+  flash: document.getElementById('flashEffect')
+};
+let stream = null;
 
-    let stream = null;
-    let imageCapture = null;
-    let lastObjectURL = null;
-
-    // Small utility: apply a light sharpening convolution to the canvas
-    function applySharpen(ctx, w, h) {
-      try {
-        const img = ctx.getImageData(0, 0, w, h);
-        const src = img.data;
-        const out = new Uint8ClampedArray(src.length);
-        // 3x3 sharpen kernel: [0 -1  0; -1 5 -1; 0 -1 0]
-        const k = [0, -1, 0, -1, 5, -1, 0, -1, 0];
-        const kw = 3;
-        const kh = 3;
-        const half = Math.floor(kw/2);
-        for (let y = 0; y < h; y++) {
-          for (let x = 0; x < w; x++) {
-            let r=0,g=0,b=0,a=0;
-            let idx = (y*w + x) * 4;
-            for (let ky = 0; ky < kh; ky++) {
-              for (let kx = 0; kx < kw; kx++) {
-                const px = x + kx - half;
-                const py = y + ky - half;
-                if (px >= 0 && px < w && py >= 0 && py < h) {
-                  const pidx = (py*w + px) * 4;
-                  const kval = k[ky*kw + kx];
-                  r += src[pidx] * kval;
-                  g += src[pidx+1] * kval;
-                  b += src[pidx+2] * kval;
-                  a += src[pidx+3] * kval;
-                }
-              }
-            }
-            // clamp
-            out[idx] = Math.min(255, Math.max(0, r));
-            out[idx+1] = Math.min(255, Math.max(0, g));
-            out[idx+2] = Math.min(255, Math.max(0, b));
-            out[idx+3] = src[idx+3]; // keep original alpha
-          }
-        }
-        img.data.set(out);
-        ctx.putImageData(img, 0, 0);
-      } catch (e) {
-        console.warn('Sharpen failed (possibly too large image):', e);
-      }
-    }
-
-    // Ouvre le modal et démarre la caméra (avec demandes de haute résolution)
-    openCameraBtn.addEventListener('click', async () => {
-      cameraModal.setAttribute('aria-hidden', 'false');
-      status.textContent = 'Ouverture de la caméra…';
-
-      // Priorité : camera arrière en haute résolution, puis fallback
-      const constraintsList = [
-        // try very high resolution first
-        { video: { width: { ideal: 3840 }, height: { ideal: 2160 }, facingMode: { ideal: "environment" } } },
-        { video: { width: { ideal: 1920 }, height: { ideal: 1080 }, facingMode: { ideal: "environment" } } },
-        { video: { facingMode: { ideal: "environment" } } },
-        { video: true }
-      ];
-
-      let got = false;
-      for (const c of constraintsList) {
-        try {
-          stream = await navigator.mediaDevices.getUserMedia(c);
-          got = true;
-          break;
-        } catch (err) {
-          console.warn('getUserMedia failed for', c, err && err.name ? err.name : err);
-        }
-      }
-
-      if (!got) {
-        status.textContent = "Erreur : impossible d'accéder à la caméra (vérifiez les permissions).";
-        return;
-      }
-
-      // Utilize ImageCapture if possible (génère des photos pleine résolution)
-      const [track] = stream.getVideoTracks();
-      if (window.ImageCapture && track) {
-        try {
-          imageCapture = new ImageCapture(track);
-          // optionally check capabilities...
-        } catch (e) {
-          imageCapture = null;
-        }
-      } else {
-        imageCapture = null;
-      }
-
-      // Affecte le flux au <video> et attend qu'il soit prêt
-      video.srcObject = stream;
-      try {
-        await new Promise((resolve) => {
-          if (video.readyState >= 2) resolve();
-          else video.onloadedmetadata = () => resolve();
-        });
-        await video.play().catch(()=>{}); // play() peut rejeter si autoplay bloqué
-        status.textContent = '';
-        takePhotoBtn.focus();
-      } catch (playErr) {
-        console.warn('video play error', playErr);
-        status.textContent = '';
-      }
+// Ouvrir la caméra
+els.openBtn.addEventListener('click', async () => {
+  els.modal.setAttribute('aria-hidden', 'false');
+  els.status.textContent = 'Initialisation de la caméra...';
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 1920 },
+        height: { ideal: 1080 }
+      },
+      audio: false
     });
+    els.video.srcObject = stream;
+    await els.video.play();
+    els.status.textContent = '';
+    els.takeBtn.focus();
+  } catch (err) {
+    els.status.textContent = "Impossible d'accéder à la caméra : " + err.message;
+  }
+});
 
-    // Fonction de capture améliorée
-    async function captureHighQuality() {
-      status.textContent = 'Capture en cours…';
-      // Clean previous preview URL
-      if (lastObjectURL) {
-        try { URL.revokeObjectURL(lastObjectURL); } catch(e) {}
-        lastObjectURL = null;
-      }
+// Capture photo
+els.takeBtn.addEventListener('click', () => {
+  if (!stream) return;
+  els.flash.classList.add('active');
+  setTimeout(() => els.flash.classList.remove('active'), 150);
 
-      // If ImageCapture.takePhoto available -> use it (best quality)
-      if (imageCapture && typeof imageCapture.takePhoto === 'function') {
-        try {
-          const blob = await imageCapture.takePhoto(); // may accept options in some browsers
-          // optional post-processing: decode blob into canvas for sharpening
-          return await processBlobToFinalBlob(blob);
-        } catch (e) {
-          console.warn('ImageCapture.takePhoto failed, falling back:', e);
-          // fallback to bitmap method below
-        }
-      }
+  const { videoWidth: w, videoHeight: h } = els.video;
+  if (!w || !h) return;
 
-      // Fallback: draw video frame at its intrinsic resolution
-      try {
-        // Prefer createImageBitmap(video) for better results when supported
-        let bitmap;
-        try {
-          bitmap = await createImageBitmap(video);
-        } catch (e) {
-          // If not supported, draw directly from video element
-          const vw = video.videoWidth || video.clientWidth;
-          const vh = video.videoHeight || video.clientHeight;
-          canvas.width = vw;
-          canvas.height = vh;
-          const ctx = canvas.getContext('2d');
-          ctx.imageSmoothingEnabled = true;
-          ctx.imageSmoothingQuality = 'high';
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          // apply sharpen
-          applySharpen(ctx, canvas.width, canvas.height);
-          return await canvasToJpegBlob(canvas, 0.92);
-        }
+  els.canvas.width = w;
+  els.canvas.height = h;
+  const ctx = els.canvas.getContext('2d');
+  ctx.drawImage(els.video, 0, 0, w, h);
 
-        // If we have a bitmap, draw it to canvas at full size
-        canvas.width = bitmap.width;
-        canvas.height = bitmap.height;
-        const ctx = canvas.getContext('2d');
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(bitmap, 0, 0);
-        // optionally apply sharpen (light)
-        applySharpen(ctx, canvas.width, canvas.height);
-        // close bitmap
-        bitmap.close?.();
-        return await canvasToJpegBlob(canvas, 0.92);
-      } catch (err) {
-        console.error('Fallback capture failed:', err);
-        throw err;
-      }
-    }
+  els.canvas.toBlob(blob => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    els.photo.src = url;
+    els.photo.style.display = 'block';
+    els.video.style.display = 'none';
+    els.download.href = url;
+    els.download.style.display = 'inline-block';
+    els.retakeBtn.style.display = 'inline-block';
+    els.takeBtn.style.display = 'none';
+    els.status.textContent = 'Photo capturée.';
+  }, 'image/jpeg', 0.9); // JPEG plus léger
+});
 
-    // Convert a blob (from ImageCapture) into a processed final jpeg Blob
-    async function processBlobToFinalBlob(inputBlob) {
-      try {
-        // createImageBitmap from blob to draw at native resolution
-        const bitmap = await createImageBitmap(inputBlob);
-        canvas.width = bitmap.width;
-        canvas.height = bitmap.height;
-        const ctx = canvas.getContext('2d');
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(bitmap, 0, 0);
-        bitmap.close?.();
-        // apply sharpening
-        applySharpen(ctx, canvas.width, canvas.height);
-        // export as high-quality JPEG
-        return await canvasToJpegBlob(canvas, 0.92);
-      } catch (e) {
-        console.warn('processBlobToFinalBlob failed, returning original blob:', e);
-        return inputBlob; // fallback: return original
-      }
-    }
+// Reprendre
+els.retakeBtn.addEventListener('click', () => {
+  if (els.photo.src) URL.revokeObjectURL(els.photo.src);
+  els.photo.style.display = 'none';
+  els.download.style.display = 'none';
+  els.retakeBtn.style.display = 'none';
+  els.takeBtn.style.display = 'inline-block';
+  els.video.style.display = 'block';
+  els.status.textContent = '';
+});
 
-    function canvasToJpegBlob(cnv, quality = 0.92) {
-      return new Promise((resolve) => {
-        cnv.toBlob((b) => resolve(b), 'image/jpeg', quality);
-      });
-    }
-
-    // Capture button
-    takePhotoBtn.addEventListener('click', async () => {
-      if (!stream) {
-        status.textContent = "Caméra non disponible.";
-        return;
-      }
-
-      takePhotoBtn.disabled = true;
-      status.textContent = 'Traitement de l\'image…';
-
-      try {
-        const finalBlob = await captureHighQuality();
-
-        if (!finalBlob) {
-          status.textContent = "Échec de la capture.";
-          takePhotoBtn.disabled = false;
-          return;
-        }
-
-        const url = URL.createObjectURL(finalBlob);
-        lastObjectURL = url;
-        photoPreview.src = url;
-        photoPreview.style.display = 'block';
-        downloadLink.href = url;
-        downloadLink.style.display = 'inline-block';
-        retakeBtn.style.display = 'inline-block';
-
-        // Masquer le flux vidéo pour mettre l'accent sur la photo capturée
-        video.style.display = 'none';
-        takePhotoBtn.style.display = 'none';
-        status.textContent = 'Photo prise — téléchargez-la ou reprenez.';
-      } catch (err) {
-        console.error(err);
-        status.textContent = "Une erreur est survenue lors de la capture.";
-      } finally {
-        takePhotoBtn.disabled = false;
-      }
-    });
-
-    // Reprendre une photo (remet le vidéo visible)
-    retakeBtn.addEventListener('click', () => {
-      if (photoPreview.src) {
-        try { URL.revokeObjectURL(photoPreview.src); } catch (e) {}
-      }
-      if (lastObjectURL) {
-        try { URL.revokeObjectURL(lastObjectURL); } catch(e){}
-        lastObjectURL = null;
-      }
-      photoPreview.style.display = 'none';
-      downloadLink.style.display = 'none';
-      retakeBtn.style.display = 'none';
-      video.style.display = 'block';
-      takePhotoBtn.style.display = 'inline-block';
-      takePhotoBtn.focus();
-      status.textContent = '';
-    });
-
-    // Fermeture propre du modal (arrêt des tracks)
-    function closeModal() {
-      cameraModal.setAttribute('aria-hidden', 'true');
-      status.textContent = '';
-      if (photoPreview.src) {
-        try { URL.revokeObjectURL(photoPreview.src); } catch(e){}
-      }
-      if (lastObjectURL) {
-        try { URL.revokeObjectURL(lastObjectURL); } catch(e){}
-        lastObjectURL = null;
-      }
-      photoPreview.style.display = 'none';
-      downloadLink.style.display = 'none';
-      retakeBtn.style.display = 'none';
-      takePhotoBtn.style.display = 'inline-block';
-      video.style.display = 'block';
-
-      if (stream) {
-        stream.getTracks().forEach(t => t.stop());
-        stream = null;
-      }
-      video.srcObject = null;
-      imageCapture = null;
-      openCameraBtn.focus();
-    }
-
-    // Bouton fermer
-    closeBtn.addEventListener('click', closeModal);
-
-    // Fermer en cliquant sur le fond (et pas sur le contenu)
-    cameraModal.addEventListener('click', (ev) => {
-      if (ev.target === cameraModal) {
-        closeModal();
-      }
-    });
-
-    // Échap pour fermer
-    document.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Escape' && cameraModal.getAttribute('aria-hidden') === 'false') {
-        closeModal();
-      }
-    });
-
-    // Nettoyage si l'onglet se ferme / refresh
-    window.addEventListener('beforeunload', () => {
-      if (stream) stream.getTracks().forEach(t => t.stop());
-    });
-  </script>
-
+// Fermer proprement
+function closeModal() {
+  els.modal.setAttribute('aria-hidden', 'true');
+  els.status.textContent = '';
+  [els.photo, els.download, els.retakeBtn].forEach(e => e.style.display = 'none');
+  els.video.style.display = 'block';
+  els.takeBtn.style.display = 'inline-block';
+  if (stream) {
+    stream.getTracks().forEach(t => t.stop());
+    stream = null;
+  }
+  els.video.srcObject = null;
+}
+els.closeBtn.addEventListener('click', closeModal);
+els.modal.addEventListener('click', e => { if (e.target === els.modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && els.modal.getAttribute('aria-hidden') === 'false') closeModal(); });
+window.addEventListener('beforeunload', () => { if (stream) stream.getTracks().forEach(t => t.stop()); });
+</script>
 </body>
 </html>
