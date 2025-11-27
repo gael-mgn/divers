@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>.ipynb to .py — Convertisseur</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#7c3aed; --glass:rgba(255,255,255,0.03);
+      --maxw:900px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial; margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#071027 0%, #071728 60%); color:#e6eef6}
+    .wrap{width:94%; max-width:var(--maxw); padding:28px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; box-shadow:0 8px 30px rgba(2,6,23,0.6);}
+    header{display:flex; align-items:center; gap:16px}
+    h1{font-size:20px; margin:0}
+    p.lead{margin:6px 0 18px; color:var(--muted)}
+
+    .drop{border:2px dashed var(--glass); border-radius:10px; padding:28px; display:flex; gap:20px; align-items:center; justify-content:space-between; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);}
+    .drop.dragover{border-color:rgba(124,58,237,0.9); box-shadow:0 6px 30px rgba(124,58,237,0.08)}
+    .drop .left{flex:1}
+    .preview{font-family:monospace; font-size:13px; color:var(--muted)}
+    .controls{display:flex; gap:8px; align-items:center}
+    .btn{background:var(--accent); color:white; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600}
+    .btn.ghost{background:transparent; border:1px solid rgba(255,255,255,0.04)}
+    input[type=file]{display:none}
+
+    .options{display:flex; gap:12px; margin-top:14px; align-items:center}
+    label.inline{color:var(--muted); font-size:13px}
+    input[type=text]{background:transparent; border:1px solid rgba(255,255,255,0.04); padding:8px 10px; border-radius:6px; color:inherit}
+
+    .log{margin-top:16px; font-family:monospace; font-size:13px; color:var(--muted); min-height:36px}
+    footer{margin-top:18px; color:var(--muted); font-size:13px}
+
+    @media (max-width:700px){.drop{flex-direction:column; align-items:stretch}} 
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Convertisseur .ipynb → .py (client-side)</h1>
+        <p class="lead">Glisse-dépose ton fichier notebook (.ipynb) ou choisis-le, puis télécharge le script Python généré.</p>
+      </div>
+    </header>
+
+    <div id="drop" class="drop">
+      <div class="left">
+        <strong id="filename">Aucun fichier sélectionné</strong>
+        <div class="preview" id="preview">Déposez un fichier .ipynb ici ou utilisez le bouton "Choisir un fichier".</div>
+      </div>
+
+      <div class="controls">
+        <label for="fileinput" class="btn ghost" role="button">Choisir un fichier</label>
+        <input id="fileinput" type="file" accept=".ipynb">
+        <button id="convert" class="btn">Convertir & Télécharger</button>
+      </div>
+    </div>
+
+    <div class="log" id="log"></div>
+
+    <footer>Astuce : Le convertisseur transforme uniquement les cellules de type <code>code</code>. Les sorties (stdout, execute_result, text/plain...) sont ajoutées sous forme de commentaires triplets <code>"""</code>. Chaque cellule est séparée par <code>#%%</code> pour faciliter l'usage dans VSCode/Spyder.</footer>
+  </div>
+
+<script>
+// Utility helpers
+const drop = document.getElementById('drop');
+const fileInput = document.getElementById('fileinput');
+const preview = document.getElementById('preview');
+const filenameEl = document.getElementById('filename');
+const outnameInput = document.getElementById('outname');
+const convertBtn = document.getElementById('convert');
+const logEl = document.getElementById('log');
+let currentFile = null;
+
+function log(msg){ logEl.textContent = msg }
+
+// Drag & drop
+['dragenter','dragover'].forEach(ev=>{
+  drop.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); drop.classList.add('dragover'); }, false);
+});
+['dragleave','drop'].forEach(ev=>{
+  drop.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); drop.classList.remove('dragover'); }, false);
+});
+
+drop.addEventListener('drop', e=>{
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if(f) handleFile(f);
+});
+
+fileInput.addEventListener('change', e=>{
+  const f = e.target.files && e.target.files[0];
+  if(f) handleFile(f);
+});
+
+function handleFile(file){
+  if(!file.name.toLowerCase().endsWith('.ipynb')){ log('Erreur : le fichier doit avoir lextension .ipynb'); return }
+  currentFile = file;
+  filenameEl.textContent = file.name;
+  preview.textContent = `${(file.size/1024).toFixed(2)} KB — prêt à convertir`;
+  log('Prêt — cliquez sur "Convertir & Télécharger"');
+
+  telechargerr();
+}
+
+// Conversion logic (mirrors le script python fourni)
+function extractOutputs(outputs){
+  const result = [];
+  if(!Array.isArray(outputs)) return '';
+  outputs.forEach(out=>{
+    const t = out.output_type;
+    if(t === 'stream'){
+      if(out.text) result.push(Array.isArray(out.text) ? out.text.join('') : String(out.text));
+    } else if(t === 'execute_result' || t === 'display_data'){
+      const data = out.data || {};
+      if(data['text/plain']){
+        result.push(Array.isArray(data['text/plain']) ? data['text/plain'].join('') : String(data['text/plain']));
+      } else if(data['text/html']){
+        // If only HTML is present, include raw HTML as string (useful but verbose)
+        result.push(Array.isArray(data['text/html']) ? data['text/html'].join('') : String(data['text/html']));
+      } else {
+        // fallback: stringify the output object
+        try{ result.push(JSON.stringify(out, null, 2)) }catch(e){ result.push(String(out)) }
+      }
+    } else if(t === 'error'){
+      // show traceback
+      if(out.traceback) result.push(out.traceback.join('\n'));
+      else result.push(JSON.stringify(out, null, 2));
+    }
+  });
+  return result.join('\n').trim();
+}
+
+function convertNotebookJson(nb){
+  if(!nb || !Array.isArray(nb.cells)) throw new Error('Fichier .ipynb invalide (cells manquantes)');
+  const lines = [];
+  nb.cells.forEach(cell=>{
+    if(cell.cell_type !== 'code') return; // skip non-code
+    lines.push('#%%\n');
+
+    // source
+    const src = Array.isArray(cell.source) ? cell.source.join('') : (cell.source || '');
+    lines.push(src);
+    if(!src.endsWith('\n')) lines.push('\n');
+
+    // outputs
+    const outputsText = extractOutputs(cell.outputs);
+    if(outputsText){
+      lines.push('\"\"\"\n');
+      lines.push(outputsText + '\n');
+      lines.push('\"\"\"\n\n');
+    }
+  });
+  return lines.join('');
+}
+
+async function readFileAsText(file){
+  return new Promise((res, rej)=>{
+    const r = new FileReader();
+    r.onload = ()=>res(r.result);
+    r.onerror = ()=>rej(r.error);
+    r.readAsText(file, 'utf-8');
+  });
+}
+
+async function telechargerr() {
+if (!currentFile) { 
+    log('Aucun fichier sélectionné'); 
+    return; 
+  }
+
+  try {
+    log('Lecture du fichier...');
+    const text = await readFileAsText(currentFile);
+    log('Parsing JSON...');
+    const nb = JSON.parse(text);
+    log('Conversion en script Python...');
+    const py = convertNotebookJson(nb);
+
+    // Toujours utiliser "notebook_converted.py" comme nom de fichier de sortie
+    const outName = 'notebook_converted.py';
+    const blob = new Blob([py], {type: 'text/x-python;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; 
+    a.download = outName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    log('Téléchargement lancé — script généré.');
+  } catch (err) {
+    console.error(err);
+    log('Erreur : ' + (err.message || String(err)));
+  }
+}
+
+convertBtn.addEventListener('click', async ()=> {
+  telechargerr();
+});
+
+
+</script>
+</body>
+</html>
