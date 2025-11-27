@@ -178,7 +178,8 @@ if (!currentFile) {
     const py = convertNotebookJson(nb);
 
     // Toujours utiliser "notebook_converted.py" comme nom de fichier de sortie
-    const outName = 'notebook_converted.py';
+    const base = currentFile.name.replace(/\.ipynb$/i, "");
+    const outName = base + ".py";
     const blob = new Blob([py], {type: 'text/x-python;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
