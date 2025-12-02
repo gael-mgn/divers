@@ -135,12 +135,21 @@ function convertNotebookJson(nb){
   if(!nb || !Array.isArray(nb.cells)) throw new Error('Fichier .ipynb invalide (cells manquantes)');
   const lines = [];
   nb.cells.forEach(cell=>{
-    if(cell.cell_type !== 'code') return; // skip non-code
+    //if(cell.cell_type !== 'code') return; // skip non-code
     lines.push('#%%\n');
+
+    if(cell.cell_type == 'markdown') {
+      lines.push('"""');
+    }
 
     // source
     const src = Array.isArray(cell.source) ? cell.source.join('') : (cell.source || '');
     lines.push(src);
+
+    if(cell.cell_type == 'markdown') {
+      lines.push('"""');
+    }
+    
     if(!src.endsWith('\n')) lines.push('\n');
 
     // outputs
