@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Géolocalisation utilisateur</title>
+</head>
+<body>
+    <h1>Récupérer la position</h1>
+    <button onclick="getLocation()">Obtenir ma position</button>
+
+    <p id="resultat"></p>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+
+                        document.getElementById("resultat").innerHTML =
+                            "Latitude : " + lat + "<br>Longitude : " + lon;
+                    },
+                    function(error) {
+                        document.getElementById("resultat").innerHTML =
+                            "Erreur lors de la récupération de la position.";
+                    }
+                );
+            } else {
+                document.getElementById("resultat").innerHTML =
+                    "La géolocalisation n'est pas supportée par ce navigateur.";
+            }
+        }
+    </script>
+</body>
+</html>
