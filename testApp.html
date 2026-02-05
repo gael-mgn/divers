@@ -22,8 +22,22 @@
                             "Latitude : " + lat + "<br>Longitude : " + lon;
                     },
                     function(error) {
-                        document.getElementById("resultat").innerHTML =
-                            "Erreur lors de la récupération de la position.";
+                        let errorMessage = "Erreur lors de la récupération de la position.";
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = "L'utilisateur a refusé la demande de géolocalisation.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = "Les informations de position sont indisponibles.";
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = "Le temps de la demande de géolocalisation a expiré.";
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                errorMessage = "Une erreur inconnue est survenue.";
+                                break;
+                        }
+                        document.getElementById("resultat").innerHTML = errorMessage;
                     }
                 );
             } else {
