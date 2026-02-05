@@ -22,7 +22,7 @@
                             "Latitude : " + lat + "<br>Longitude : " + lon;
                     },
                     function(error) {
-                        let errorMessage = "Erreur lors de la récupération de la position.";
+                        let errorMessage = "Erreur lors de la récupération de la position: " + error;
                         switch(error.code) {
                             case error.PERMISSION_DENIED:
                                 errorMessage = "L'utilisateur a refusé la demande de géolocalisation.";
