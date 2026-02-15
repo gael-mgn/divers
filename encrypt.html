@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Déchiffrement via Worker</title>
+</head>
+<body>
+  <h2>Test chiffrement/déchiffrement</h2>
+  <input type="text" id="message" placeholder="Message à chiffrer">
+  <button onclick="send()">Envoyer</button>
+  <pre id="result"></pre>
+
+<script>
+async function send() {
+  const message = document.getElementById("message").value;
+
+  const keyString = "12345678901234567890123456789012";
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(keyString),
+    { name: "AES-GCM" },
+    false,
+    ["encrypt"]
+  );
+
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+
+  const encrypted = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    new TextEncoder().encode(message)
+  );
+
+  const encryptedBase64 = btoa(String.fromCharCode(...new Uint8Array(encrypted)));
+  const ivBase64 = btoa(String.fromCharCode(...iv));
+
+  const response = await fetch("secure-aes.gael-maignan.workers.dev", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      encryptedData: encryptedBase64,
+      iv: ivBase64
+    })
+  });
+
+  const data = await response.json();
+  document.getElementById("result").textContent = data.message;
+}
+</script>
+</body>
+</html>
