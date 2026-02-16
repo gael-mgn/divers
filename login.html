@@ -113,7 +113,6 @@ function showLogin() {
 
 /* ---------------- AUTO LOGIN ON PAGE LOAD ---------------- */
 (async () => {
-  // Si cookie accessToken encore valide → dashboard direct
   const res = await fetch(`${WORKER_URL}/user-info`, {
     method: "POST",
     credentials: "include",
@@ -121,8 +120,15 @@ function showLogin() {
     body: JSON.stringify({})
   });
 
+  if (res.status === 401) {
+    const refreshed = await refreshToken();
+    if (refreshed) return loadUserInfo();
+    else return showLogin();
+  }
+
   if (res.ok) {
     const info = await res.json();
+
     document.getElementById("d_username").innerText = info.username;
     document.getElementById("d_level").innerText = info.level;
     document.getElementById("d_xp").innerText = info.xp;
@@ -132,6 +138,7 @@ function showLogin() {
     document.getElementById("dashboard").classList.remove("hidden");
   }
 })();
+
 </script>
 
 </body>
