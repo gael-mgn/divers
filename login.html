@@ -1,0 +1,24 @@
+<!-- Inclure CryptoJS depuis CDN si tu veux chiffrer quelque chose côté client -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script> -->
+
+<script>
+const WORKER_URL = "https://test-auth-api.gael-maignan.workers.dev";
+const username = "contact@gael-maignan.fr";
+const password = "password";
+
+
+// Login (ex : form submit)
+fetch(`${WORKER_URL}/login`, {
+  method: "POST",
+  credentials: "include", // <--- important
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ username, password })
+});
+
+
+</script>
+
+<h2>Dashboard</h2>
+<p>Niveau : <span id="level"></span></p>
+<p>XP : <span id="xp"></span></p>
+<p>Activités : <span id="activities"></span></p>
