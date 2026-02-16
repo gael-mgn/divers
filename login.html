@@ -1,101 +1,147 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Auth Demo</title>
-  <style>
-    body { font-family: Arial; padding: 40px; }
-    .hidden { display: none; }
-    .card { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
-  </style>
+<meta charset="UTF-8" />
+<title>Authentification</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 400px;
+    margin: 40px auto;
+  }
+
+  .hidden { display: none; }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+  }
+
+  button {
+    padding: 8px 12px;
+    margin-top: 8px;
+    cursor: pointer;
+  }
+
+  .error { color: red; margin-top: 8px; }
+
+  .card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 6px;
+  }
+
+  .loading {
+    text-align: center;
+    font-weight: bold;
+  }
+</style>
 </head>
 <body>
 
-<h1>Connexion utilisateur</h1>
+<div id="loading" class="loading">Vérification de la session...</div>
 
-<!-- FORMULAIRE LOGIN -->
-<div id="loginBox" class="card">
-  <input id="username" type="text" placeholder="Username"><br><br>
-  <input id="password" type="password" placeholder="Password"><br><br>
-  <button onclick="login()">Se connecter</button>
-  <p id="loginStatus"></p>
+<div id="loginCard" class="card hidden">
+  <h2>Connexion</h2>
+  <input type="email" id="username" value="contact@gael-maignan.fr" />
+  <input type="password" id="password" value="password" />
+  <button onclick="handleLogin()">Se connecter</button>
+  <div id="loginError" class="error"></div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="card hidden">
+<div id="dashboardCard" class="card hidden">
   <h2>Dashboard</h2>
-  <p><b>Username :</b> <span id="d_username"></span></p>
-  <p><b>Niveau :</b> <span id="d_level"></span></p>
-  <p><b>XP :</b> <span id="d_xp"></span></p>
-  <p><b>Activités :</b> <span id="d_activities"></span></p>
+  <p><strong>Email :</strong> <span id="userEmail"></span></p>
+  <p><strong>Niveau :</strong> <span id="level"></span></p>
+  <p><strong>XP :</strong> <span id="xp"></span></p>
+  <p><strong>Activités :</strong> <span id="activities"></span></p>
   <button onclick="logout()">Se déconnecter</button>
 </div>
 
 <script>
 const WORKER_URL = "https://test-auth-api.gael-maignan.workers.dev";
 
-/* ---------------- LOGIN ---------------- */
-async function login() {
+function showLoading() {
+  document.getElementById("loading").classList.remove("hidden");
+  document.getElementById("loginCard").classList.add("hidden");
+  document.getElementById("dashboardCard").classList.add("hidden");
+}
+
+function showLogin() {
+  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("dashboardCard").classList.add("hidden");
+  document.getElementById("loginCard").classList.remove("hidden");
+}
+
+function showDashboard() {
+  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("loginCard").classList.add("hidden");
+  document.getElementById("dashboardCard").classList.remove("hidden");
+}
+
+async function checkSession() {
+  showLoading();
+
+  try {
+    const res = await fetch(`${WORKER_URL}/user-info`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({})
+    });
+
+    if (res.status === 401) {
+      showLogin();
+      return;
+    }
+
+    const info = await res.json();
+    populateDashboard(info);
+    showDashboard();
+
+  } catch (err) {
+    console.error("Erreur session:", err);
+    showLogin();
+  }
+}
+
+function populateDashboard(info) {
+  document.getElementById("userEmail").innerText = info.email ?? "N/A";
+  document.getElementById("level").innerText = info.level ?? "N/A";
+  document.getElementById("xp").innerText = info.xp ?? "N/A";
+  document.getElementById("activities").innerText =
+    (info.activities || []).join(", ");
+}
+
+async function handleLogin() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
+  const errorDiv = document.getElementById("loginError");
+  errorDiv.innerText = "";
 
-  const res = await fetch(`${WORKER_URL}/login`, {
-    method: "POST",
-    credentials: "include", // IMPORTANT pour cookies httpOnly
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  });
+  try {
+    const res = await fetch(`${WORKER_URL}/login`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (data.success) {
-    document.getElementById("loginStatus").innerText = "Connexion réussie ✔";
-    await loadUserInfo();
-  } else {
-    document.getElementById("loginStatus").innerText = "Identifiants incorrects ✖";
+    if (res.ok && data.success) {
+      await checkSession(); // recharge proprement
+    } else {
+      errorDiv.innerText = "Identifiants incorrects.";
+    }
+
+  } catch (err) {
+    errorDiv.innerText = "Erreur serveur.";
+    console.error(err);
   }
 }
 
-/* ---------------- LOAD USER INFO ---------------- */
-async function loadUserInfo() {
-  const res = await fetch(`${WORKER_URL}/user-info`, {
-    method: "POST",
-    credentials: "include", // envoie cookie accessToken automatiquement
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({})
-  });
-
-  // Si token expiré → refresh
-  if (res.status === 401) {
-    const refreshed = await refreshToken();
-    if (refreshed) return loadUserInfo();
-    else return showLogin();
-  }
-
-  const info = await res.json();
-
-  // Affichage
-  document.getElementById("d_username").innerText = info.username;
-  document.getElementById("d_level").innerText = info.level;
-  document.getElementById("d_xp").innerText = info.xp;
-  document.getElementById("d_activities").innerText = info.activities.join(", ");
-
-  document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-}
-
-/* ---------------- REFRESH TOKEN ---------------- */
-async function refreshToken() {
-  const res = await fetch(`${WORKER_URL}/refresh`, {
-    method: "POST",
-    credentials: "include"
-  });
-
-  const data = await res.json();
-  return data.success;
-}
-
-/* ---------------- LOGOUT ---------------- */
 async function logout() {
   await fetch(`${WORKER_URL}/logout`, {
     method: "POST",
@@ -105,40 +151,8 @@ async function logout() {
   showLogin();
 }
 
-/* ---------------- UI HELPERS ---------------- */
-function showLogin() {
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("loginBox").classList.remove("hidden");
-}
-
-/* ---------------- AUTO LOGIN ON PAGE LOAD ---------------- */
-(async () => {
-  const res = await fetch(`${WORKER_URL}/user-info`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({})
-  });
-
-  if (res.status === 401) {
-    const refreshed = await refreshToken();
-    if (refreshed) return loadUserInfo();
-    else return showLogin();
-  }
-
-  if (res.ok) {
-    const info = await res.json();
-
-    document.getElementById("d_username").innerText = info.username;
-    document.getElementById("d_level").innerText = info.level;
-    document.getElementById("d_xp").innerText = info.xp;
-    document.getElementById("d_activities").innerText = info.activities.join(", ");
-
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-  }
-})();
-
+// 🔥 Vérification automatique au démarrage
+window.addEventListener("DOMContentLoaded", checkSession);
 </script>
 
 </body>
