@@ -1,24 +1,138 @@
-<!-- Inclure CryptoJS depuis CDN si tu veux chiffrer quelque chose côté client -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script> -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Auth Demo</title>
+  <style>
+    body { font-family: Arial; padding: 40px; }
+    .hidden { display: none; }
+    .card { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<h1>Connexion utilisateur</h1>
+
+<!-- FORMULAIRE LOGIN -->
+<div id="loginBox" class="card">
+  <input id="username" type="text" placeholder="Username"><br><br>
+  <input id="password" type="password" placeholder="Password"><br><br>
+  <button onclick="login()">Se connecter</button>
+  <p id="loginStatus"></p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="card hidden">
+  <h2>Dashboard</h2>
+  <p><b>Username :</b> <span id="d_username"></span></p>
+  <p><b>Niveau :</b> <span id="d_level"></span></p>
+  <p><b>XP :</b> <span id="d_xp"></span></p>
+  <p><b>Activités :</b> <span id="d_activities"></span></p>
+  <button onclick="logout()">Se déconnecter</button>
+</div>
 
 <script>
 const WORKER_URL = "https://test-auth-api.gael-maignan.workers.dev";
-const username = "contact@gael-maignan.fr";
-const password = "password";
 
+/* ---------------- LOGIN ---------------- */
+async function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-// Login (ex : form submit)
-fetch(`${WORKER_URL}/login`, {
-  method: "POST",
-  credentials: "include", // <--- important
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ username, password })
-});
+  const res = await fetch(`${WORKER_URL}/login`, {
+    method: "POST",
+    credentials: "include", // IMPORTANT pour cookies httpOnly
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
 
+  const data = await res.json();
 
+  if (data.success) {
+    document.getElementById("loginStatus").innerText = "Connexion réussie ✔";
+    await loadUserInfo();
+  } else {
+    document.getElementById("loginStatus").innerText = "Identifiants incorrects ✖";
+  }
+}
+
+/* ---------------- LOAD USER INFO ---------------- */
+async function loadUserInfo() {
+  const res = await fetch(`${WORKER_URL}/user-info`, {
+    method: "POST",
+    credentials: "include", // envoie cookie accessToken automatiquement
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({})
+  });
+
+  // Si token expiré → refresh
+  if (res.status === 401) {
+    const refreshed = await refreshToken();
+    if (refreshed) return loadUserInfo();
+    else return showLogin();
+  }
+
+  const info = await res.json();
+
+  // Affichage
+  document.getElementById("d_username").innerText = info.username;
+  document.getElementById("d_level").innerText = info.level;
+  document.getElementById("d_xp").innerText = info.xp;
+  document.getElementById("d_activities").innerText = info.activities.join(", ");
+
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
+}
+
+/* ---------------- REFRESH TOKEN ---------------- */
+async function refreshToken() {
+  const res = await fetch(`${WORKER_URL}/refresh`, {
+    method: "POST",
+    credentials: "include"
+  });
+
+  const data = await res.json();
+  return data.success;
+}
+
+/* ---------------- LOGOUT ---------------- */
+async function logout() {
+  await fetch(`${WORKER_URL}/logout`, {
+    method: "POST",
+    credentials: "include"
+  });
+
+  showLogin();
+}
+
+/* ---------------- UI HELPERS ---------------- */
+function showLogin() {
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
+}
+
+/* ---------------- AUTO LOGIN ON PAGE LOAD ---------------- */
+(async () => {
+  // Si cookie accessToken encore valide → dashboard direct
+  const res = await fetch(`${WORKER_URL}/user-info`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({})
+  });
+
+  if (res.ok) {
+    const info = await res.json();
+    document.getElementById("d_username").innerText = info.username;
+    document.getElementById("d_level").innerText = info.level;
+    document.getElementById("d_xp").innerText = info.xp;
+    document.getElementById("d_activities").innerText = info.activities.join(", ");
+
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+  }
+})();
 </script>
 
-<h2>Dashboard</h2>
-<p>Niveau : <span id="level"></span></p>
-<p>XP : <span id="xp"></span></p>
-<p>Activités : <span id="activities"></span></p>
+</body>
+</html>
